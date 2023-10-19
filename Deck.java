@@ -24,7 +24,7 @@ public class Deck {
     public Deck() {
         cards = new ArrayList<>();
 
-        // Add 80 number cards (10 of each colour)
+        // add 80 number cards (10 of each colour)
         for (Card.Colour colour : Card.Colour.values()) {
             for (int i = 0; i < 10; i++) {
                 cards.add(new Card(colour, Card.Type.NUMBER, i));
@@ -52,13 +52,13 @@ public class Deck {
             }
         }
 
-        // Add 4 Wild cards and 4 Wild Draw Two cards
+        // add 4 Wild cards and 4 Wild Draw Two cards
         for (int i = 0; i < 4; i++) {
             cards.add(new Card(null, Card.Type.WILD, i));
             cards.add(new Card(null, Card.Type.WILD_DRAW_TWO));
         }
 
-        // Shuffle the deck
+        // shuffle the deck
         shuffle();
     }
 
@@ -67,12 +67,12 @@ public class Deck {
      *
      */
     public void shuffle() {
-        Collections.shuffle(cards); //Randomizes the order of the deck
+        Collections.shuffle(cards); // randomizes the order of the deck
     }
 
     public Card drawCard() {
         if (!cards.isEmpty()) {
-            return cards.remove(0); // Remove and return the first card from the deck.
+            return cards.remove(0); // remove and return the first card from the deck
         } else {
             System.out.println("The deck is empty.");
             return null;

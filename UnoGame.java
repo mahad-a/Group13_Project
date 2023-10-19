@@ -1,19 +1,21 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 
 public class UnoGame {
 
     private ArrayList<Player> players;
     private Deck deck;
-    private boolean lightGame; // if true, we are in light game baby!!!
+    private boolean lightGame; // if true, we are in light game
+    private static Scanner scanner = new Scanner(System.in);
 
     public UnoGame(boolean lightGame) {
         this.players = new ArrayList<>();
         this.deck = new Deck(); // Initialize the deck
         this.lightGame = lightGame;
 
-        //Add a way to create 4 players and give them names using input
+        //** add a way to create 4 players and give them names using input
     }
     public void addPlayer(Player player){
         players.add(player);
@@ -48,7 +50,21 @@ public class UnoGame {
         }
     }
 
+    private static String promptText(String text){
+        System.out.print(text + ": ");
+        return scanner.nextLine();
+    }
 
 
+    public static void main(String[] args) {
+        UnoGame unoGame = new UnoGame(true);
+        int numPlayers = Integer.parseInt(promptText("Enter a number of players (2-4)"));
+        numPlayers = (numPlayers >= 2 && numPlayers <= 4) ? numPlayers : Integer.parseInt(promptText("Enter a number of players (2-4)")); // invalid input of players
 
+        // prompt player names and add to game
+        for (int i = 1; i<=numPlayers; i++){
+            unoGame.addPlayer(new Player(promptText("Enter a name for Player " + i)));
+        }
+        scanner.close();
+    }
 }
