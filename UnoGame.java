@@ -9,6 +9,9 @@ public class UnoGame {
     private Deck deck;
     private boolean lightGame; // if true, we are in light game
     private static Scanner scanner = new Scanner(System.in);
+    private Card currentCard;
+    private Player playerTurn;
+    private boolean gameOver;
 
     public UnoGame(boolean lightGame) {
         this.players = new ArrayList<>();
@@ -50,6 +53,17 @@ public class UnoGame {
         }
     }
 
+    public void drawOne(Player player){
+        Card cardDrawn = deck.drawCard();
+
+        if (cardDrawn != null) {
+            player.addCard(cardDrawn);
+        } else {
+            // Handle the case where there are no more cards in the deck.
+            System.out.println("No more cards in the deck.");
+        }
+    }
+
     public boolean isPlayerNameExists(String playerName){
         for (Player player : players) {
             if (player.getName().equals(playerName)) {
@@ -83,6 +97,54 @@ public class UnoGame {
                 }
             }
         }
+        unoGame.startGame();
         scanner.close();
+
     }
+
+    public void startGame(){
+        dealCards();
+        this.gameOver = false;
+        currentCard = deck.drawCard();
+        playerTurn = players.get(0);
+        System.out.println("Starting card is: " + currentCard.toString());
+
+
+        System.out.println(playerTurn.getName() + "'s turn:");
+        System.out.println(playerTurn.showHand());
+
+        System.out.println("Top card: " + currentCard.toString());
+        handlePlayerTurn(playerTurn);
+
+    }
+
+    public void gameOver(){
+        for(Player player: players){
+            if (player.getHand().isEmpty()){
+                this.gameOver = true;
+            }
+        }
+        this.gameOver = false;
+    }
+
+    public void handlePlayerTurn(Player player){
+        int cardPlayed = Integer.parseInt(promptText("Enter card index to play or 0 to draw card"));
+        if(cardPlayed == 0){
+            drawOne(player);
+
+        }
+        if(player.getHand().get(cardPlayed-1) == null){
+            cardPlayed = Integer.parseInt(promptText("Enter a VALID card index to play or 0 to draw card"));
+        }
+
+        currentCard = (Card) player.getHand().get(cardPlayed-1);
+        player.getHand().remove(cardPlayed -1);
+
+
+
+    }
+
+
+
+
 }

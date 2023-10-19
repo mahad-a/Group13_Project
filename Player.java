@@ -18,8 +18,19 @@ public class Player {
 
 
     // actually a getter
-    public ArrayList<Card> showHand() {
-        return this.hand;
+    public ArrayList getHand(){
+        return this.getHand();
+    }
+
+    public String showHand() {
+
+        String retString = "";
+
+        for(int i = 1; i < hand.size(); i++){
+            retString += (i + ".  " + hand.get(i-1).toString() + "\n");
+        }
+
+        return retString;
     }
 
 //    public void addPlayer(String playerName)  {
