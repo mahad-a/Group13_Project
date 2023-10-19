@@ -64,6 +64,7 @@ public class UnoGame {
         }
     }
 
+    // make javadocs: checks the player arraylist if the player exists
     public boolean isPlayerNameExists(String playerName){
         for (Player player : players) {
             if (player.getName().equals(playerName)) {
@@ -129,10 +130,11 @@ public class UnoGame {
 
     public void handlePlayerTurn(Player player){
         int cardPlayed = Integer.parseInt(promptText("Enter card index to play or 0 to draw card"));
+
         if(cardPlayed == 0){
             drawOne(player);
-
         }
+
         if(player.getHand().get(cardPlayed-1) == null){
             cardPlayed = Integer.parseInt(promptText("Enter a VALID card index to play or 0 to draw card"));
         }

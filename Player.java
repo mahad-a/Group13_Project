@@ -18,8 +18,8 @@ public class Player {
 
 
     // actually a getter
-    public ArrayList getHand(){
-        return this.getHand();
+    public ArrayList<Card> getHand(){
+        return this.hand;
     }
 
     public String showHand() {
