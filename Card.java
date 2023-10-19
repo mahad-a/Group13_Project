@@ -5,16 +5,19 @@ public class Card {
     }
 
     public enum Type {
-        NUMBER, DRAW_ONE, SKIP, REVERSE, WILD, WILD_DRAW_TWO
+         DRAW_ONE, SKIP, REVERSE, WILD, WILD_DRAW_TWO
+    }
+
+    public enum Number{
+        ZERO,ONE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE
     }
 
     private Colour colour;
     private Type type;
-    private int number;
+    private Number number;
 
-    public Card(Colour colour, Type type, int number) {
+    public Card(Colour colour, Number number) {
         this.colour = colour;
-        this.type = type;
         this.number = number;
 
     }

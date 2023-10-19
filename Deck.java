@@ -26,8 +26,13 @@ public class Deck {
 
         // add 80 number cards (10 of each colour)
         for (Card.Colour colour : Card.Colour.values()) {
-            for (int i = 0; i < 10; i++) {
-                cards.add(new Card(colour, Card.Type.NUMBER, i));
+            cards.add(new Card(colour, Card.Number.ZERO));
+            for (Card.Number number : Card.Number.values()){
+                if (number != Card.Number.ZERO) {
+                    cards.add(new Card(colour, number));
+                    cards.add(new Card(colour, number));
+                }
+
             }
         }
 
@@ -54,7 +59,7 @@ public class Deck {
 
         // add 4 Wild cards and 4 Wild Draw Two cards
         for (int i = 0; i < 4; i++) {
-            cards.add(new Card(null, Card.Type.WILD, i));
+            cards.add(new Card(null, Card.Type.WILD));
             cards.add(new Card(null, Card.Type.WILD_DRAW_TWO));
         }
 
