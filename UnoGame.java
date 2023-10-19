@@ -50,6 +50,15 @@ public class UnoGame {
         }
     }
 
+    public boolean isPlayerNameExists(String playerName){
+        for (Player player : players) {
+            if (player.getName().equals(playerName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private static String promptText(String text){
         System.out.print(text + ": ");
         return scanner.nextLine();
@@ -63,7 +72,16 @@ public class UnoGame {
 
         // prompt player names and add to game
         for (int i = 1; i<=numPlayers; i++){
-            unoGame.addPlayer(new Player(promptText("Enter a name for Player " + i)));
+            String playerName;
+            while (true){
+                playerName = promptText("Enter a name for Player " + i);
+                if (!unoGame.isPlayerNameExists(playerName)) {
+                    unoGame.addPlayer(new Player(playerName));
+                    break;
+                } else {
+                    System.out.println("Player name already exists. Please choose a different name.");
+                }
+            }
         }
         scanner.close();
     }
