@@ -6,7 +6,7 @@ public class WildCard extends Card {
     }
 
     @Override
-    public void playCard(Deck deck, Player player){
+    public void playCard(UnoGame game){
 
     }
 

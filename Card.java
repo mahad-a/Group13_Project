@@ -37,5 +37,5 @@ public abstract class Card {
         return (this.colour + "");
     }
 
-    public abstract void playCard(Deck deck, Player player);
+    public abstract void playCard(UnoGame game);
 }

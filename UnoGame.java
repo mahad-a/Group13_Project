@@ -100,11 +100,9 @@ public class UnoGame {
                     System.out.println("Player name already exists. Please choose a different name.");
                 }
             }
-
         }
         unoGame.startGame();
         scanner.close();
-
     }
 
     public void startGame(){
@@ -120,7 +118,6 @@ public class UnoGame {
 
         System.out.println("Top card: " + currentCard.toString());
         handlePlayerTurn(playerTurn);
-
     }
 
     public void gameOver(){
@@ -146,8 +143,6 @@ public class UnoGame {
 
         currentCard = (Card) player.getHand().get(cardPlayed-1);
         player.getHand().remove(cardPlayed -1);
-
-
 
     }
     public Player getCurrentPlayer() {

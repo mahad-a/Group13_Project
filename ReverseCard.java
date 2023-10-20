@@ -6,7 +6,7 @@ public class ReverseCard extends Card{
     }
 
     @Override
-    public void playCard(Deck deck, Player player){
+    public void playCard(UnoGame game){
         // mahad
 //        for (Player rPlayer: players) {
 //

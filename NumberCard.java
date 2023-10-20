@@ -11,12 +11,12 @@ public class NumberCard extends Card {
     }
 
     @Override
-    public void playCard(Deck deck, Player player) {
+    public void playCard(UnoGame game) {
 
     }
 
     @Override
     public String toString() {
-        return this.number + " " + super.getColour();
+        return super.getColour() + " " + this.number;
     }
 }

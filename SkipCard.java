@@ -5,7 +5,7 @@ public class SkipCard extends Card{
     }
 
     @Override
-    public void playCard(Deck deck, Player player){
+    public void playCard(UnoGame game){
         Player nextPlayer;
         Player players;
         //player = players.getPl
@@ -14,6 +14,6 @@ public class SkipCard extends Card{
 
     @Override
     public String toString() {
-        return "SKIP-CARD " + super.getColour();
+        return super.getColour() + "SKIP-CARD " ;
     }
 }
