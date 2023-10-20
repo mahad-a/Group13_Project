@@ -3,6 +3,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * The UnoGame class represents the logic of the UNO game. It manages the players, the cards, and the flow of the game.
+ * The class is responsible for controlling the game, and the player interactions.
+ *
+ * @author Mahad Ahmed
+ * @author Firas El-Ezzi
+ * @author Hasib Khodayar
+ * @author Hajar Assim
+ * @author Yusuf Ibrahim
+ *
+ * @version 1.1
+ */
 public class UnoGame {
 
     private ArrayList<Player> players;
@@ -14,39 +26,86 @@ public class UnoGame {
 
     private boolean gameOver;
 
+    /**
+     * Constructs an UNO game.
+     *
+     * @param lightGame  an indicator that indicates if the game is in "light" mode.
+     */
     public UnoGame(boolean lightGame) {
         this.players = new ArrayList<>();
         this.deck = new Deck(); // Initialize the deck
         this.lightGame = lightGame;
 
-        //** add a way to create 4 players and give them names using input
+        //** add a way to create 4 players and give them names using input **\\
     }
+
+    /**
+     * Adds a player to the game.
+     *
+     * @param player The player to be added.
+     */
     public void addPlayer(Player player){
         players.add(player);
     }
 
+    /**
+     * Retrieves a list of the current players.
+     *
+     * @return An ArrayList of players in the game.
+     */
     public ArrayList<Player> getPlayers() {
         return players;
     }
+
+    /**
+     * Retrieves the current player who's turn it is to play.
+     *
+     * @return The current player taking their turn.
+     */
     public Player getCurrentPlayer() {
         return playerTurn;
     }
+
+    /**
+     * Retrieves the current card placed on the table.
+     *
+     * @return The current card in play.
+     */
     public Card getCurrentCard(){
         return this.currentCard;
     }
+
+    /**
+     * Sets the current card on the table.
+     *
+     * @param card The card to be set as the current card.
+     */
     public void setCurrentCard(Card card){
         this.currentCard = card;
     }
 
+    /**
+     * Checks if the game is in light mode.
+     *
+     * @return true if the game is in light mode, false otherwise.
+     */
     public boolean isLightGame() {
         return lightGame;
     }
 
+    /**
+     * Sets the game's mode to light or normal.
+     *
+     * @param lightGame true if game in light mode, false if game in normal mode.
+     */
     public void setLightGame(boolean lightGame) {
         this.lightGame = lightGame;
     }
 
 
+    /**
+     *
+     */
     public void dealCards(){
         for(Player player: players){
             for(int i = 0; i<7; i++){
@@ -116,6 +175,9 @@ public class UnoGame {
         scanner.close();
     }
 
+    /**
+     * Starts the UNO game by dealing the cards, initializing the state of the game, and beginning the first turn.
+     */
     public void startGame(){
         dealCards();
         this.gameOver = false;
@@ -128,6 +190,9 @@ public class UnoGame {
         handlePlayerTurn(playerTurn);
     }
 
+    /**
+     * Checks if the UNO game is over depending on how many cards each player has in their hand.
+     */
     public void gameOver(){
         for(Player player: players){
             if (player.getHand().isEmpty()){
@@ -138,6 +203,11 @@ public class UnoGame {
         this.gameOver = false;
     }
 
+    /**
+     * Handles a player's turn by allowing them to place a card, or draw a card if no placeable card is available.
+     *
+     * @param player The current player taking their turn.
+     */
     public void handlePlayerTurn(Player player){
         int cardPlayed = Integer.parseInt(promptText("Enter card index to play or 0 to draw card"));
 
@@ -157,6 +227,9 @@ public class UnoGame {
 
     }
 
+    /**
+     * Display the current player's hand and the top card on the table.
+     */
     public void displayHand(){
         System.out.println(playerTurn.getName() + "'s turn:");
         System.out.println(playerTurn.showHand());
@@ -164,8 +237,4 @@ public class UnoGame {
         System.out.println("Top card: " + currentCard.toString());
     }
 
-
-
-
-//gg
 }
