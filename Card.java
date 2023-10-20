@@ -1,47 +1,41 @@
-public class Card {
+/**
+ * The Card class represents a card in the UNO game. UNO cards have a colour and can be assigned different
+ * types. The class is abstract and is designed to be extended to define specific types of UNO cards.
+ *
+ * @author Mahad Ahmed
+ * @author Firas El-Ezzi
+ * @author Hasib Khodayar
+ * @author Hajar Assim
+ * @author Yusuf Ibrahim
+ *
+ * @version 1.1
+ */
+public abstract class Card {
 
     public enum Colour {
         BLUE, RED, GREEN, YELLOW
     }
 
-    public enum Type {
-         DRAW_TWO, SKIP, REVERSE, WILD, WILD_DRAW_TWO
-    }
-
-    public enum Number{
-        ZERO,ONE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE
-    }
-
     private Colour colour;
-    private Type type;
     private Number number;
 
-    public Card(Colour colour, Number number) {
-        this.colour = colour;
-        this.number = number;
-        this.type = null;
+    public Card(){
+
     }
 
-    public Card(Colour colour, Type type) {
+    public Card(Colour colour) {
         this.colour = colour;
-        this.type = type;
-        this.number = null;
     }
+
 
     public Colour getColour() {
         return colour;
     }
 
-    public Type getType() {
-        return type;
-    }
-
     // Display the card, EX (RED SKIP)
     public String toString() {
-        if(this.type == null ){
-            return (this.colour + " " + this.number);
-        }
-
-        return (this.colour + " " + this.type);
+        return (this.colour + "");
     }
+
+    public abstract void playCard(Deck deck, Player player);
 }

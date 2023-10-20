@@ -11,6 +11,7 @@ public class UnoGame {
     private static Scanner scanner = new Scanner(System.in);
     private Card currentCard;
     private Player playerTurn;
+
     private boolean gameOver;
 
     public UnoGame(boolean lightGame) {
@@ -81,14 +82,16 @@ public class UnoGame {
 
 
     public static void main(String[] args) {
+
         UnoGame unoGame = new UnoGame(true);
+
         int numPlayers = Integer.parseInt(promptText("Enter a number of players (2-4)"));
         numPlayers = (numPlayers >= 2 && numPlayers <= 4) ? numPlayers : Integer.parseInt(promptText("Enter a number of players (2-4)")); // invalid input of players
 
         // prompt player names and add to game
         for (int i = 1; i<=numPlayers; i++){
             String playerName;
-            while (true){
+            while (true) {
                 playerName = promptText("Enter a name for Player " + i);
                 if (!unoGame.isPlayerNameExists(playerName)) {
                     unoGame.addPlayer(new Player(playerName));
@@ -97,6 +100,7 @@ public class UnoGame {
                     System.out.println("Player name already exists. Please choose a different name.");
                 }
             }
+
         }
         unoGame.startGame();
         scanner.close();
@@ -123,6 +127,7 @@ public class UnoGame {
         for(Player player: players){
             if (player.getHand().isEmpty()){
                 this.gameOver = true;
+                player.updateMyScore(); // adds point to the winner
             }
         }
         this.gameOver = false;
@@ -144,6 +149,9 @@ public class UnoGame {
 
 
 
+    }
+    public Player getCurrentPlayer() {
+        return playerTurn;
     }
 
 

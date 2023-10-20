@@ -2,46 +2,83 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 
+/**
+ * The player class represents a player in the UNO game. Each player has a name, a hand of uno cards,
+ * and a discard pile. Players are allowed to draw cards, add cards to their hand of cards, and discard cards
+ * in their hand into the discard pile.
+ *
+ * @author Mahad Ahmed
+ * @author Firas El-Ezzi
+ * @author Hasib Khodayar
+ * @author Hajar Assim
+ * @author Yusuf Ibrahim
+ *
+ * @version 1.4
+ */
 public class Player {
     private String name;
     private ArrayList<Card> hand;
     private ArrayList<Card> discardPile;
+    private int myScore;
 
+    /**
+     * Constructs a player with the player provided name. The player's hand is initially empty.
+     *
+     * @param name The name of the player.
+     */
     public Player(String name) {
         this.name = name;
         hand = new ArrayList<>();
     }
 
+    /**
+     * Gets the name of the player.
+     *
+     * @return The name of the player.
+     */
     public String getName() {
         return name;
     }
 
-
-    // actually a getter
+    /**
+     * Gets the player's hand of UNO cards.
+     *
+     * @return The player's hand of UNO cards, as an ArrayList of Card objects.
+     */
     public ArrayList<Card> getHand(){
         return this.hand;
     }
 
+    /**
+     * Displays a formatted string representation of the player's hand of UNO cards.
+     *
+     * @return A string representation of the player's hand of UNO cards.
+     */
     public String showHand() {
-
         String retString = "";
 
-        for(int i = 1; i < hand.size(); i++){
-            retString += (i + ".  " + hand.get(i-1).toString() + "\n");
+        for (int i = 1; i < hand.size(); i++) {
+            retString += (i + ".  " + hand.get(i - 1).toString() + "\n");
         }
 
         return retString;
     }
 
-//    public void addPlayer(String playerName)  {
-//        hand.add(playerName, new ArrayList<>());
-//    }
-
-    // draws a card and adds to hand
+    /**
+     * Adds a card to the player's hand
+     *
+     * @param card The card to be added to the player's hand
+     */
     public void addCard(Card card) {
             hand.add(card);
     }
 
+    /**
+     * Discards a card from the player's hand into the discard pile.
+     *
+     * @param playerName The name of the player the card is being discarded from.
+     * @param card The card to be discarded
+     */
     public void discardCard(String playerName, Card card) {
         if (hand.contains(card)) {
             hand.remove(card);
@@ -51,6 +88,22 @@ public class Player {
         }
     }
 
-}
+    /**
+     * Gets the player's score.
+     *
+     * @return the player's score.
+     */
+    public int getMyScore() {
+        return this.myScore;
+    }
 
-// testing srouce tree push
+    /**
+     * Updates the player's score by adding 1 to the current score.
+     *
+     * @return The updated player's score.
+     */
+    public int updateMyScore() {
+        return (this.myScore += 1);
+    }
+
+}
