@@ -76,13 +76,13 @@ public class Player {
     /**
      * Discards a card from the player's hand into the discard pile.
      *
-     * @param playerName The name of the player the card is being discarded from.
+     *
      * @param card The card to be discarded
      */
-    public void discardCard(String playerName, Card card) {
+    public void discardCard(Card card) {
         if (hand.contains(card)) {
             hand.remove(card);
-            this.discardPile.add(card);
+            /*this.discardPile.add(card);*/
         } else {
             System.out.println("Cannot remove " + card + " as this is not in the players hand");
         }

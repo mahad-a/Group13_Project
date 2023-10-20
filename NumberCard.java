@@ -19,11 +19,16 @@ public class NumberCard extends Card {
         Card currCard = game.getCurrentCard();
         if(currCard.getColour() == this.getColour()){
             game.setCurrentCard(this);
+            game.getCurrentPlayer().discardCard(this);
         }
         else if(currCard instanceof NumberCard){
             if (((NumberCard) currCard).getNumber() == this.number) {
                 game.setCurrentCard(this);
+                game.getCurrentPlayer().discardCard(this);
             }
+        }
+        else{
+            System.out.println("Cannot place this Card");
         }
     }
 

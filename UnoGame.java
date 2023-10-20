@@ -124,10 +124,7 @@ public class UnoGame {
         System.out.println("Starting card is: " + currentCard.toString());
 
 
-        System.out.println(playerTurn.getName() + "'s turn:");
-        System.out.println(playerTurn.showHand());
-
-        System.out.println("Top card: " + currentCard.toString());
+        displayHand();
         handlePlayerTurn(playerTurn);
     }
 
@@ -152,9 +149,19 @@ public class UnoGame {
             cardPlayed = Integer.parseInt(promptText("Enter a VALID card index to play or 0 to draw card"));
         }
 
-        currentCard = (Card) player.getHand().get(cardPlayed-1);
-        player.getHand().remove(cardPlayed -1);
+        Card cardplayed =  (Card) player.getHand().get(cardPlayed-1);
+        cardplayed.playCard(this);
 
+
+        displayHand();
+
+    }
+
+    public void displayHand(){
+        System.out.println(playerTurn.getName() + "'s turn:");
+        System.out.println(playerTurn.showHand());
+
+        System.out.println("Top card: " + currentCard.toString());
     }
 
 
