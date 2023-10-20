@@ -5,7 +5,7 @@ public class Card {
     }
 
     public enum Type {
-         DRAW_ONE, SKIP, REVERSE, WILD, WILD_DRAW_TWO
+         DRAW_TWO, SKIP, REVERSE, WILD, WILD_DRAW_TWO
     }
 
     public enum Number{
@@ -19,12 +19,13 @@ public class Card {
     public Card(Colour colour, Number number) {
         this.colour = colour;
         this.number = number;
-
+        this.type = null;
     }
 
     public Card(Colour colour, Type type) {
         this.colour = colour;
         this.type = type;
+        this.number = null;
     }
 
     public Colour getColour() {
@@ -37,6 +38,10 @@ public class Card {
 
     // Display the card, EX (RED SKIP)
     public String toString() {
-        return colour + " " + type;
+        if(this.type == null ){
+            return (this.colour + " " + this.number);
+        }
+
+        return (this.colour + " " + this.type);
     }
 }

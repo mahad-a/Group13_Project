@@ -28,6 +28,7 @@ public class Deck {
         for (Card.Colour colour : Card.Colour.values()) {
             cards.add(new Card(colour, Card.Number.ZERO));
             for (Card.Number number : Card.Number.values()){
+
                 if (number != Card.Number.ZERO) {
                     cards.add(new Card(colour, number));
                     cards.add(new Card(colour, number));
@@ -36,25 +37,22 @@ public class Deck {
             }
         }
 
-        // adds 8 Draw One cards of each colour
+        // adds 2 Draw Two cards of each colour
         for (Card.Colour colour : Card.Colour.values()) {
-            for (int i = 0; i < 8; i++) {
-                cards.add(new Card(colour, Card.Type.DRAW_ONE));
-            }
+            cards.add(new Card(colour, Card.Type.DRAW_TWO));
+            cards.add(new Card(colour, Card.Type.DRAW_TWO));
         }
 
-        // adds 8 Skip cards of each colour
+        // adds 2 Skip cards of each colour
         for (Card.Colour colour : Card.Colour.values()) {
-            for (int i = 0; i < 8; i++) {
-                cards.add(new Card(colour, Card.Type.SKIP));
-            }
+            cards.add(new Card(colour, Card.Type.SKIP));
+            cards.add(new Card(colour, Card.Type.SKIP));
         }
 
-        // adds 8 Reverse cards of each colour
+        // adds 2 Reverse cards of each colour
         for (Card.Colour colour : Card.Colour.values()) {
-            for (int i = 0; i < 8; i++) {
-                cards.add(new Card(colour, Card.Type.REVERSE));
-            }
+            cards.add(new Card(colour, Card.Type.REVERSE));
+            cards.add(new Card(colour, Card.Type.REVERSE));
         }
 
         // add 4 Wild cards and 4 Wild Draw Two cards
