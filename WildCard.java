@@ -1,18 +1,13 @@
 import java.util.Scanner;
 
-
-
 public class WildCard extends Card {
-
 
     public WildCard(){
 
         super();
     }
 
-
     @Override
-
     public void playCard(UnoGame game){
 
         Scanner scanner = new Scanner(System.in);  // Create a Scanner object
@@ -21,9 +16,6 @@ public class WildCard extends Card {
 
         System.out.println("Enter A Colour of your choice: ");
         String upInput = input.toUpperCase();
-
-
-
 
         if (upInput == "BLUE"){
             this.setColour(Colour.BLUE);
