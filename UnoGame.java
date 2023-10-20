@@ -28,6 +28,15 @@ public class UnoGame {
     public ArrayList<Player> getPlayers() {
         return players;
     }
+    public Player getCurrentPlayer() {
+        return playerTurn;
+    }
+    public Card getCurrentCard(){
+        return this.currentCard;
+    }
+    public void setCurrentCard(Card card){
+        this.currentCard = card;
+    }
 
     public boolean isLightGame() {
         return lightGame;
@@ -74,6 +83,8 @@ public class UnoGame {
         }
         return false;
     }
+
+
 
     private static String promptText(String text){
         System.out.print(text + ": ");
@@ -145,9 +156,7 @@ public class UnoGame {
         player.getHand().remove(cardPlayed -1);
 
     }
-    public Player getCurrentPlayer() {
-        return playerTurn;
-    }
+
 
 
 

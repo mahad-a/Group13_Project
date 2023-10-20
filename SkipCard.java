@@ -14,6 +14,6 @@ public class SkipCard extends Card{
 
     @Override
     public String toString() {
-        return super.getColour() + "SKIP-CARD " ;
+        return super.toString() + "SKIP-CARD " ;
     }
 }

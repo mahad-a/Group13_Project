@@ -15,7 +15,7 @@ public class ReverseCard extends Card{
 
     @Override
     public String toString() {
-        return "REVERSE-CARD " + super.getColour();
+        return  super.toString() + "REVERSE-CARD " ;
     }
 
 

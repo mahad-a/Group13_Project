@@ -34,7 +34,7 @@ public abstract class Card {
 
     // Display the card, EX (RED SKIP)
     public String toString() {
-        return (this.colour + "");
+        return (this.colour + " ");
     }
 
     public abstract void playCard(UnoGame game);
