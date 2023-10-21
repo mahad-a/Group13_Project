@@ -66,6 +66,11 @@ public class UnoGame {
         return playerTurn;
     }
 
+    public void setCurrentPlayer(Player player) {
+        this.playerTurn = player;
+    }
+
+
     /**
      * Retrieves the current card placed on the table.
      *
@@ -83,6 +88,11 @@ public class UnoGame {
     public void setCurrentCard(Card card){
         this.currentCard = card;
     }
+
+    public ArrayList<Player> getPlayerList() {
+        return this.players;
+    }
+
 
     /**
      * Checks if the game is in light mode.
