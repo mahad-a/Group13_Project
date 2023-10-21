@@ -28,10 +28,9 @@ public class SkipCard extends Card{
      */
     @Override
     public void playCard(UnoGame game){
-        Player nextPlayer;
-        Player players;
-        //player = players.getPl
-        // firas stop for one second so i can run main
+
+        //nextplayer = players[currentplayerindex + 2];
+
     }
 
     /**

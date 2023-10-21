@@ -113,7 +113,7 @@ public class UnoGame {
             }
         }
         unoGame.startGame();
-        scanner.close();
+            scanner.close();
     }
 
     public void startGame(){
@@ -164,8 +164,4 @@ public class UnoGame {
         System.out.println("Top card: " + currentCard.toString());
     }
 
-
-
-
-//gg
 }
