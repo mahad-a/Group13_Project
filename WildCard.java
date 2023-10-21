@@ -1,12 +1,34 @@
 import java.util.Scanner;
 
+/**
+ * The WildCard class represents a specific type of UNO card, the Wild card.
+ * The wild card can be played in an UNO game to change the current colour of the game.
+ *
+ * @author Mahad Ahmed
+ * @author Firas El-Ezzi
+ * @author Hasib Khodayar
+ * @author Hajar Assim
+ * @author Yusuf Ibrahim
+ *
+ * @version 1.1
+ */
 public class WildCard extends Card {
 
+    /**
+     * Constructs a wild card.
+     *
+     */
     public WildCard(){
-
         super();
     }
 
+
+    /**
+     * Play the wild card in the UNO game. When played, it allows the player to choose
+     * the next playing colour of the cards.
+     *
+     * @param game The UNO game in which the card is being played.
+     */
     @Override
     public void playCard(UnoGame game){
 
@@ -44,6 +66,11 @@ public class WildCard extends Card {
 
     }
 
+    /**
+     * Returns a string representation of the wild card. Specifies the type of the card (WILD-CARD).
+     *
+     * @return A string representation of the wild card.
+     */
     @Override
     public String toString() {
         return "WILD-CARD ";

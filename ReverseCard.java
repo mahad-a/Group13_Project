@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Collections;
+
 /**
  * The ReverseCard class represents a specific type of UNO card, the reverse card.
  * Reverse cards have a colour and can be placed in an UNO game to reverse the order of playing.
@@ -28,10 +31,19 @@ public class ReverseCard extends Card{
      */
     @Override
     public void playCard(UnoGame game){
-        // mahad
-//        for (Player rPlayer: players) {
-//
-//        }
+        // reverse card
+        Player currPlayer = game.getCurrentPlayer();
+        ArrayList<Player> players = game.getPlayerList();
+        int index = players.indexOf(currPlayer);
+        Player prevPlayer;
+        if ((index - 1) < 0) {
+            prevPlayer = players.get(players.size() - 1);
+        } else {
+            prevPlayer = players.get(index - 1);
+        }
+        Collections.reverse(players);
+        game.setCurrentPlayer(prevPlayer);
+
     }
 
     /**
