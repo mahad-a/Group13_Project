@@ -29,7 +29,16 @@ public class SkipCard extends Card{
     @Override
     public void playCard(UnoGame game){
 
-        //nextplayer = players[currentplayerindex + 2];
+        if(this.getColour() == game.getCurrentCard().getColour()){
+
+            game.setCurrentCard(this);
+            game.getCurrentPlayer().discardCard(this);
+            int currplayindx = game.getPlayers().indexOf(game.getCurrentPlayer());
+            game.setCurrentPlayer(game.getPlayers().get(currplayindx + 2));
+
+        }
+
+
 
     }
 

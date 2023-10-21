@@ -66,6 +66,7 @@ public class UnoGame {
         return playerTurn;
     }
 
+
     public void setCurrentPlayer(Player player) {
         this.playerTurn = player;
     }
@@ -76,6 +77,7 @@ public class UnoGame {
      *
      * @return The current card in play.
      */
+
     public Card getCurrentCard(){
         return this.currentCard;
     }
