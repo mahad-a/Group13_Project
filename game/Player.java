@@ -59,8 +59,8 @@ public class Player {
     public String showHand() {
         String retString = "";
 
-        for (int i = 1; i < hand.size(); i++) {
-            retString += (i + ".  " + hand.get(i - 1).toString() + "\n");
+        for (int i = 0; i < hand.size(); i++) {
+            retString += ((i+1) + ".  " + hand.get(i).toString() + "\n");
         }
 
         return retString;
@@ -72,7 +72,7 @@ public class Player {
      * @param card The card to be added to the player's hand
      */
     public void addCard(Card card) {
-            hand.add(card);
+        hand.add(card);
     }
 
     /**

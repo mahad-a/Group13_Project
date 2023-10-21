@@ -42,8 +42,7 @@ public class WildCard extends Card {
         String input;
 
         do {
-            System.out.println("Enter a color of your choice: ");
-            input = scanner.nextLine().toUpperCase();
+            input = UnoGame.promptText("Enter a color of your choice: ").toUpperCase();
 
             switch (input) {
                 case "BLUE":
@@ -64,11 +63,13 @@ public class WildCard extends Card {
                     continue;
             }
 
-            System.out.println(game.getCurrentPlayer() + " has changed color to: " + input + "!");
+            System.out.println(game.getCurrentPlayer().getName() + " has changed color to: " + input + "!");
+            this.setColour(Colour.valueOf(input));
             break; // Exit the loop if a valid color is chosen.
         } while (true);
         game.setCurrentCard(this);
         game.getCurrentPlayer().discardCard(this);
+        game.nextPlayer(1);
 
     }
 
@@ -79,6 +80,10 @@ public class WildCard extends Card {
      */
     @Override
     public String toString() {
-        return "WILD-CARD";
+        if (this.getColour() == null) {
+            return "WILD-CARD";
+        } else {
+            return "WILD-CARD (" + this.getColour() + ")";
+        }
     }
 }

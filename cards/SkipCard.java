@@ -39,7 +39,7 @@ public class SkipCard extends Card {
             game.setCurrentCard(this);
             game.getCurrentPlayer().discardCard(this);
             int currPlayerIndex = game.getPlayers().indexOf(game.getCurrentPlayer());
-            game.setCurrentPlayer(game.getPlayers().get(currPlayerIndex + 2));
+            game.nextPlayer(2);
 
         }
     }

@@ -14,12 +14,10 @@ public class WildDrawTwo extends Card {
 
     @Override
     public void playCard(UnoGame game) {
-        Scanner scanner = new Scanner(System.in);
         String input;
 
         do {
-            System.out.println("Enter a color of your choice: ");
-            input = scanner.nextLine().toUpperCase();
+            input = UnoGame.promptText("Enter a color of your choice: ").toUpperCase();
 
             switch (input) {
                 case "BLUE":
@@ -40,7 +38,8 @@ public class WildDrawTwo extends Card {
                     continue;
             }
 
-            System.out.println(game.getCurrentPlayer() + " has changed color to: " + input + "!");
+            System.out.println(game.getCurrentPlayer().getName() + " has changed color to: " + input + "!");
+            this.setColour(Colour.valueOf(input));
             break; // Exit the loop if a valid color is chosen.
 
         } while (true);
@@ -48,17 +47,20 @@ public class WildDrawTwo extends Card {
         game.setCurrentCard(this);
         game.getCurrentPlayer().discardCard(this);
 
-        int currplayindx = game.getPlayers().indexOf(game.getCurrentPlayer());
-        game.drawOne(game.getPlayers().get(currplayindx + 1));
-        game.drawOne(game.getPlayers().get(currplayindx + 1));
-        game.setCurrentPlayer(game.getPlayers().get(currplayindx + 2));
-
+        game.nextPlayer(1);
+        game.drawOne(game.getCurrentPlayer());
+        game.drawOne(game.getCurrentPlayer());
+        game.nextPlayer(1);
 
     }
 
     @Override
     public String toString() {
-        return "WILD-CARD DRAW TWO";
+        if (this.getColour() == null) {
+            return "WILD-CARD-DRAW-TWO";
+        } else {
+            return "WILD-CARD-DRAW-TWO (" + this.getColour() + ")";
+        }
     }
 }
     

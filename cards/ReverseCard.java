@@ -37,17 +37,14 @@ public class ReverseCard extends Card {
     @Override
     public void playCard(UnoGame game){
         // reverse card
-        Player currPlayer = game.getCurrentPlayer();
-        ArrayList<Player> players = game.getPlayerList();
-        int index = players.indexOf(currPlayer);
-        Player prevPlayer;
-        if ((index - 1) < 0) {
-            prevPlayer = players.get(players.size() - 1);
-        } else {
-            prevPlayer = players.get(index - 1);
+
+        // if this doesnt change the original player list make a setter for player list
+        //and replace the list with the reversed list
+        Collections.reverse(game.getPlayers());
+        int currPlayerIndex = game.getPlayers().indexOf(game.getCurrentPlayer());
+        if(game.getPlayers().size() > 2){
+            game.setCurrentPlayer(game.getPlayers().get(currPlayerIndex + 1));
         }
-        Collections.reverse(players);
-        game.setCurrentPlayer(prevPlayer);
 
     }
 

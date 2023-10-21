@@ -56,12 +56,14 @@ public class NumberCard extends Card {
 
             game.setCurrentCard(this);
             game.getCurrentPlayer().discardCard(this);
+            game.nextPlayer(1);
             return;
         }
         else if(currCard instanceof NumberCard){
             if (((NumberCard) currCard).getNumber() == this.number) {
                 game.setCurrentCard(this);
                 game.getCurrentPlayer().discardCard(this);
+                game.nextPlayer(1);
                 return;
             }
         }

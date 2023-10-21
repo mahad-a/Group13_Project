@@ -22,11 +22,10 @@ public class UnoGame {
     private ArrayList<Player> players;
     private Deck deck;
     private boolean lightGame; // if true, we are in light game
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
     private Card currentCard;
     private Player playerTurn;
 
-    private boolean gameOver;
 
     /**
      * Constructs an UNO game.
@@ -60,7 +59,7 @@ public class UnoGame {
     }
 
     /**
-     * Retrieves the current player who's turn it is to play.
+     * Retrieves the current player whose turn it is to play.
      *
      * @return The current player taking their turn.
      */
@@ -73,6 +72,10 @@ public class UnoGame {
         this.playerTurn = player;
     }
 
+    public void nextPlayer(int numSkip){
+        int currPayerIndex = this.players.indexOf(getCurrentPlayer());
+        setCurrentPlayer(players.get(currPayerIndex + numSkip));
+    }
 
     /**
      * Retrieves the current card placed on the table.
@@ -139,13 +142,9 @@ public class UnoGame {
     public void drawOne(Player player){
         Card cardDrawn = deck.drawCard();
 
-        if (cardDrawn != null) {
-            System.out.print("Drew a card: " + cardDrawn.toString() + "\n\n");
-            player.addCard(cardDrawn);
-        } else {
-            // Handle the case where there are no more cards in the deck.
-            System.out.println("No more cards in the deck.");
-        }
+        System.out.print("Drew a card: " + cardDrawn.toString() + "\n\n");
+        player.addCard(cardDrawn);
+
     }
 
     // make javadocs: checks the player arraylist if the player exists
@@ -166,7 +165,7 @@ public class UnoGame {
 
 
 
-    private static String promptText(String text){
+    public static String promptText(String text){
         System.out.print(text + ": ");
         return scanner.nextLine();
     }
@@ -176,28 +175,27 @@ public class UnoGame {
      */
     public void startGame(){
         dealCards();
-        this.gameOver = false;
         currentCard = deck.drawCard();
         playerTurn = players.get(0);
         System.out.println("Starting card is: " + currentCard.toString());
-        displayHand();
 
-        while(!this.gameOver){
+
+        do{
             handlePlayerTurn(playerTurn);
-        }
+        }while (!gameOver());
     }
 
     /**
      * Checks if the UNO game is over depending on how many cards each player has in their hand.
      */
-    public void gameOver(){
+    public boolean gameOver(){
         for(Player player: players){
             if (player.getHand().isEmpty()){
-                this.gameOver = true;
                 player.updateMyScore(); // adds point to the winner
+                return true;
             }
         }
-        this.gameOver = false;
+        return false;
     }
 
     /**
@@ -206,18 +204,20 @@ public class UnoGame {
      * @param player The current player taking their turn.
      */
     public void handlePlayerTurn(Player player){
-        int playerChoice = Integer.parseInt(promptText("Enter card index to play or 0 to draw card: "));
+        displayHand();
+        int playerChoice = Integer.parseInt(promptText("Enter card index to play or 0 to draw card"));
         // player chose to draw deck
         if(playerChoice == 0){
             drawOne(player);
 
         } else if(player.getHand().get(playerChoice-1) == null){ // player chose a card out of bounds
-            playerChoice = Integer.parseInt(promptText("Enter a VALID card index to play or 0 to draw card: "));
+            playerChoice = Integer.parseInt(promptText("Enter a VALID card index to play or 0 to draw card"));
         } else {
             Card cardPlayed =  (Card) player.getHand().get(playerChoice-1);
             cardPlayed.playCard(this);
         }
-        displayHand();
+
+        System.out.print("===================================================\n");
     }
 
     /**
