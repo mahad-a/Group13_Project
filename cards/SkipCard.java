@@ -38,17 +38,14 @@ public class SkipCard extends Card {
 
             game.setCurrentCard(this);
             game.getCurrentPlayer().discardCard(this);
-            int currplayindx = game.getPlayers().indexOf(game.getCurrentPlayer());
-            game.setCurrentPlayer(game.getPlayers().get(currplayindx + 2));
+            int currPlayerIndex = game.getPlayers().indexOf(game.getCurrentPlayer());
+            game.setCurrentPlayer(game.getPlayers().get(currPlayerIndex + 2));
 
         }
-
-
-
     }
 
     /**
-     * Returns a string representation of the skip card, including it's colour and type (SKIP-CARD)
+     * Returns a string representation of the skip card, including its colour and type (SKIP-CARD)
      *
      * @return A string representation of the skip card.
      */

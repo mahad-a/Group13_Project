@@ -180,11 +180,11 @@ public class UnoGame {
         currentCard = deck.drawCard();
         playerTurn = players.get(0);
         System.out.println("Starting card is: " + currentCard.toString());
-
-
         displayHand();
-        handlePlayerTurn(playerTurn);
-        //MOVE TO NEXT PLAYER
+
+        while(!this.gameOver){
+            handlePlayerTurn(playerTurn);
+        }
     }
 
     /**
