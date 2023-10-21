@@ -1,9 +1,13 @@
+package game;
+
+import cards.*;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 /**
- * The "Deck" class creates a deck of 112 cards, where 80 cards are normal number cards with 10
+ * The "game.Deck" class creates a deck of 112 cards, where 80 cards are normal number cards with 10
  * of each colour(0-9) and the rest would be for 8 of each special cards: DRAW_ONE, SKIP,
  * REVERSE, WILD, WILD_DRAW_TWO
  *

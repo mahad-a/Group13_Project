@@ -1,6 +1,8 @@
+package game;
+
+import cards.Card;
+
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
 
 /**
  * The player class represents a player in the UNO game. Each player has a name, a hand of uno cards,
@@ -43,7 +45,7 @@ public class Player {
     /**
      * Gets the player's hand of UNO cards.
      *
-     * @return The player's hand of UNO cards, as an ArrayList of Card objects.
+     * @return The player's hand of UNO cards, as an ArrayList of cards.Card objects.
      */
     public ArrayList<Card> getHand(){
         return this.hand;

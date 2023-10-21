@@ -1,6 +1,11 @@
+package cards;
+
+import cards.Card;
+import game.*;
+
 import java.util.Scanner;
 
-public class WildDrawTwo extends Card{
+public class WildDrawTwo extends Card {
 
 
     public WildDrawTwo(){
@@ -53,7 +58,7 @@ public class WildDrawTwo extends Card{
 
     @Override
     public String toString() {
-        return "WILD-CARD DRAW TWO ";
+        return "WILD-CARD DRAW TWO";
     }
 }
     

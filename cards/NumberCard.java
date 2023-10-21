@@ -1,5 +1,8 @@
+package cards;
+import game.*;
+
 /**
- * The NumberCard class represents the specific number of UNO card. NumberCards consist of a number (0-9) and a Colour.
+ * The cards.NumberCard class represents the specific number of UNO card. NumberCards consist of a number (0-9) and a Colour.
  *
  * @author Mahad Ahmed
  * @author Firas El-Ezzi
@@ -20,11 +23,11 @@ public class NumberCard extends Card {
     private Number number;
 
     /**
-     * Constructs a NumberCard with a specific colour and number.
+     * Constructs a cards.NumberCard with a specific colour and number.
      *
      *
-     * @param colour The colour of the NumberCard
-     * @param number The numeric value of the NumberCard
+     * @param colour The colour of the cards.NumberCard
+     * @param number The numeric value of the cards.NumberCard
      */
     public NumberCard(Colour colour, Number number ){
         super(colour);
@@ -62,7 +65,7 @@ public class NumberCard extends Card {
                 return;
             }
         }
-        System.out.println("Cannot place this Card");
+        System.out.println("Cannot place this card.");
 
     }
 
@@ -73,6 +76,6 @@ public class NumberCard extends Card {
      */
     @Override
     public String toString() {
-        return super.toString() + " " + this.number;
+        return super.toString() + this.number;
     }
 }

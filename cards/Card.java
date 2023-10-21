@@ -1,5 +1,7 @@
+package cards;
+import game.*;
 /**
- * The Card class represents a card in the UNO game. UNO cards have a colour and can be assigned different
+ * The cards.Card class represents a card in the UNO game. UNO cards have a colour and can be assigned different
  * types. The class is abstract and is designed to be extended to define specific types of UNO cards.
  *
  * @author Mahad Ahmed

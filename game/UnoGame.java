@@ -1,10 +1,12 @@
+package game;
+
+import cards.Card;
+
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Scanner;
 
 /**
- * The UnoGame class represents the logic of the UNO game. It manages the players, the cards, and the flow of the game.
+ * The game.UnoGame class represents the logic of the UNO game. It manages the players, the cards, and the flow of the game.
  * The class is responsible for controlling the game, and the player interactions.
  *
  * @author Mahad Ahmed
@@ -138,6 +140,7 @@ public class UnoGame {
         Card cardDrawn = deck.drawCard();
 
         if (cardDrawn != null) {
+            System.out.print("Drew a card: " + cardDrawn.toString() + "\n\n");
             player.addCard(cardDrawn);
         } else {
             // Handle the case where there are no more cards in the deck.
@@ -147,8 +150,14 @@ public class UnoGame {
 
     // make javadocs: checks the player arraylist if the player exists
     public boolean isPlayerNameExists(String playerName){
+        if (playerName.isEmpty()){
+            System.out.print("Cannot have an empty name. ");
+            return true;
+        }
+
         for (Player player : players) {
-            if (player.getName().equals(playerName)) {
+            if (player.getName().equalsIgnoreCase(playerName)) {
+                System.out.print("Player name already exists. ");
                 return true;
             }
         }
@@ -160,31 +169,6 @@ public class UnoGame {
     private static String promptText(String text){
         System.out.print(text + ": ");
         return scanner.nextLine();
-    }
-
-
-    public static void main(String[] args) {
-
-        UnoGame unoGame = new UnoGame(true);
-
-        int numPlayers = Integer.parseInt(promptText("Enter a number of players (2-4)"));
-        numPlayers = (numPlayers >= 2 && numPlayers <= 4) ? numPlayers : Integer.parseInt(promptText("Enter a number of players (2-4)")); // invalid input of players
-
-        // prompt player names and add to game
-        for (int i = 1; i<=numPlayers; i++){
-            String playerName;
-            while (true) {
-                playerName = promptText("Enter a name for Player " + i);
-                if (!unoGame.isPlayerNameExists(playerName)) {
-                    unoGame.addPlayer(new Player(playerName));
-                    break;
-                } else {
-                    System.out.println("Player name already exists. Please choose a different name.");
-                }
-            }
-        }
-        unoGame.startGame();
-            scanner.close();
     }
 
     /**
@@ -200,6 +184,7 @@ public class UnoGame {
 
         displayHand();
         handlePlayerTurn(playerTurn);
+        //MOVE TO NEXT PLAYER
     }
 
     /**
@@ -221,22 +206,18 @@ public class UnoGame {
      * @param player The current player taking their turn.
      */
     public void handlePlayerTurn(Player player){
-        int cardPlayed = Integer.parseInt(promptText("Enter card index to play or 0 to draw card"));
-
-        if(cardPlayed == 0){
+        int playerChoice = Integer.parseInt(promptText("Enter card index to play or 0 to draw card: "));
+        // player chose to draw deck
+        if(playerChoice == 0){
             drawOne(player);
+
+        } else if(player.getHand().get(playerChoice-1) == null){ // player chose a card out of bounds
+            playerChoice = Integer.parseInt(promptText("Enter a VALID card index to play or 0 to draw card: "));
+        } else {
+            Card cardPlayed =  (Card) player.getHand().get(playerChoice-1);
+            cardPlayed.playCard(this);
         }
-
-        if(player.getHand().get(cardPlayed-1) == null){
-            cardPlayed = Integer.parseInt(promptText("Enter a VALID card index to play or 0 to draw card"));
-        }
-
-        Card cardplayed =  (Card) player.getHand().get(cardPlayed-1);
-        cardplayed.playCard(this);
-
-
         displayHand();
-
     }
 
     /**
@@ -247,6 +228,30 @@ public class UnoGame {
         System.out.println(playerTurn.showHand());
 
         System.out.println("Top card: " + currentCard.toString());
+    }
+
+    public static void main(String[] args) {
+
+        UnoGame unoGame = new UnoGame(true);
+
+        int numPlayers = Integer.parseInt(promptText("Enter a number of players (2-4)"));
+        numPlayers = (numPlayers >= 2 && numPlayers <= 4) ? numPlayers : Integer.parseInt(promptText("Enter a number of players (2-4)")); // invalid input of players
+
+        // prompt player names and add to game
+        for (int i = 1; i<=numPlayers; i++){
+            String playerName;
+            while (true) {
+                playerName = promptText("Enter a name for Player " + i);
+                if (!unoGame.isPlayerNameExists(playerName)) {
+                    unoGame.addPlayer(new Player(playerName));
+                    break;
+                } else {
+                    System.out.println("Please choose a different name.");
+                }
+            }
+        }
+        unoGame.startGame();
+        scanner.close();
     }
 
 }
