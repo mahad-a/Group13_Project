@@ -31,7 +31,6 @@ public abstract class Card {
     }
 
     private Colour colour;
-    private Number number;
 
     /**
      * Default constructor for a card. Creates a card with no specific number or colour.
@@ -88,8 +87,9 @@ public abstract class Card {
         boolean wildCardMatch = currentCard.getColour() == placeCard.getColour() && (currentCard instanceof WildCard);
         boolean wildDrawTwoCardMatch = (currentCard instanceof WildDrawTwoCard) && noPlayableCardInHand;
         boolean reverseCardsMatch = currentCard instanceof ReverseCard && placeCard instanceof ReverseCard;
+        boolean drawOneCardMatch = currentCard instanceof DrawOneCard && placeCard instanceof DrawOneCard;
 
-        return deckColorMatch || wildCardMatch || reverseCardsMatch || wildDrawTwoCardMatch;
+        return deckColorMatch || wildCardMatch || reverseCardsMatch || wildDrawTwoCardMatch || drawOneCardMatch;
     }
 
     /**

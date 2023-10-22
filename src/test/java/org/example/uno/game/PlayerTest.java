@@ -29,7 +29,7 @@ public class PlayerTest {
         player.addCard(new NumberCard(NumberCard.Colour.BLUE, NumberCard.Number.THREE));
         player.addCard(new NumberCard(NumberCard.Colour.RED, NumberCard.Number.SEVEN));
 
-        String expected = "1. BLUE THREE\n2. RED SEVEN";
+        String expected = "1.  BLUE THREE\n2.  RED SEVEN\n";
         assertEquals(expected, player.showHand());
     }
 

@@ -33,33 +33,39 @@ public class Deck {
     public Deck() {
         cards = new ArrayList<>();
 
-        // add 80 number cards (10 of each colour)
+        // add 18 (1-9 twice) of each colour cards
         for (Card.Colour colour : Card.Colour.values()) {
-            cards.add(new NumberCard(colour, NumberCard.Number.ZERO)); // zero is only added once in each color
             for (NumberCard.Number number : NumberCard.Number.values()){
-                if (number != NumberCard.Number.ZERO) {
-                    cards.add(new NumberCard(colour, number)); // every other number is added twice
-                    cards.add(new NumberCard(colour, number));
-                }
+                cards.add(new NumberCard(colour, number));
+                cards.add(new NumberCard(colour, number));
             }
         }
 
-        // adds 2 Skip cards of each colour
+        // add 8 Skip cards of each colour
         for (Card.Colour colour : Card.Colour.values()) {
-            cards.add(new SkipCard(colour));
-            cards.add(new SkipCard(colour));
+            for(int i = 0; i<2;i++) {
+                cards.add(new SkipCard(colour));
+            }
         }
 
-        // adds 2 Reverse cards of each colour
+        // add 8 Reverse cards of each colour
         for (Card.Colour colour : Card.Colour.values()) {
-            cards.add(new ReverseCard(colour));
-            cards.add(new ReverseCard(colour));
+            for(int i = 0; i<2;i++) {
+                cards.add(new ReverseCard(colour));
+            }
         }
 
         // add 4 Wild cards and 4 Wild Draw Two cards
         for (int i = 0; i < 4; i++) {
             cards.add(new WildCard());
             cards.add(new WildCard());
+        }
+
+        // add 8 Draw One Cards
+        for (Card.Colour colour : Card.Colour.values()) {
+            for(int i = 0; i<2;i++) {
+                cards.add(new DrawOneCard(colour));
+            }
         }
 
         // shuffle the deck
