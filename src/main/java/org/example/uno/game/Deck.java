@@ -66,6 +66,10 @@ public class Deck {
         shuffle();
     }
 
+    public int getDeckSize(){
+        return cards.size();
+    }
+
     /**
      * Shuffles the deck by randomizing the order of the cards in the deck.
      */
