@@ -31,6 +31,7 @@ public class Player {
     public Player(String name) {
         this.name = name;
         hand = new ArrayList<>();
+        this.myScore = 0;
     }
 
     /**
@@ -104,8 +105,8 @@ public class Player {
      *
      * @return The updated player's score.
      */
-    public int updateMyScore() {
-        return (this.myScore += 1);
+    public void updateMyScore(int score) {
+        this.myScore = score;
     }
 
 }

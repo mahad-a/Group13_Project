@@ -14,11 +14,23 @@ import game.*;
  */
 public class NumberCard extends Card {
 
+    private int value;
+
     /**
      * Enumeration representing the numeric values of UNO number cards.
      */
-    public enum Number{
-        ZERO,ONE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE
+    public enum Number {
+        ZERO(0), ONE(1), TWO(2), THREE(3), FOUR(4), FIVE(5), SIX(6), SEVEN(7), EIGHT(8), NINE(9);
+
+        private final int value;
+
+        Number(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
     }
     private Number number;
 
@@ -32,6 +44,10 @@ public class NumberCard extends Card {
     public NumberCard(Colour colour, Number number ){
         super(colour);
         this.number = number;
+        this.value = number.getValue();
+    }
+    public int getValue(){
+        return this.value;
     }
 
     /**

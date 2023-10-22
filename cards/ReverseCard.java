@@ -20,6 +20,8 @@ import java.util.Collections;
  */
 public class ReverseCard extends Card {
 
+    private  final int VALUE = 20;
+
     /**
      * Constructs a reverse card with a specific colour.
      *
@@ -50,6 +52,10 @@ public class ReverseCard extends Card {
             System.out.println("Cannot place this card.");
         }
 
+    }
+
+    public int getValue(){
+        return this.VALUE;
     }
 
     /**

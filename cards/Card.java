@@ -14,6 +14,7 @@ import game.*;
  */
 public abstract class Card {
 
+
     /**
      * Enumeration representing the colours of the UNO cards.
      */
@@ -68,6 +69,8 @@ public abstract class Card {
         game.getCurrentPlayer().discardCard(card);
         game.nextPlayer();
     }
+
+    public abstract int getValue();
 
     /**
      * Get the colour of a card, represented as a string.

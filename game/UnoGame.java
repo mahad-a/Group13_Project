@@ -28,6 +28,7 @@ public class UnoGame {
     private Card currentCard;
     private Player playerTurn;
 
+    private boolean roundOver;
 
     /**
      * Constructs an UNO game.
@@ -36,7 +37,6 @@ public class UnoGame {
      */
     public UnoGame(boolean lightGame) {
         this.players = new ArrayList<>();
-        this.deck = new Deck(); // Initialize the deck
         this.lightGame = lightGame;
 
         //** add a way to create 4 players and give them names using input **\\
@@ -186,6 +186,8 @@ public class UnoGame {
      * Starts the UNO game by dealing the cards, initializing the state of the game, and beginning the first turn.
      */
     public void startGame(){
+        this.deck = new Deck(); // Initialize the deck
+        this.roundOver = false;
         dealCards();
         currentCard = deck.drawCard();
         // ***double check but i think the first card has to be a number card
@@ -199,20 +201,51 @@ public class UnoGame {
         do{
             handlePlayerTurn(playerTurn);
 
-        }while (!gameOver());
+        }while (!roundOver);
     }
 
     /**
      * Checks if the UNO game is over depending on how many cards each player has in their hand.
      */
-    public boolean gameOver(){
+    public void gameOver(){
+        System.out.println("\n============================================");
+        System.out.println("End of game: ");
         for(Player player: players){
-            if (player.getHand().isEmpty()){
-                player.updateMyScore(); // adds point to the winner
-                return true;
+            System.out.println(player.getName() +"s Score: " + player.getMyScore() + "\n");
+        }
+        System.out.println("Thank you for playing!! ");
+    }
+
+    public void roundOver(Player player){
+
+        if (player.getHand().isEmpty()){
+            this.roundOver = true;
+            player.updateMyScore(calculateScore(player)); // adds point to the winner
+
+            System.out.println("\n============================================");
+            System.out.println(player.getName() + " won this round!!");
+
+            String playerChoice = promptText("Do you wish to play again? (yes or no) ");
+            System.out.println("============================================\n");
+
+            if(playerChoice.toUpperCase().equals("YES")){
+                startGame();
+            } else if (playerChoice.toUpperCase().equals("NO")) {
+                gameOver();
             }
         }
-        return false;
+
+    }
+
+    public int calculateScore(Player player){
+        int score = player.getMyScore();
+        for(Player p: players){
+            for(Card card: p.getHand()){
+                score += card.getValue();
+            }
+        }
+
+        return score;
     }
 
     /**
@@ -232,6 +265,7 @@ public class UnoGame {
         } else {
             Card cardPlayed =  (Card) player.getHand().get(playerChoice-1);
             cardPlayed.playCard(this);
+            roundOver(player);
         }
 
         System.out.print("\n===================================================\n");

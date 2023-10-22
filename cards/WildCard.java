@@ -20,6 +20,8 @@ import java.util.Scanner;
  */
 public class WildCard extends Card {
 
+    private final int VALUE = 40;
+
     /**
      * Constructs a wild card.
      *
@@ -69,6 +71,9 @@ public class WildCard extends Card {
         } while (true);
         super.placeCard(game, this);
 
+    }
+    public int getValue(){
+        return this.VALUE;
     }
 
     /**

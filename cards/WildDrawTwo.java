@@ -6,6 +6,7 @@ import game.*;
 import java.util.Scanner;
 
 public class WildDrawTwo extends Card {
+    private final int VALUE = 50;
 
 
     public WildDrawTwo(){
@@ -49,6 +50,9 @@ public class WildDrawTwo extends Card {
         game.drawOne(game.getCurrentPlayer());
         game.drawOne(game.getCurrentPlayer());
 
+    }
+    public int getValue(){
+        return this.VALUE;
     }
 
     @Override

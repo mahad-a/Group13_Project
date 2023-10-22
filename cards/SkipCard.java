@@ -16,6 +16,7 @@ import game.*;
  * @version 1.1
  */
 public class SkipCard extends Card {
+    private final int VALUE = 20;
 
     /**
      * Constructs a skip card with a specific colour.
@@ -43,6 +44,9 @@ public class SkipCard extends Card {
         } else {
             System.out.println("Cannot place this card.");
         }
+    }
+    public int getValue(){
+        return this.VALUE;
     }
 
     /**
