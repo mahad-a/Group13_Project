@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>GROUP13PROJECT</artifactId>
+    <artifactId>Group13_Project</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -15,8 +15,6 @@
     </properties>
 
     <dependencies>
-        <!-- Other dependencies might be listed here -->
-
         <!-- JUnit 5 (JUnit Jupiter) Dependency -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>

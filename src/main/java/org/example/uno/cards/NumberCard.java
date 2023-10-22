@@ -34,7 +34,7 @@ public class NumberCard extends Card {
             return value;
         }
     }
-    private Number number;
+    private final Number NUMBER;
 
     /**
      * Constructs a cards.NumberCard with a specific colour and number.
@@ -45,7 +45,7 @@ public class NumberCard extends Card {
      */
     public NumberCard(Colour colour, Number number ){
         super(colour);
-        this.number = number;
+        this.NUMBER = number;
         this.value = number.getValue();
     }
     public int getValue(){
@@ -58,7 +58,7 @@ public class NumberCard extends Card {
      * @return The numeric value of the number card.
      */
     public Number getNumber(){
-        return this.number;
+        return this.NUMBER;
     }
 
     /**
@@ -68,14 +68,13 @@ public class NumberCard extends Card {
      * @param game The UNO game in which the card is being played.
      */
     @Override
-    public void playCard(UnoGame game) {
+    public boolean playCard(UnoGame game) {
         Card currCard = game.getCurrentCard();
-        if(super.isCardPlaceable(currCard, this) || (currCard instanceof NumberCard && ((NumberCard) currCard).getNumber() == this.number)){
+        if(super.isCardPlaceable(game, this) || (currCard instanceof NumberCard && ((NumberCard) currCard).getNumber() == this.NUMBER)){
             super.placeCard(game, this);
-
-        } else {
-            System.out.print("Cannot place this card.");
+            return true;
         }
+        return false;
     }
 
     /**
@@ -85,6 +84,6 @@ public class NumberCard extends Card {
      */
     @Override
     public String toString() {
-        return super.toString() + this.number;
+        return super.toString() + this.NUMBER;
     }
 }

@@ -32,18 +32,17 @@ public class SkipCard extends Card {
      * @param game The UNO game in which the card is being played.
      */
     @Override
-    public void playCard(UnoGame game){
+    public boolean playCard(UnoGame game){
         Card currCard = game.getCurrentCard();
-        if(super.isCardPlaceable(currCard, this)){
-            game.setCurrentCard(this);
-            game.getCurrentPlayer().discardCard(this);
-            game.nextPlayer();
+        if(super.isCardPlaceable(game, this)){
+            super.placeCard(game, this);
             game.nextPlayer(); // skip a player
-
-        } else {
-            System.out.println("Cannot place this card.");
+            return true;
         }
+        return false;
     }
+
+
     public int getValue(){
         return this.VALUE;
     }

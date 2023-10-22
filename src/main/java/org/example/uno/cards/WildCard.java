@@ -35,42 +35,29 @@ public class WildCard extends Card {
      * @param game The UNO game in which the card is being played.
      */
     @Override
-    public void playCard(UnoGame game){
-
-        Scanner scanner = new Scanner(System.in);
+    public boolean playCard(UnoGame game){
+        Colour chosenColour;
         String input;
 
         do {
             input = UnoGame.promptText("Enter a color of your choice").toUpperCase();
 
-            switch (input) {
-                case "BLUE":
-                    this.setColour(Colour.BLUE);
-                    break;
-                case "RED":
-                    this.setColour(Colour.RED);
-                    break;
-                case "YELLOW":
-                    this.setColour(Colour.YELLOW);
-                    break;
-                case "GREEN":
-                    this.setColour(Colour.GREEN);
-                    break;
-                default:
-                    System.out.println("Please enter a card with either matching colors or number:");
-                    // Continue the loop to prompt the user again.
-                    continue;
+            try {
+                chosenColour = Colour.valueOf(input);
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid color. Please try again.");
             }
 
-            System.out.println(game.getCurrentPlayer().getName() + " has changed color to: " + input + "!");
-            this.setColour(Colour.valueOf(input));
-            break; // Exit the loop if a valid color is chosen.
         } while (true);
-        super.placeCard(game, this);
 
+        System.out.println(chosenColour + " has been chosen.");
+        this.setColour(chosenColour);
+        super.placeCard(game, this);
+        return true;
     }
     public int getValue(){
-        return this.VALUE;
+        return VALUE;
     }
 
     /**

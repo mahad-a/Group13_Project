@@ -22,7 +22,12 @@ public abstract class Card {
      * Enumeration representing the colours of the UNO cards.
      */
     public enum Colour {
-        BLUE, RED, GREEN, YELLOW
+        BLUE, RED, GREEN, YELLOW;
+
+        @Override
+        public String toString() {
+            return name();
+        }
     }
 
     private Colour colour;
@@ -61,11 +66,22 @@ public abstract class Card {
     public Colour getColour() {
         return colour;
     }
-    public boolean isCardPlaceable(Card currentCard, Card placeCard){
+    public boolean isCardPlaceable(UnoGame game, Card placeCard){
+        boolean noPlayableCardInHand = true;
+        Card currentCard = game.getCurrentCard();
+        // within rulebook, states wildDrawTwoCard can only be played if the player has no cards of the current color
+        for (Card card : game.getCurrentPlayer().getHand()){
+            if (card instanceof NumberCard && card.getColour().equals(currentCard.getColour())){
+                noPlayableCardInHand = false;
+                break;
+            }
+        }
         boolean deckColorMatch = currentCard.getColour() == placeCard.getColour();
-        boolean wildCardsMatch = currentCard.getColour() == placeCard.getColour() && (currentCard instanceof WildCard || currentCard instanceof WildDrawTwoCard);
+        boolean wildCardMatch = currentCard.getColour() == placeCard.getColour() && (currentCard instanceof WildCard);
+        boolean wildDrawTwoCardMatch = (currentCard instanceof WildDrawTwoCard) && noPlayableCardInHand;
         boolean reverseCardsMatch = currentCard instanceof ReverseCard && placeCard instanceof ReverseCard;
-        return deckColorMatch || wildCardsMatch || reverseCardsMatch;
+
+        return deckColorMatch || wildCardMatch || reverseCardsMatch || wildDrawTwoCardMatch;
     }
 
     public void placeCard(UnoGame game, Card card){
@@ -90,5 +106,5 @@ public abstract class Card {
      *
      * @param game The UNO game in which the card is being played.
      */
-    public abstract void playCard(UnoGame game);
+    public abstract boolean playCard(UnoGame game);
 }

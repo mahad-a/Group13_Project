@@ -36,21 +36,20 @@ public class ReverseCard extends Card {
      * @param game The UNO game in which the card is being played.
      */
     @Override
-    public void playCard(UnoGame game){
+    public boolean playCard(UnoGame game){
         // reverse card
 
         // if this doesn't change the original player list make a setter for player list
         //and replace the list with the reversed list
         Card currCard = game.getCurrentCard();
-        if(super.isCardPlaceable(currCard, this)) {
+        if(super.isCardPlaceable(game, this)) {
             ArrayList<Player> players = game.getPlayers();
             Collections.reverse(players);
             game.setPlayers(players);
             super.placeCard(game, this);
-        } else {
-            System.out.println("Cannot place this card.");
+            return true;
         }
-
+        return false;
     }
 
     public int getValue(){

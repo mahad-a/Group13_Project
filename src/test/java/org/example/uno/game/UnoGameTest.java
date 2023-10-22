@@ -59,7 +59,7 @@ public class UnoGameTest {
 
         unoGame.dealCards();
 
-        unoGame.drawOne(alpha);
+        unoGame.takeFromDeck(alpha);
         assertTrue(alpha.getHand().size() > beta.getHand().size());
         // beta should have 1 card less than alpha
     }

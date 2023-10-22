@@ -17,10 +17,10 @@ import java.util.ArrayList;
  * @version 1.4
  */
 public class Player {
-    private String name;
+    private final String NAME;
     private ArrayList<Card> hand;
     private ArrayList<Card> discardPile;
-    private int myScore;
+    private int score;
 
     /**
      * Constructs a player with the player provided name. The player's hand is initially empty.
@@ -28,9 +28,9 @@ public class Player {
      * @param name The name of the player.
      */
     public Player(String name) {
-        this.name = name;
+        this.NAME = name;
         hand = new ArrayList<>();
-        this.myScore = 0;
+        this.score = 0;
     }
 
     /**
@@ -39,7 +39,7 @@ public class Player {
      * @return The name of the player.
      */
     public String getName() {
-        return name;
+        return this.NAME;
     }
 
     /**
@@ -95,8 +95,8 @@ public class Player {
      *
      * @return the player's score.
      */
-    public int getMyScore() {
-        return this.myScore;
+    public int getScore() {
+        return this.score;
     }
 
     /**
@@ -104,8 +104,15 @@ public class Player {
      *
      * @return The updated player's score.
      */
-    public void updateMyScore(int score) {
-        this.myScore = score;
+    public void updateScore(int score) {
+        this.score = score;
+    }
+
+    /**
+     * Discards the player's current hand for when a round is over.
+     */
+    public void discardHand(){
+        this.hand = new ArrayList<Card>();
     }
 
 }
