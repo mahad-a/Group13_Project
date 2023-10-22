@@ -33,14 +33,15 @@ public class SkipCard extends Card {
      */
     @Override
     public void playCard(UnoGame game){
-
-        if(this.getColour() == game.getCurrentCard().getColour()){
-
+        Card currCard = game.getCurrentCard();
+        if(super.isCardPlaceable(currCard, this)){
             game.setCurrentCard(this);
             game.getCurrentPlayer().discardCard(this);
-            int currPlayerIndex = game.getPlayers().indexOf(game.getCurrentPlayer());
-            game.nextPlayer(2);
+            game.nextPlayer();
+            game.nextPlayer(); // skip a player
 
+        } else {
+            System.out.println("Cannot place this card.");
         }
     }
 

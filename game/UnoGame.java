@@ -1,6 +1,8 @@
 package game;
 
 import cards.Card;
+import cards.NumberCard;
+import cards.ReverseCard;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -58,6 +60,10 @@ public class UnoGame {
         return players;
     }
 
+    public void setPlayers(ArrayList<Player> players) {
+        this.players = players;
+    }
+
     /**
      * Retrieves the current player whose turn it is to play.
      *
@@ -72,9 +78,13 @@ public class UnoGame {
         this.playerTurn = player;
     }
 
-    public void nextPlayer(int numSkip){
-        int currPayerIndex = this.players.indexOf(getCurrentPlayer());
-        setCurrentPlayer(players.get(currPayerIndex + numSkip));
+    public void nextPlayer(){
+        int currPlayerIndex = this.players.indexOf(getCurrentPlayer());
+        int nextPlayer = (currPlayerIndex + 1) % players.size();
+        // handle reverse case when only 2 players
+        if (!(currentCard instanceof ReverseCard && players.size() == 2)){
+            setCurrentPlayer(players.get(nextPlayer));
+        }
     }
 
     /**
@@ -144,7 +154,9 @@ public class UnoGame {
 
         System.out.print("Drew a card: " + cardDrawn.toString() + "\n\n");
         player.addCard(cardDrawn);
-
+        // current handling: **DOUVLE CHECK IF ITS SUPPOED TO
+        // if you pick up a card it will count as a turn
+        nextPlayer();
     }
 
     // make javadocs: checks the player arraylist if the player exists
@@ -176,12 +188,17 @@ public class UnoGame {
     public void startGame(){
         dealCards();
         currentCard = deck.drawCard();
+        // ***double check but i think the first card has to be a number card
+        while (!(currentCard instanceof NumberCard)){
+            currentCard = deck.drawCard();
+        }
         playerTurn = players.get(0);
-        System.out.println("Starting card is: " + currentCard.toString());
-
+        setCurrentPlayer(players.get(0));
+        System.out.println("\nStarting card is: " + currentCard.toString());
 
         do{
             handlePlayerTurn(playerTurn);
+
         }while (!gameOver());
     }
 

@@ -52,23 +52,15 @@ public class NumberCard extends Card {
     @Override
     public void playCard(UnoGame game) {
         Card currCard = game.getCurrentCard();
-        if(currCard.getColour() == this.getColour()){
-
-            game.setCurrentCard(this);
-            game.getCurrentPlayer().discardCard(this);
-            game.nextPlayer(1);
-            return;
-        }
-        else if(currCard instanceof NumberCard){
+        if(super.isCardPlaceable(currCard, this)){
+            super.placeCard(game, this);
+        } else if(currCard instanceof NumberCard){
             if (((NumberCard) currCard).getNumber() == this.number) {
-                game.setCurrentCard(this);
-                game.getCurrentPlayer().discardCard(this);
-                game.nextPlayer(1);
-                return;
+                super.placeCard(game, this);
             }
+        } else {
+            System.out.println("Cannot place this card.");
         }
-        System.out.println("Cannot place this card.");
-
     }
 
     /**

@@ -17,7 +17,7 @@ public class WildDrawTwo extends Card {
         String input;
 
         do {
-            input = UnoGame.promptText("Enter a color of your choice: ").toUpperCase();
+            input = UnoGame.promptText("Enter a color of your choice").toUpperCase();
 
             switch (input) {
                 case "BLUE":
@@ -44,13 +44,10 @@ public class WildDrawTwo extends Card {
 
         } while (true);
 
-        game.setCurrentCard(this);
-        game.getCurrentPlayer().discardCard(this);
-
-        game.nextPlayer(1);
+        // put down card and make next player pick up two cards
+        super.placeCard(game, this);
         game.drawOne(game.getCurrentPlayer());
         game.drawOne(game.getCurrentPlayer());
-        game.nextPlayer(1);
 
     }
 

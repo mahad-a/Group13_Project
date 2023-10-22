@@ -38,12 +38,16 @@ public class ReverseCard extends Card {
     public void playCard(UnoGame game){
         // reverse card
 
-        // if this doesnt change the original player list make a setter for player list
+        // if this doesn't change the original player list make a setter for player list
         //and replace the list with the reversed list
-        Collections.reverse(game.getPlayers());
-        int currPlayerIndex = game.getPlayers().indexOf(game.getCurrentPlayer());
-        if(game.getPlayers().size() > 2){
-            game.setCurrentPlayer(game.getPlayers().get(currPlayerIndex + 1));
+        Card currCard = game.getCurrentCard();
+        if(super.isCardPlaceable(currCard, this)) {
+            ArrayList<Player> players = game.getPlayers();
+            Collections.reverse(players);
+            game.setPlayers(players);
+            super.placeCard(game, this);
+        } else {
+            System.out.println("Cannot place this card.");
         }
 
     }
@@ -60,3 +64,6 @@ public class ReverseCard extends Card {
 
 
 }
+
+// notes:
+// reverse card is not removing itself from deck when played, and also not being placed on the top of the deck

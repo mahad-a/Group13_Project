@@ -57,6 +57,17 @@ public abstract class Card {
     public Colour getColour() {
         return colour;
     }
+    public boolean isCardPlaceable(Card currentCard, Card placeCard){
+        boolean deckColorMatch = currentCard.getColour() == placeCard.getColour();
+        boolean wildCardsMatch = currentCard.getColour() == placeCard.getColour() && (currentCard instanceof WildCard || currentCard instanceof WildDrawTwo);
+        return deckColorMatch || wildCardsMatch;
+    }
+
+    public void placeCard(UnoGame game, Card card){
+        game.setCurrentCard(card);
+        game.nextPlayer();
+        game.getCurrentPlayer().discardCard(card);
+    }
 
     /**
      * Get the colour of a card, represented as a string.

@@ -42,7 +42,7 @@ public class WildCard extends Card {
         String input;
 
         do {
-            input = UnoGame.promptText("Enter a color of your choice: ").toUpperCase();
+            input = UnoGame.promptText("Enter a color of your choice").toUpperCase();
 
             switch (input) {
                 case "BLUE":
@@ -67,9 +67,7 @@ public class WildCard extends Card {
             this.setColour(Colour.valueOf(input));
             break; // Exit the loop if a valid color is chosen.
         } while (true);
-        game.setCurrentCard(this);
-        game.getCurrentPlayer().discardCard(this);
-        game.nextPlayer(1);
+        super.placeCard(game, this);
 
     }
 
