@@ -66,7 +66,7 @@ public class UnoGame {
      * @return An ArrayList of players in the game.
      */
     public ArrayList<Player> getPlayers() {
-        return players;
+        return this.players;
     }
 
     /**
@@ -125,15 +125,6 @@ public class UnoGame {
      */
     public void setCurrentCard(Card card){
         this.currentCard = card;
-    }
-
-    /**
-     * Gets the list of current players playing the UNO game.
-     *
-     * @return The ArrayList of players currently playing the game.
-     */
-    public ArrayList<Player> getPlayerList() {
-        return this.players;
     }
 
     /**
