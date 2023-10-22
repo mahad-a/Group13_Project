@@ -59,14 +59,14 @@ public class Deck {
         // add 4 Wild cards and 4 Wild Draw Two cards
         for (int i = 0; i < 4; i++) {
             cards.add(new WildCard());
-            cards.add(new WildCard());
+            cards.add(new WildDrawTwoCard());
         }
 
         // shuffle the deck
         shuffle();
     }
 
-    public int getDeckSize(){
+    public int getSize(){
         return cards.size();
     }
 

@@ -32,7 +32,7 @@ public class WildDrawTwoCard extends Card {
         super.placeCard(game, this);
         Card c1 = game.takeFromDeck(game.getCurrentPlayer());
         Card c2 = game.takeFromDeck(game.getCurrentPlayer());
-        System.out.println(game.getCurrentPlayer() + " has to draw two due to Wild Draw Two: " + c1 + ", " + c2);
+        System.out.println(game.getCurrentPlayer().getName() + " has to draw two due to Wild Draw Two: " + c1 + ", " + c2);
         return true;
     }
     public int getValue(){
