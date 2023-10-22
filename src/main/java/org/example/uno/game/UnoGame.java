@@ -43,6 +43,14 @@ public class UnoGame {
         //** add a way to create 4 players and give them names using input **\\
     }
 
+    public void setDeck(Deck deck){
+        this.deck = deck;
+    }
+
+    public Deck getDeck(){
+        return this.deck;
+    }
+
     /**
      * Adds a player to the game.
      *
@@ -153,6 +161,9 @@ public class UnoGame {
      */
     public boolean isRoundOver(){
         return this.roundOver;
+    }
+    public void setRoundOver(boolean bool){
+        this.roundOver = bool;
     }
 
 

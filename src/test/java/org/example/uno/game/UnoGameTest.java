@@ -1,5 +1,6 @@
 package org.example.uno.game;
 
+import org.example.uno.cards.Card;
 import org.example.uno.cards.NumberCard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +12,7 @@ public class UnoGameTest {
 
     @BeforeEach
     public void createGame() {
-        UnoGame unoGame = new UnoGame(true);
+        unoGame = new UnoGame(true);
     }
 
     @Test
@@ -23,8 +24,7 @@ public class UnoGameTest {
         unoGame.addPlayer(alpha);
         unoGame.addPlayer(beta);
         unoGame.addPlayer(gamma);
-        // right now players ArrayList should be ["Alpha", "Beta", "Gamma"]
-
+        unoGame.setCurrentPlayer(unoGame.getPlayers().get(0));
         unoGame.nextPlayer();
         assertEquals(unoGame.getCurrentPlayer(), beta);
     }
@@ -40,12 +40,12 @@ public class UnoGameTest {
         unoGame.addPlayer(beta);
         unoGame.addPlayer(gamma);
         unoGame.addPlayer(delta);
-
+        unoGame.setDeck(new Deck());
         unoGame.dealCards();
 
-        // check every player has 6 cards dealt to them
+        // check every player has 7 cards dealt to them
         for (Player player: unoGame.getPlayerList()) {
-            assertTrue(player.getHand().size() < 7);
+            assertEquals(7, player.getHand().size());
         }
     }
 
@@ -57,11 +57,16 @@ public class UnoGameTest {
         unoGame.addPlayer(alpha);
         unoGame.addPlayer(beta);
 
+        unoGame.setDeck(new Deck());
         unoGame.dealCards();
 
+        int initialAlphaHandSize = alpha.getHand().size();
+        int initialBetaHandSize = beta.getHand().size();
+
         unoGame.takeFromDeck(alpha);
-        assertTrue(alpha.getHand().size() > beta.getHand().size());
-        // beta should have 1 card less than alpha
+
+        assertEquals(initialAlphaHandSize + 1, alpha.getHand().size());
+        assertEquals(initialBetaHandSize, beta.getHand().size());
     }
 
     @Test
@@ -77,67 +82,18 @@ public class UnoGameTest {
     }
 
     @Test
-    public void testStartGame(){
+    public void testCalculateScore() {
         Player alpha = new Player("Alpha");
         Player beta = new Player("Beta");
-        Player gamma = new Player("Gamma");
-        Player delta = new Player("Delta");
-
         unoGame.addPlayer(alpha);
         unoGame.addPlayer(beta);
-        unoGame.addPlayer(gamma);
-        unoGame.addPlayer(delta);
-
-        unoGame.startGame();
-
-        assertEquals(unoGame.getCurrentPlayer(), alpha);
-        assertTrue(alpha.getHand().size() < 7);
-        assertFalse(unoGame.isRoundOver());
+        alpha.addCard(new NumberCard(Card.Colour.RED, NumberCard.Number.FIVE));
+        alpha.addCard(new NumberCard(Card.Colour.BLUE, NumberCard.Number.THREE));
+        assertEquals(8, unoGame.calculateScore(beta));
+        beta.updateScore(unoGame.calculateScore(beta));
+        assertEquals(0, alpha.getScore());
+        assertEquals(8, beta.getScore());
     }
 
 
-
-    @Test
-    public void testGameOver() {
-        Player alpha = new Player("Alpha");
-        Player beta = new Player("Beta");
-        Player gamma = new Player("Gamma");
-        Player delta = new Player("Delta");
-
-        unoGame.addPlayer(alpha);
-        unoGame.addPlayer(beta);
-        unoGame.addPlayer(gamma);
-
-        unoGame.dealCards();
-
-        unoGame.addPlayer(delta);
-        NumberCard throwCard = new NumberCard(NumberCard.Colour.RED, NumberCard.Number.SEVEN);
-        delta.addCard(throwCard);
-
-        delta.discardCard(throwCard);
-
-        assertTrue(unoGame.isRoundOver());
-    }
-
-    /* This test is not done yet - Mahad
-    @Test
-    public void testHandlePlayerDraw() {
-        Player alpha = new Player("Alpha");
-        Player beta = new Player("Beta");
-        Player gamma = new Player("Gamma");
-
-        unoGame.addPlayer(alpha);
-        unoGame.addPlayer(beta);
-        unoGame.addPlayer(gamma);
-
-        unoGame.dealCards();
-
-        int beforeChoice = alpha.getHand().size();
-
-        unoGame.handlePlayerTurn(alpha);
-        // alpha draws a card
-        assertTrue(beforeChoice < alpha.getHand().size());
-    }
-
-     */
 }

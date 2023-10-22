@@ -1,6 +1,7 @@
 package org.example.uno.game;
 import org.example.uno.cards.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * The player class represents a player in the UNO game. Each player has a name, a hand of uno cards,
@@ -109,6 +110,14 @@ public class Player {
      */
     public void discardHand(){
         this.hand = new ArrayList<Card>();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Player player = (Player) obj;
+        return Objects.equals(NAME, player.NAME);
     }
 
 }
