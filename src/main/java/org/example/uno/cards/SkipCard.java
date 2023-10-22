@@ -3,7 +3,7 @@ package org.example.uno.cards;
 import org.example.uno.game.*;
 
 /**
- * The cards.SkipCard class is a representation of a specific type of UNO card, The Skip card.
+ * The SkipCard class is a representation of a specific type of UNO card, The Skip card.
  * Skip cards have a colour and can be plated to skip the next player's turn.
  *
  * @author Mahad Ahmed

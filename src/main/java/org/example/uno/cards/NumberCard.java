@@ -2,9 +2,8 @@ package org.example.uno.cards;
 
 import org.example.uno.game.*;
 
-
 /**
- * The cards.NumberCard class represents the specific number of UNO card. NumberCards consist of a number (0-9) and a Colour.
+ * The NumberCard class represents the specific number of UNO card. NumberCards consist of a number (0-9) and a Colour.
  *
  * @author Mahad Ahmed
  * @author Firas El-Ezzi
@@ -37,7 +36,7 @@ public class NumberCard extends Card {
     private final Number NUMBER;
 
     /**
-     * Constructs a cards.NumberCard with a specific colour and number.
+     * Constructs a NumberCard with a specific colour and number.
      *
      * @param colour The colour of the cards.NumberCard
      * @param number The numeric value of the cards.NumberCard

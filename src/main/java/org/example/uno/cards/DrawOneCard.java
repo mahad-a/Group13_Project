@@ -2,6 +2,18 @@ package org.example.uno.cards;
 
 import org.example.uno.game.UnoGame;
 
+/**
+ * The DrawOneCard class represents a special UNO card type, the draw one card.
+ * When played, the next player must draw one card and their turn is skipped.
+ *
+ * @author Mahad Ahmed
+ * @author Firas El-Ezzi
+ * @author Hasib Khodayar
+ * @author Hajar Assim
+ * @author Yusuf Ibrahim
+ *
+ * @version 1.1
+ */
 public class DrawOneCard extends Card{
     private final int value;
 
@@ -20,7 +32,12 @@ public class DrawOneCard extends Card{
     }
 
 
-
+    /**
+     * Plays the Draw one card only if it can be placed on the current card on the table. (Based off of colour).
+     *
+     * @param game The UNO game in which the card is being played.
+     * @return 'true' if the card was played, 'false' otherwise.
+     */
     @Override
     public boolean playCard(UnoGame game) {
         Card currCard = game.getCurrentCard();

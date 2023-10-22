@@ -72,6 +72,11 @@ public class Deck {
         shuffle();
     }
 
+    /**
+     * Gets the amount of cards remaining in the deck.
+     *
+     * @return The size of the deck.
+     */
     public int getDeckSize(){
         return cards.size();
     }

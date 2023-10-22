@@ -32,7 +32,8 @@ public class UnoGame {
 
 
     /**
-     * Constructs an UNO game.
+     * Constructs an UNO game, initializing the list of players that are going to play, creates the players,
+     * and sets their names based on user input, and setting the game to light mode or normal mode.
      *
      * @param lightGame  an indicator that indicates if the game is in "light" mode.
      */
@@ -43,10 +44,20 @@ public class UnoGame {
         //** add a way to create 4 players and give them names using input **\\
     }
 
+    /**
+     * Sets the deck to be used for the game.
+     *
+     * @param deck The deck to be used.
+     */
     public void setDeck(Deck deck){
         this.deck = deck;
     }
 
+    /**
+     * Retrieves the deck used in the game.
+     *
+     * @return The deck being used.
+     */
     public Deck getDeck(){
         return this.deck;
     }
@@ -213,7 +224,6 @@ public class UnoGame {
         return false;
     }
 
-
     /**
      * Displays a prompt in the console and waits for a player to enter text.
      *
@@ -300,7 +310,6 @@ public class UnoGame {
         System.out.println("Top card: " + currentCard.toString());
     }
 
-
     /**
      * Starts the UNO game by dealing the cards, initializing the state of the game, and beginning the first turn.
      */
@@ -322,7 +331,6 @@ public class UnoGame {
                     System.out.println("Invalid entry. Please try again.");
                 }
             } while (true);
-
 
             // initialize player names
             for (int i = 1; i <= numPlayers; i++) {
@@ -399,8 +407,7 @@ public class UnoGame {
         }
         System.out.println("Thank you for playing!");
     }
-
-
+    
     public static void main(String[] args) {
         UnoGame unoGame = new UnoGame(true);
         unoGame.startGame();

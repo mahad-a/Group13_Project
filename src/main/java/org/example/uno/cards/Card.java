@@ -57,7 +57,7 @@ public abstract class Card {
         this.colour = colour;
     }
 
-    /**I
+    /**
      * Get the colour of the card.
      *
      * @return the colour of the card.

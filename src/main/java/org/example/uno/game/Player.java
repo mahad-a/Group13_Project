@@ -112,6 +112,13 @@ public class Player {
         this.hand = new ArrayList<Card>();
     }
 
+    /**
+     * Compares this player object with another object to check for equality.
+     * Two players are considered equal if they have the same name.
+     *
+     * @param obj The object we are checking to see if players match.
+     * @return 'true' if players match, 'false' otherwise.
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;

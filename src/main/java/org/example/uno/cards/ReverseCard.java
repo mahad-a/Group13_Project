@@ -6,7 +6,7 @@ import org.example.uno.game.*;
 
 
 /**
- * The cards.ReverseCard class represents a specific type of UNO card, the reverse card.
+ * The ReverseCard class represents a specific type of UNO card, the reverse card.
  * Reverse cards have a colour and can be placed in an UNO game to reverse the order of playing.
  *
  * @author Mahad Ahmed
