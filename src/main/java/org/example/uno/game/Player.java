@@ -1,5 +1,4 @@
 package org.example.uno.game;
-
 import org.example.uno.cards.*;
 import java.util.ArrayList;
 
@@ -78,7 +77,6 @@ public class Player {
     /**
      * Discards a card from the player's hand into the discard pile.
      *
-     *
      * @param card The card to be discarded
      */
     public void discardCard(Card card) {
@@ -101,8 +99,6 @@ public class Player {
 
     /**
      * Updates the player's score by adding 1 to the current score.
-     *
-     * @return The updated player's score.
      */
     public void updateScore(int score) {
         this.score = score;

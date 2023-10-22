@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * The game.UnoGame class represents the logic of the UNO game. It manages the players, the cards, and the flow of the game.
+ * The UnoGame class represents the logic of the UNO game. It manages the players, the cards, and the flow of the game.
  * The class is responsible for controlling the game, and the player interactions.
  *
  * @author Mahad Ahmed
@@ -61,6 +61,11 @@ public class UnoGame {
         return players;
     }
 
+    /**
+     * Sets an ArrayList of players who are currently playing the game.
+     *
+     * @param players The list of players currently playing.
+     */
     public void setPlayers(ArrayList<Player> players) {
         this.players = players;
     }
@@ -74,11 +79,18 @@ public class UnoGame {
         return currentPlayer;
     }
 
-
+    /**
+     * Sets the current player who is meant to play their turn.
+     *
+     * @param player The player to set as the current player.
+     */
     public void setCurrentPlayer(Player player) {
         this.currentPlayer = player;
     }
 
+    /**
+     * Advances the turn to the next player, taking into consideration the effects of a special card.
+     */
     public void nextPlayer(){
         int currPlayerIndex = this.players.indexOf(getCurrentPlayer());
         int nextPlayer = (currPlayerIndex + 1) % players.size();
@@ -107,10 +119,14 @@ public class UnoGame {
         this.currentCard = card;
     }
 
+    /**
+     * Gets the list of current players playing the UNO game.
+     *
+     * @return The ArrayList of players currently playing the game.
+     */
     public ArrayList<Player> getPlayerList() {
         return this.players;
     }
-
 
     /**
      * Checks if the game is in light mode.
@@ -130,13 +146,18 @@ public class UnoGame {
         this.lightGame = lightGame;
     }
 
+    /**
+     * Checks if the current round is over.
+     *
+     * @return 'true' if the round is over, 'false' otherwise.
+     */
     public boolean isRoundOver(){
         return this.roundOver;
     }
 
 
     /**
-     *
+     * Deals a set of cards to each player of the game.
      */
     public void dealCards(){
         for(Player player: players){
@@ -154,6 +175,12 @@ public class UnoGame {
         }
     }
 
+    /**
+     * Draws a card from the deck and gives it to the player.
+     *
+     * @param player The player taking a card from the deck.
+     * @return The card that was taken from the deck and placed in the player's hand.
+     */
     public Card takeFromDeck(Player player){
         Card cardDrawn = deck.drawCard();
         if (!(currentCard instanceof WildDrawTwoCard)) {
@@ -163,7 +190,12 @@ public class UnoGame {
         return cardDrawn;
     }
 
-    // make javadocs: checks the player arraylist if the player exists
+    /**
+     * Checks if the name of the player is already taken from the list of players.
+     *
+     * @param playerName The name to be checked.
+     * @return 'true' if the name is available, 'false' otherwise.
+     */
     public boolean isPlayerNameExists(String playerName){
         if (playerName.isEmpty()){
             System.out.print("Cannot have an empty name. ");
@@ -180,13 +212,23 @@ public class UnoGame {
     }
 
 
-
+    /**
+     * Displays a prompt in the console and waits for a player to enter text.
+     *
+     * @param text The prompt text to be displayed
+     * @return The text entered by the user.
+     */
     public static String promptText(String text){
         System.out.print(text + ": ");
         return scanner.nextLine();
     }
 
-
+    /**
+     * Calculates the player's score based off of the score of each card in the player's hand.
+     *
+     * @param player The player whose score is to be calculated.
+     * @return The player's score.
+     */
     public int calculateScore(Player player){
         int score = player.getScore();
         for(Player p: players){
@@ -198,6 +240,12 @@ public class UnoGame {
         return score;
     }
 
+    /**
+     * Prints a header with a centered title and a separator used to separate the header from other text.
+     *
+     * @param title The title of the header.
+     * @param separator The separator of the header.
+     */
     private void printHeader(String title, String separator){
         int consoleWidth = 50;
         int spaces = (consoleWidth - title.length()) / 2;
@@ -306,6 +354,11 @@ public class UnoGame {
         }while (!this.roundOver);
     }
 
+    /**
+     * Checks if a player has won the round. And ends the round.
+     *
+     * @param player The player to be checked for winning.
+     */
     public void checkGameWinner(Player player){
 
         if (player.getHand().isEmpty()){
@@ -344,6 +397,7 @@ public class UnoGame {
         }
         System.out.println("Thank you for playing!");
     }
+
 
     public static void main(String[] args) {
         UnoGame unoGame = new UnoGame(true);

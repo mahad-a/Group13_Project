@@ -66,6 +66,14 @@ public abstract class Card {
     public Colour getColour() {
         return colour;
     }
+
+    /**
+     * Checks if a card can be placed on the "table" based off of the current card.
+     *
+     * @param game The UNO game the card is being played in
+     * @param placeCard The card being considered for placement.
+     * @return 'true' if the card is placeable, 'false' otherwise.
+     */
     public boolean isCardPlaceable(UnoGame game, Card placeCard){
         boolean noPlayableCardInHand = true;
         Card currentCard = game.getCurrentCard();
@@ -84,12 +92,23 @@ public abstract class Card {
         return deckColorMatch || wildCardMatch || reverseCardsMatch || wildDrawTwoCardMatch;
     }
 
+    /**
+     * Places the card on the "table" that the UNO game is being played on.
+     *
+     * @param game The UNO game the card is being played in
+     * @param card The card to be placed.
+     */
     public void placeCard(UnoGame game, Card card){
         game.setCurrentCard(card);
         game.getCurrentPlayer().discardCard(card);
         game.nextPlayer();
     }
 
+    /**
+     * Abstract method designed to get the score value of each card.
+     *
+     * @return The value of the card.
+     */
     public abstract int getValue();
 
     /**

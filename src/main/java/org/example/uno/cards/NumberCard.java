@@ -39,7 +39,6 @@ public class NumberCard extends Card {
     /**
      * Constructs a cards.NumberCard with a specific colour and number.
      *
-     *
      * @param colour The colour of the cards.NumberCard
      * @param number The numeric value of the cards.NumberCard
      */
@@ -48,6 +47,12 @@ public class NumberCard extends Card {
         this.NUMBER = number;
         this.value = number.getValue();
     }
+
+    /**
+     * Gets the score value of the number card.
+     *
+     * @return The value of the number card.
+     */
     public int getValue(){
         return this.value;
     }

@@ -52,6 +52,11 @@ public class ReverseCard extends Card {
         return false;
     }
 
+    /**
+     * Gets the score value of the reverse card.
+     *
+     * @return The value of the reverse card (20).
+     */
     public int getValue(){
         return this.VALUE;
     }

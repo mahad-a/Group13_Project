@@ -42,7 +42,11 @@ public class SkipCard extends Card {
         return false;
     }
 
-
+    /**
+     * Gets the score value of the skip card.
+     *
+     * @return The value of the skip card (20).
+     */
     public int getValue(){
         return this.VALUE;
     }
