@@ -1,25 +1,22 @@
 package org.example.uno.cards;
 
-import static org.junit.Assert.*;
+import org.example.uno.game.*;
+import org.example.uno.cards.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import org.example.uno.game.Player;
-import org.example.uno.game.UnoGame;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SkipCardTest {
 
     private SkipCard skipCard;
     private UnoGame game;
 
-    @Before
+    @BeforeEach
     public void setUp() {
-        // Create an instance of SkipCard with a specific color for testing
         skipCard = new SkipCard(Card.Colour.BLUE);
-
-        // Create an UnoGame instance (you may need to adapt this based on your project)
         game = new UnoGame(true);
-        game.setCurrentCard(skipCard); // Set the current card to the skip card
+        game.setCurrentCard(new NumberCard(Card.Colour.BLUE, NumberCard.Number.FIVE));
     }
 
     @Test
@@ -28,16 +25,36 @@ public class SkipCardTest {
     }
 
     @Test
-    public void testPlayCard() {
-        // Test whether the card can be played
-        assertTrue(skipCard.playCard(game));
-
-        // Ensure that the next player's turn has been skipped
+    public void testPlayCardTwoPlayer() {
+        Player alpha = new Player("Alpha");
+        Player beta = new Player("Beta");
+        Player gamma = new Player("Gamma");
+        game.addPlayer(alpha);
+        game.addPlayer(beta);
+        game.setCurrentPlayer(game.getPlayers().get(0));
+        // ensure that the next player's turn has been skipped
         Player originalCurrentPlayer = game.getCurrentPlayer();
-        game.nextPlayer(); // Simulate moving to the next player
+        assertTrue(skipCard.playCard(game)); // test whether the card can be played
+        Player newCurrentPlayer = game.getCurrentPlayer();
+
+        assertEquals(originalCurrentPlayer, newCurrentPlayer);
+    }
+    @Test
+    public void testPlayCardThreePlayer() {
+        Player alpha = new Player("Alpha");
+        Player beta = new Player("Beta");
+        Player gamma = new Player("Gamma");
+        game.addPlayer(alpha);
+        game.addPlayer(beta);
+        game.addPlayer(gamma);
+        game.setCurrentPlayer(game.getPlayers().get(0));
+        // ensure that the next player's turn has been skipped
+        Player originalCurrentPlayer = game.getCurrentPlayer();
+        assertTrue(skipCard.playCard(game)); // test whether the card can be played
         Player newCurrentPlayer = game.getCurrentPlayer();
 
         assertNotEquals(originalCurrentPlayer, newCurrentPlayer);
+        assertEquals(newCurrentPlayer, gamma);
     }
 
     @Test

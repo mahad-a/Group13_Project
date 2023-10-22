@@ -44,7 +44,7 @@ public class UnoGameTest {
         unoGame.dealCards();
 
         // check every player has 7 cards dealt to them
-        for (Player player: unoGame.getPlayerList()) {
+        for (Player player: unoGame.getPlayers()) {
             assertEquals(7, player.getHand().size());
         }
     }

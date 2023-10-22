@@ -6,7 +6,7 @@
 
 ## Project Objective
 
-The objective of the project is to create an UNO Flip card game. Uno Flip is a variation of the classic Uno card game, and we aim to provide an interactive and user friendly experience for players.
+The objective of the project is to create an UNO Flip card game. Uno Flip is a variation of the classic Uno card game, and we aim to provide an interactive and user-friendly experience for players.
 
 ## Project Milestones
 

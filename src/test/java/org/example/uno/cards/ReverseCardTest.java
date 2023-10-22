@@ -15,12 +15,13 @@ public class ReverseCardTest {
 
     @Before
     public void setUp() {
-        // Create an instance of ReverseCard with a specific color for testing
+        Player player = new Player("TEST");
         reverseCard = new ReverseCard(Card.Colour.BLUE);
 
-        // Create an UnoGame instance (you may need to adapt this based on your project)
         game = new UnoGame(true);
-        game.setCurrentCard(reverseCard); // Set the current card to the reverse card
+        game.setCurrentCard(reverseCard);
+        game.addPlayer(player);
+        game.setCurrentPlayer(game.getPlayers().get(0));
     }
 
     @Test
