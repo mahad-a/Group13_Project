@@ -52,14 +52,11 @@ public class NumberCard extends Card {
     @Override
     public void playCard(UnoGame game) {
         Card currCard = game.getCurrentCard();
-        if(super.isCardPlaceable(currCard, this)){
+        if(super.isCardPlaceable(currCard, this) || (currCard instanceof NumberCard && ((NumberCard) currCard).getNumber() == this.number)){
             super.placeCard(game, this);
-        } else if(currCard instanceof NumberCard){
-            if (((NumberCard) currCard).getNumber() == this.number) {
-                super.placeCard(game, this);
-            }
+
         } else {
-            System.out.println("Cannot place this card.");
+            System.out.print("Cannot place this card.");
         }
     }
 

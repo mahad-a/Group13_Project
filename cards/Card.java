@@ -65,8 +65,8 @@ public abstract class Card {
 
     public void placeCard(UnoGame game, Card card){
         game.setCurrentCard(card);
-        game.nextPlayer();
         game.getCurrentPlayer().discardCard(card);
+        game.nextPlayer();
     }
 
     /**

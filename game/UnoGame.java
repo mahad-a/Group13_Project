@@ -234,7 +234,7 @@ public class UnoGame {
             cardPlayed.playCard(this);
         }
 
-        System.out.print("===================================================\n");
+        System.out.print("\n===================================================\n");
     }
 
     /**
