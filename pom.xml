@@ -40,5 +40,28 @@
 
     </dependencies>
 
+    <build>
+        <plugins>
+            <!-- Maven JAR Plugin Configuration -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>org.example.uno.game.UnoGame</mainClass>
+                        </manifest>
+                    </archive>
+                    <includes>
+                        <include>**/*.java</include> <!-- this includes all Java source files, as stated in rubric -->
+                    </includes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 
 </project>

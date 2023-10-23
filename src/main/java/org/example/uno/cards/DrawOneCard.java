@@ -46,7 +46,7 @@ public class DrawOneCard extends Card{
             super.placeCard(game, this);
             // makes the next person pick up a card and skips their turn
             Card c1 = game.takeFromDeck(game.getCurrentPlayer());
-            System.out.println(game.getCurrentPlayer().getName() + " has to draw two due to Draw One Card: " + c1);
+            System.out.println(game.getCurrentPlayer().getName() + " has to draw one due to Draw One Card: " + c1);
             game.nextPlayer(); // skip the player
             return true;
         }

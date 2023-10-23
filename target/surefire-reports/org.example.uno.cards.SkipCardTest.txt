@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: org.example.uno.cards.SkipCardTest
 -------------------------------------------------------------------------------
-Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s - in org.example.uno.cards.SkipCardTest
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.016 s - in org.example.uno.cards.SkipCardTest
