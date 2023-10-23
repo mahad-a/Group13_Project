@@ -117,7 +117,7 @@ public class Player {
      * Two players are considered equal if they have the same name.
      *
      * @param obj The object we are checking to see if players match.
-     * @return 'true' if players match, 'false' otherwise.
+     * @return {@code true} if players match, {@code false} otherwise.
      */
     @Override
     public boolean equals(Object obj) {

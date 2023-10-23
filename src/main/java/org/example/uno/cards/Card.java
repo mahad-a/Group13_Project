@@ -71,7 +71,7 @@ public abstract class Card {
      *
      * @param game The UNO game the card is being played in
      * @param placeCard The card being considered for placement.
-     * @return 'true' if the card is placeable, 'false' otherwise.
+     * @return {@code true} if the card is placeable, {@code false} otherwise.
      */
     public boolean isCardPlaceable(UnoGame game, Card placeCard){
         boolean noPlayableCardInHand = true;

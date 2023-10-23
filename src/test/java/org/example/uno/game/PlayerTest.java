@@ -51,5 +51,21 @@ public class PlayerTest {
         player.discardCard(card);
         assertFalse(player.getHand().contains(card));
     }
+
+    @Test
+    public void testUpdateScore(){
+        player.updateScore(32);
+        assertEquals(player.getScore(), 32);
+    }
+
+    @Test
+    public void testPlayerEquals(){
+        Player p1 = new Player("John");
+        Player p3 = new Player("john");
+        Player p2 = new Player("TestDummy");
+        assertTrue(p1.equals(p1));
+        assertTrue(player.equals(p2));
+        assertFalse(p1.equals(p3));
+    }
 }
 

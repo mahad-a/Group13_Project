@@ -29,7 +29,7 @@ public class WildDrawTwoCard extends Card {
      * player must draw two cards.
      *
      * @param game The UNO game in which the card is being played.
-     * @return 'true' if the card was successfully played, 'false' otherwise.
+     * @return {@code true} if the card was successfully played, {@code false} otherwise.
      */
     @Override
     public boolean playCard(UnoGame game) {

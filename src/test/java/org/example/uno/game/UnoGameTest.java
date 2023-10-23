@@ -95,5 +95,61 @@ public class UnoGameTest {
         assertEquals(8, beta.getScore());
     }
 
+    @Test
+    public void testIsLightGame(){
+        assertTrue(unoGame.isLightGame());
+    }
+
+    @Test
+    public void testDeck(){
+        Deck deck = new Deck();
+        unoGame.setDeck(deck);
+        assertEquals(unoGame.getDeck(), deck);
+    }
+
+    @Test
+    public void testAddPlayer(){
+        unoGame.addPlayer(new Player("John"));
+        unoGame.addPlayer(new Player("Cathy"));
+        unoGame.addPlayer(new Player("Manny"));
+        assertEquals(unoGame.getPlayers().size(), 3);
+    }
+
+    @Test
+    public void testGetCurrentPlayerAndNextPlayer(){
+        Player p1 = new Player("Hajar");
+        Player p2 = new Player("Mahad");
+        Player p3 = new Player("Hasib");
+        unoGame.addPlayer(p1);
+        unoGame.addPlayer(p2);
+        unoGame.addPlayer(p3);
+        unoGame.setCurrentPlayer(p1);
+        assertEquals(unoGame.getCurrentPlayer(),p1);
+        unoGame.nextPlayer();
+        assertEquals(unoGame.getCurrentPlayer(),p2);
+        unoGame.nextPlayer();
+        assertEquals(unoGame.getCurrentPlayer(),p3);
+    }
+
+    @Test
+    public void testTakeFromDeck(){
+        Deck deck = new Deck();
+        Player p1 = new Player("Hajar");
+        Player p2 = new Player("Mahad");
+        Player p3 = new Player("Hasib");
+        unoGame.addPlayer(p1);
+        unoGame.addPlayer(p2);
+        unoGame.addPlayer(p3);
+        unoGame.setDeck(deck);
+        unoGame.takeFromDeck(p1);
+        unoGame.takeFromDeck(p1);
+        unoGame.takeFromDeck(p1);
+        unoGame.takeFromDeck(p2);
+        unoGame.takeFromDeck(p2);
+        unoGame.takeFromDeck(p3);
+        assertEquals(p1.getHand().size(), 3);
+        assertEquals(p2.getHand().size(), 2);
+        assertEquals(p3.getHand().size(), 1);
+    }
 
 }

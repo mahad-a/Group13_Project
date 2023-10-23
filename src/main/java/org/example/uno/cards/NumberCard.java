@@ -15,7 +15,7 @@ import org.example.uno.game.*;
  */
 public class NumberCard extends Card {
 
-    private final int value;
+    private final int VALUE;
 
     /**
      * Enumeration representing the numeric values of UNO number cards.
@@ -25,10 +25,20 @@ public class NumberCard extends Card {
 
         private final int value;
 
+        /**
+         * Constructs an Enum with its corresponding numerical value as an int.
+         *
+         * @param value The numerical value int of the Number enum.
+         */
         Number(int value) {
             this.value = value;
         }
 
+        /**
+         * Get the numeric value of the number card.
+         *
+         * @return The numeric value of the number card.
+         */
         public int getValue() {
             return value;
         }
@@ -44,7 +54,7 @@ public class NumberCard extends Card {
     public NumberCard(Colour colour, Number number ){
         super(colour);
         this.NUMBER = number;
-        this.value = number.getValue();
+        this.VALUE = number.getValue();
     }
 
     /**
@@ -53,7 +63,7 @@ public class NumberCard extends Card {
      * @return The value of the number card.
      */
     public int getValue(){
-        return this.value;
+        return this.VALUE;
     }
 
     /**

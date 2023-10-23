@@ -150,7 +150,7 @@ public class UnoGame {
     /**
      * Sets the game's mode to light or normal.
      *
-     * @param lightGame true if game in light mode, false if game in normal mode.
+     * @param lightGame {@code true} if game in light mode, {@code false} if game in normal mode.
      */
     public void setLightGame(boolean lightGame) {
         this.lightGame = lightGame;
@@ -159,13 +159,19 @@ public class UnoGame {
     /**
      * Checks if the current round is over.
      *
-     * @return 'true' if the round is over, 'false' otherwise.
+     * @return {@code true} if the round is over, {@code false} otherwise.
      */
     public boolean isRoundOver(){
         return this.roundOver;
     }
-    public void setRoundOver(boolean bool){
-        this.roundOver = bool;
+
+    /**
+     * Sets the status of the current round.
+     *
+     * @param roundOver {@code true} if the round is over, {@code false} otherwise.
+     */
+    public void setRoundOver(boolean roundOver){
+        this.roundOver = roundOver;
     }
 
 
@@ -207,7 +213,7 @@ public class UnoGame {
      * Checks if the name of the player is already taken from the list of players.
      *
      * @param playerName The name to be checked.
-     * @return 'true' if the name is available, 'false' otherwise.
+     * @return {@code true} if the name is available, {@code false} otherwise.
      */
     public boolean isPlayerNameExists(String playerName){
         if (playerName.isEmpty()){

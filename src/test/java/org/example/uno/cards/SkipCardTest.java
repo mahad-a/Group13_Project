@@ -25,10 +25,9 @@ public class SkipCardTest {
     }
 
     @Test
-    public void testPlayCardTwoPlayer() {
+    public void testCardPlayTwoPlayer() {
         Player alpha = new Player("Alpha");
         Player beta = new Player("Beta");
-        Player gamma = new Player("Gamma");
         game.addPlayer(alpha);
         game.addPlayer(beta);
         game.setCurrentPlayer(game.getPlayers().get(0));
@@ -40,7 +39,7 @@ public class SkipCardTest {
         assertEquals(originalCurrentPlayer, newCurrentPlayer);
     }
     @Test
-    public void testPlayCardThreePlayer() {
+    public void testCardPlayThreePlayer() {
         Player alpha = new Player("Alpha");
         Player beta = new Player("Beta");
         Player gamma = new Player("Gamma");

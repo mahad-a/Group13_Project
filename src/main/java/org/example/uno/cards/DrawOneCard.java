@@ -36,7 +36,7 @@ public class DrawOneCard extends Card{
      * Plays the Draw one card only if it can be placed on the current card on the table. (Based off of colour).
      *
      * @param game The UNO game in which the card is being played.
-     * @return 'true' if the card was played, 'false' otherwise.
+     * @return {@code true} if the card was played, {@code false} otherwise.
      */
     @Override
     public boolean playCard(UnoGame game) {
