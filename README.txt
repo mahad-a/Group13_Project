@@ -28,6 +28,14 @@ In this first milestone, we successfully developed a playable text-based version
 - Scoring: The ability to add and update the scores of each player currently playing. 
 - Testing: The program has been tested using JUnit tests, to ensure a functional program. 
 
+### Milestone 2 (Planned) 
+In the second milestone, we plan to update the game to make a GUI-based version of the game. This version will including JFrames, JButtons, etc... . User interaction detected through mouse input. 
+
+### Milestone 3 (Planned)
+For the third milestone, we aim to integrate the Uno Flip card features into the game, implementing specific rules and scoring rules. Additionally, we will introduce a computer player, allowing the game to accommodate a play alone feature.
+
+### Milestone 4 (Planned)
+In the final milestone, we will incorporate redo capabilities and replay capabilities. Players will have the ability to redo/undo their moves within the game, and they can replay the game, allowing them to play the perfect match and enjoy multiple rounds. We will also implement save/load features using Java Serialization, enabling players to save their current game progress and later resume it.
 
 ## Deliverables
 
