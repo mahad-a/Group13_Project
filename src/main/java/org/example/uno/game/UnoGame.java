@@ -20,6 +20,7 @@ import java.util.Scanner;
 public class UnoGame {
 
     private ArrayList<Player> players;
+    private int numPlayers;
     private Deck deck;
     private boolean lightGame; // if true, we are in light game
     private static final Scanner scanner = new Scanner(System.in);
@@ -37,10 +38,11 @@ public class UnoGame {
      *
      * @param lightGame  an indicator that indicates if the game is in "light" mode.
      */
-    public UnoGame(boolean lightGame) {
+    public UnoGame(boolean lightGame,int numberOfPlayers) {
         this.players = new ArrayList<>();
         this.lightGame = lightGame;
-
+        this.numPlayers = numberOfPlayers;
+        //startGame();
         //** add a way to create 4 players and give them names using input **\\
     }
 
@@ -324,32 +326,9 @@ public class UnoGame {
 
         // prompt user to input valid number of players
         if (!roundOver) {
-            int numPlayers;
-            do {
-                try {
-                    numPlayers = Integer.parseInt(promptText("Enter a number of players (2-4)"));
-                    if (numPlayers >= 2 && numPlayers <= 4) {
-                        break;
-                    } else {
-                        System.out.println("Invalid entry. Please enter a number between 2 and 4.");
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.println("Invalid entry. Please try again.");
-                }
-            } while (true);
-
             // initialize player names
             for (int i = 1; i <= numPlayers; i++) {
-                String playerName;
-                while (true) {
-                    playerName = promptText("Enter a name for Player " + i);
-                    if (!isPlayerNameExists(playerName)) {
-                        addPlayer(new Player(playerName));
-                        break;
-                    } else {
-                        System.out.println("Please choose a different name.");
-                    }
-                }
+                addPlayer(new Player("Player " + i));
             }
         }
         // initialize deck
@@ -414,10 +393,10 @@ public class UnoGame {
         System.out.println("Thank you for playing!");
     }
     
-    public static void main(String[] args) {
-        UnoGame unoGame = new UnoGame(true);
-        unoGame.startGame();
-        scanner.close();
-    }
+//    public static void main(String[] args) {
+//        UnoGame unoGame = new UnoGame(true);
+//        unoGame.startGame();
+//        scanner.close();
+//    }
 
 }
