@@ -35,23 +35,6 @@ public class WildCard extends Card {
      */
     @Override
     public boolean playCard(UnoGame game){
-        Colour chosenColour;
-        String input;
-
-        do {
-            input = UnoGame.promptText("Enter a color of your choice").toUpperCase();
-
-            try {
-                chosenColour = Colour.valueOf(input);
-                break;
-            } catch (IllegalArgumentException e) {
-                System.out.println("Invalid color. Please try again.");
-            }
-
-        } while (true);
-
-        System.out.println(chosenColour + " has been chosen.");
-        this.setColour(chosenColour);
         super.placeCard(game, this);
         return true;
     }

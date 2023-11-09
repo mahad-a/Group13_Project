@@ -88,8 +88,9 @@ public abstract class Card {
         boolean wildDrawTwoCardMatch = (currentCard instanceof WildDrawTwoCard) && noPlayableCardInHand;
         boolean reverseCardsMatch = currentCard instanceof ReverseCard && placeCard instanceof ReverseCard;
         boolean drawOneCardMatch = currentCard instanceof DrawOneCard && placeCard instanceof DrawOneCard;
+        boolean skipCardMatch = currentCard instanceof SkipCard && placeCard instanceof SkipCard;
 
-        return deckColorMatch || wildCardMatch || reverseCardsMatch || wildDrawTwoCardMatch || drawOneCardMatch;
+        return deckColorMatch || wildCardMatch || reverseCardsMatch || wildDrawTwoCardMatch || drawOneCardMatch || skipCardMatch;
     }
 
     /**
@@ -99,9 +100,8 @@ public abstract class Card {
      * @param card The card to be placed.
      */
     public void placeCard(UnoGame game, Card card){
-        game.setCurrentCard(card);
         game.getCurrentPlayer().discardCard(card);
-        game.nextPlayer();
+        game.setCurrentCard(card);
     }
 
     /**

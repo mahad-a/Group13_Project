@@ -36,7 +36,7 @@ public class SkipCard extends Card {
         Card currCard = game.getCurrentCard();
         if(super.isCardPlaceable(game, this)){
             super.placeCard(game, this);
-            game.nextPlayer(); // skip a player
+            game.setSkipNextPlayer(true);
             return true;
         }
         return false;

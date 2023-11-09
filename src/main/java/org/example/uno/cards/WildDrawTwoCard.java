@@ -33,27 +33,12 @@ public class WildDrawTwoCard extends Card {
      */
     @Override
     public boolean playCard(UnoGame game) {
-        Colour chosenColour;
-        String input;
 
-        do {
-            input = UnoGame.promptText("Enter a color of your choice").toUpperCase();
 
-            try {
-                chosenColour = Colour.valueOf(input);
-                break;
-            } catch (IllegalArgumentException e) {
-                System.out.println("Invalid color. Please try again.");
-            }
-
-        } while (true);
-
-        System.out.println(chosenColour + " has been chosen.");
-        this.setColour(chosenColour);
         super.placeCard(game, this);
-        Card c1 = game.takeFromDeck(game.getCurrentPlayer());
-        Card c2 = game.takeFromDeck(game.getCurrentPlayer());
-        System.out.println(game.getCurrentPlayer().getName() + " has to draw two due to Wild Draw Two: " + c1 + ", " + c2);
+        Card c1 = game.takeFromDeck(game.getNextPlayer(),true,game.getNextPlayer().getName() + " has to draw two cards due to Wild Draw Two" );
+        Card c2 = game.takeFromDeck(game.getNextPlayer(),true,game.getNextPlayer().getName() + " has to draw two cards due to Wild Draw Two" );
+
         return true;
     }
 
