@@ -141,6 +141,7 @@ public class View extends JFrame implements UnoGameModelView {
       }
       if(model.isRoundOver()){
           String str = " ";
+          //get scores
           for(Player p: model.getPlayers()){
              str += (p.getName() +"s Score: " + p.getScore() + "\n");
           }
