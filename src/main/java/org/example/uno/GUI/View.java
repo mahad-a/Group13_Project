@@ -98,6 +98,7 @@ public class View extends JFrame implements UnoGameModelView {
         // Set icon
         ImageIcon cardIcon = new ImageIcon(image);
         button.setIcon(cardIcon);
+        button.setText(null);
     }
     private void updateHand(){
         if(!cards.isEmpty()){
