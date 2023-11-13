@@ -6,10 +6,7 @@ import java.util.Iterator;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
-import org.example.uno.cards.Card;
-import org.example.uno.cards.DrawOneCard;
-import org.example.uno.cards.SkipCard;
-import org.example.uno.cards.WildDrawTwoCard;
+import org.example.uno.cards.*;
 import org.example.uno.game.Player;
 import org.example.uno.game.UnoGame;
 
@@ -95,6 +92,13 @@ public class View extends JFrame implements UnoGameModelView {
 
     }
 
+    private void setIcon(JButton button, Card card){
+
+        String image = card.toString()+ ".jpg";
+        // Set icon
+        ImageIcon cardIcon = new ImageIcon(image);
+        button.setIcon(cardIcon);
+    }
     private void updateHand(){
         if(!cards.isEmpty()){
             for(JButton b: cards){
@@ -105,7 +109,8 @@ public class View extends JFrame implements UnoGameModelView {
 
         cards.clear();
         for(Card c: model.getCurrentPlayer().getHand()){
-            JButton b = new JButton(c.toString());
+            JButton b = new JButton();
+            setIcon(b,c);
             b.addActionListener(unoController);
             cards.add(b);
             hand.add(b);
