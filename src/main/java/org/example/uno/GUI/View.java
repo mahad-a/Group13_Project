@@ -10,7 +10,19 @@ import org.example.uno.cards.*;
 import org.example.uno.game.Player;
 import org.example.uno.game.UnoGame;
 
-
+/**
+ * The View class represents the GUI for the UNO game. It extends the JFrame class and implements the UnoGameModelView
+ * interface. It is the visual representation of the game's current state and allows the players to interact with the
+ * game using buttons and visual elements.
+ *
+ * @author Mahad Ahmed
+ * @author Firas El-Ezzi
+ * @author Hasib Khodayar
+ * @author Hajar Assim
+ * @author Yusuf Ibrahim
+ *
+ * @version 1.0
+ */
 public class View extends JFrame implements UnoGameModelView {
     UnoGame model;
     JLabel playerLabel;
@@ -25,7 +37,9 @@ public class View extends JFrame implements UnoGameModelView {
     Controller unoController;
     ArrayList<JButton> cards;
 
-
+    /**
+     * Constructs a View, by initializing the elements of the GUI.
+     */
     public View() {
         super("UNO");
         JDialog.setDefaultLookAndFeelDecorated(true);
@@ -38,6 +52,11 @@ public class View extends JFrame implements UnoGameModelView {
         this.startGame((Integer)selection);
     }
 
+    /**
+     * Initializes the layout of the GUI elements and starts the UNO game with the specified number of players.
+     *
+     * @param numPlayer The number of players playing the game.
+     */
     private void startGame(int numPlayer) {
         this.model = new UnoGame(true,numPlayer);
         this.unoController = new Controller(model);
@@ -52,6 +71,9 @@ public class View extends JFrame implements UnoGameModelView {
         this.setVisible(true);
     }
 
+    /**
+     * Sets the layout and components of the GUI.
+     */
     private void setGuiLayout(){
         setLayout(new BorderLayout());
         this.playerLabel = new JLabel(model.getCurrentPlayer().getName());
@@ -103,6 +125,13 @@ public class View extends JFrame implements UnoGameModelView {
 
     }
 
+    /**
+     * Sets the icon of the buttons based on the cards dealt the player and the top card in the pile.
+     *
+     * @param button the JButton we are setting the icon for.
+     * @param card The card to be represented by the icon.
+     * @param topCard Checker to determine if card is top card.
+     */
     private void setIcon(JButton button, Card card, Boolean topCard){
         String imagePath = "src/main/java/org/example/uno/GUI/images/" + card.toString()+ ".jpg";
         int width = 200;
@@ -115,6 +144,10 @@ public class View extends JFrame implements UnoGameModelView {
         }
         button.setIcon(scaledIcon);
     }
+
+    /**
+     * Updates the player's hand in the GUI depending on the current state of the Game Model.
+     */
     private void updateHand(){
         if(!cards.isEmpty()){
             for(JButton b: cards){
@@ -134,6 +167,11 @@ public class View extends JFrame implements UnoGameModelView {
         }
     }
 
+    /**
+     * Updates the view of the GUI based on Uno Event from the Game Model.
+     *
+     * @param e The UnoEvent object that needs to be viewed.
+     */
     @Override
     public void updateView(UnoEvent e) {
 
@@ -166,6 +204,7 @@ public class View extends JFrame implements UnoGameModelView {
       }
 
     }
+
 
     private void handleRoundOver(UnoEvent e){
         String str = "";
@@ -209,6 +248,11 @@ public class View extends JFrame implements UnoGameModelView {
         }
     }
 
+    /**
+     * The main method that launches the GUI model.
+     *
+     * @param args The arguments for the command line.
+     */
     public static void main(String[] args) {
         new View();
     }

@@ -8,17 +8,42 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The Controller class is the architecture for the UNO Game.
+ * It also handles user interactions from GUI, such as button clicks, and communicates them with the UnoGame.
+ *
+ * @author Mahad Ahmed
+ * @author Firas El-Ezzi
+ * @author Hasib Khodayar
+ * @author Hajar Assim
+ * @author Yusuf Ibrahim
+ *
+ * @version 1.0
+ */
 public class Controller implements ActionListener {
     private UnoGame model;
+
+    /**
+     * Constructs an instance of controller with a reference to the UnoGame model.
+     *
+     * @param game The UnoGame model to be controlled.
+     */
     public Controller(UnoGame game) {
         this.model = game;
     }
+
+    /**
+     * Displays text for the user to choose the colour of a wild card, when a wild card is played.
+     *
+     * @return The chosen color for the WildCard.
+     */
     private Card.Colour getColourInput(){
         Object[] selectionValues = new Object[]{"RED","YELLOW","BLUE","GREEN"};
         String initialSelection = "Red";
         Object selection = JOptionPane.showInputDialog((Component)null, "Choose A Colour", "Wild Card Colour", JOptionPane.QUESTION_MESSAGE, (Icon)null, selectionValues, String.valueOf(initialSelection));
         return Card.Colour.valueOf((String) selection);
     }
+
 
     private String getChallengeInput(){
         Object[] selectionValues = new Object[]{"YES","NO"};
@@ -27,6 +52,11 @@ public class Controller implements ActionListener {
         return ((String) selection);
     }
 
+    /**
+     * Responsible for ActionEvents triggered by interactions from the user with the GUI components.
+     *
+     * @param e The ActionEvent triggered by the user.
+     */
     public void actionPerformed(ActionEvent e) {
         Object o = e.getSource();
         if(o instanceof JButton){
