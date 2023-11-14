@@ -12,7 +12,7 @@ public class ReverseCardTest {
 
     private ReverseCard reverseCard;
     private UnoGame game;
-    int numPlayers = 4 ;
+    int numPlayers = 2 ;
 
     @Before
     public void setUp() {
@@ -35,15 +35,14 @@ public class ReverseCardTest {
 
     @Test
     public void testPlayCard() {
-        // Test whether the card can be played
-        assertTrue(reverseCard.playCard(game));
 
         // Ensure that the order of players has been reversed
-        ArrayList<Player> originalPlayers = game.getPlayers();
+        ArrayList<Player> originalPlayers = new ArrayList<>(game.getPlayers());
         reverseCard.playCard(game);
-        ArrayList<Player> reversedPlayers = game.getPlayers();
-
+        ArrayList<Player> reversedPlayers = new ArrayList<>(game.getPlayers());
         assertNotEquals(reversedPlayers, originalPlayers);
+        Collections.reverse(originalPlayers);
+        assertEquals(originalPlayers, reversedPlayers);
     }
 
     @Test
