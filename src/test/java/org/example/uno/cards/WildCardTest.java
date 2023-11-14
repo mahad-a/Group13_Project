@@ -13,7 +13,7 @@ public class WildCardTest {
     private WildCard wildCard;
     private UnoGame game;
     private static Scanner scanner;
-    private int numPlayers;
+    private int numPlayers = 2;
 
     @Before
     public void setUp() {
@@ -46,6 +46,7 @@ public class WildCardTest {
     @Test
     public void testToStringWithColor() {
         wildCard.setColour(Card.Colour.BLUE);
+        System.out.println(wildCard.toString());
         assertEquals("WILD_CARD (BLUE)", wildCard.toString());
     }
 }

@@ -10,7 +10,7 @@ public class NumberCardTest {
 
     private NumberCard numberCard;
     private UnoGame game;
-    int numPlayers;
+    int numPlayers = 2;
     @Before
     public void setUp() {
         Player alpha = new Player("Alpha");

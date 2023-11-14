@@ -26,39 +26,13 @@ public class DrawOneCardTest {
     }
 
     @Test
-    public void testCardPlayTwoPlayer() {
-        Player alpha = new Player("Alpha");
-        Player beta = new Player("Beta");
-        game.addPlayer(alpha);
-        game.addPlayer(beta);
-        game.setCurrentPlayer(game.getPlayers().get(0));
-        game.setDeck(new Deck());
-        // ensure that the next player's turn has been skipped, and they picked up one
-        Player originalCurrentPlayer = game.getCurrentPlayer();
-        assertTrue(drawOneCard.playCard(game)); // test whether the card can be played
-        Player newCurrentPlayer = game.getCurrentPlayer();
-
-        assertEquals(originalCurrentPlayer, newCurrentPlayer);
-
-    }
-    @Test
-    public void testCardPlayThreePlayer() {
-        Player alpha = new Player("Alpha");
-        Player beta = new Player("Beta");
-        Player gamma = new Player("Gamma");
-        game.addPlayer(alpha);
-        game.addPlayer(beta);
-        game.addPlayer(gamma);
-        game.setDeck(new Deck());
-        game.setCurrentPlayer(alpha);
-        // ensure that the next player's turn has been skipped
-        Player originalCurrentPlayer = game.getCurrentPlayer();
-        assertTrue(drawOneCard.playCard(game));// test whether the card can be played
-
-        Player newCurrentPlayer = game.getCurrentPlayer();
-
-        assertNotEquals(alpha, game.getCurrentPlayer());
-
+    public void testPlayCard() {
+        Player nextPlayer = game.getNextPlayer();
+        int size = nextPlayer.getHand().size();
+        drawOneCard.playCard(game);
+        System.out.println(size);
+        System.out.println(game.getNextPlayer().getHand().size());
+        assertTrue(size < game.getNextPlayer().getHand().size());
     }
 
     @Test
