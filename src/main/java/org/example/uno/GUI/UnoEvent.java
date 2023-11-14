@@ -22,6 +22,8 @@ public class UnoEvent extends EventObject {
     private boolean skipNextPlayer;
     private String message;
 
+    private Card cardDrawn;
+
     /**
      * Constructs a new UnoEvent with parameters.
      *
@@ -35,6 +37,17 @@ public class UnoEvent extends EventObject {
         this.moveMade = t;
         this.skipNextPlayer = skipNext;
         this.message = m;
+        this.cardDrawn = null;
+    }
+    /**
+     * YUSUF
+     */
+    public UnoEvent(UnoGame model, boolean t,boolean skipNext,String m, Card cardDrawn){
+        super(model);
+        this.moveMade = t;
+        this.skipNextPlayer = skipNext;
+        this.message = m;
+        this.cardDrawn = cardDrawn;
     }
 
     /**
@@ -60,5 +73,12 @@ public class UnoEvent extends EventObject {
      */
     public String getMessage(){
         return this.message;
+    }
+
+    /**
+     * YUSUF
+     */
+    public Card getCardDrawn(){
+        return this.cardDrawn;
     }
 }

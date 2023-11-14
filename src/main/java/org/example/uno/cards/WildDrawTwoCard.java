@@ -37,21 +37,20 @@ public class WildDrawTwoCard extends Card {
     public boolean playCard(UnoGame game) {
 
         if(challenged){
-
-                if(! super.isCardPlaceable(game,this)){
-                    Card c1 = game.takeFromDeck(game.getCurrentPlayer(),false,"" );
-                    Card c2 = game.takeFromDeck(game.getCurrentPlayer(),false,"" );
-                    this.message = this.getColour() + " was chosen.\n" + game.getCurrentPlayer().getName()
+            if (super.isCardPlaceable(game,this)){
+                Card c1 = game.takeFromDeck(game.getNextPlayer(), true, "");
+                Card c2 = game.takeFromDeck(game.getNextPlayer(), true, "");
+                this.message = this.getColour() + " was chosen.\n" + game.getNextPlayer().getName()
+                        + " must draw 2 cards due to Wild Draw Two.";
+            } else {
+                 Card c1 = game.takeFromDeck(game.getCurrentPlayer(),false,"" );
+                 Card c2 = game.takeFromDeck(game.getCurrentPlayer(),false,"" );
+                 this.message = this.getColour() + " was chosen.\n" + game.getCurrentPlayer().getName()
                             + " was challenged and found GUILTY!\nDraw two cards";
-                }
+            }
 
         }
-        else {
-            Card c1 = game.takeFromDeck(game.getNextPlayer(), true, "");
-            Card c2 = game.takeFromDeck(game.getNextPlayer(), true, "");
-            this.message = this.getColour() + " was chosen.\n" + game.getNextPlayer().getName()
-                    + " must draw 2 cards due to Wild Draw Two.";
-        }
+
         super.placeCard(game, this);
 
         return true;

@@ -64,10 +64,9 @@ public class Controller implements ActionListener {
             switch(b.getText()){
 
                 case "Draw A Card":
-                    Card c = model.takeFromDeck(model.getCurrentPlayer(),false,"Drew a Card: ");
+                    Card c = model.takeFromDeck(model.getCurrentPlayer(),false,"Drew a Card:\n ");
                     break;
                 case "Next Player":
-
                     model.nextPlayer();
                     break;
                 default:

@@ -204,6 +204,11 @@ public class UnoGame {
     public void setRoundOver(boolean roundOver){
         this.roundOver = roundOver;
     }
+    private void updateView(boolean moveMade,boolean skipNext,String m, Card cardDrawn){
+        for(UnoGameModelView v: this.views){
+            v.updateView(new UnoEvent(this,moveMade,skipNext,m, cardDrawn));
+        }
+    }
     private void updateView(boolean moveMade,boolean skipNext,String m){
         for(UnoGameModelView v: this.views){
             v.updateView(new UnoEvent(this,moveMade,skipNext,m));
@@ -240,8 +245,8 @@ public class UnoGame {
         Card cardDrawn = deck.drawCard();
 
         player.addCard(cardDrawn);
-        if (message.equals("Drew a Card: ")){
-            updateView(true,false,message + cardDrawn.toString());
+        if (message.equals("Drew a Card:\n ")){
+            updateView(true,false,message + cardDrawn.toString(), cardDrawn);
         }
         else {
             updateView(true,skipNext, message);
