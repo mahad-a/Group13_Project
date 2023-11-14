@@ -1,8 +1,12 @@
 package org.example.uno.GUI;
 
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
+import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
@@ -51,6 +55,8 @@ public class View extends JFrame implements UnoGameModelView {
         this.model.addUnoView(this);
         cards = new ArrayList<JButton>();
         setGuiLayout();
+
+        playBackgroundMusic();
 
         this.setDefaultCloseOperation(3);
         this.setSize(1600, 700);
@@ -247,7 +253,20 @@ public class View extends JFrame implements UnoGameModelView {
         unoController.actionPerformed(new ActionEvent(nextPlayer, ActionEvent.ACTION_PERFORMED, null));
     }
 
+    private static void playBackgroundMusic() {
+        try {
+            File musicFile = new File ("src/main/java/org/example/uno/GUI/UNO_FILP_MUSIC.wav");
+            //System.out.println(musicFile);
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(musicFile);
 
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+            e.printStackTrace();
+        }
+    }
     public static void main(String[] args) {
         new View();
     }
