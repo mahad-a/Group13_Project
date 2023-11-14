@@ -25,7 +25,6 @@ public class Controller implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         Object o = e.getSource();
-
         if(o instanceof JButton){
             JButton b = (JButton) o;
             switch(b.getText()){
@@ -39,7 +38,7 @@ public class Controller implements ActionListener {
                     break;
                 default:
                     for(Card ca: model.getCurrentPlayer().getHand()){
-                        if(b.getText().equals(ca.toString())){
+                        if(b.getClientProperty("card").equals(ca.toString())){
                             if(ca instanceof WildCard){
                                 ca.setColour(getColourInput());
                                 model.handleCurrentPlayerTurn(model.getCurrentPlayer(),ca);

@@ -17,7 +17,7 @@ public class View extends JFrame implements UnoGameModelView {
     JPanel userArea;
     JPanel statusArea;
     JTextArea statusField;
-    JTextField topCard;
+    JButton topCard;
     JPanel hand;
     JButton drawOneButton;
     JButton nextPlayer;
@@ -30,7 +30,10 @@ public class View extends JFrame implements UnoGameModelView {
         JDialog.setDefaultLookAndFeelDecorated(true);
         Object[] selectionValues = new Object[]{2, 3, 4};
         int initialSelection = 2;
-        Object selection = JOptionPane.showInputDialog((Component)null, "How many players?", "Select Players", 3, (Icon)null, selectionValues, Integer.valueOf(initialSelection));
+        ImageIcon optionPanePicture = new ImageIcon("src/main/java/org/example/uno/GUI/images/uno_pic.png");
+        Image scaledImage = optionPanePicture.getImage().getScaledInstance(200, 140, Image.SCALE_SMOOTH);
+        ImageIcon scaledOptionPanePicture = new ImageIcon(scaledImage);
+        Object selection = JOptionPane.showInputDialog((Component)null, "How many players?", "Select Players", 3, scaledOptionPanePicture, selectionValues, Integer.valueOf(initialSelection));
         this.startGame((Integer)selection);
     }
 
@@ -42,7 +45,7 @@ public class View extends JFrame implements UnoGameModelView {
         setGuiLayout();
 
         this.setDefaultCloseOperation(3);
-        this.setSize(1000, 1000);
+        this.setSize(1600, 700);
         this.setVisible(true);
     }
 
@@ -57,7 +60,9 @@ public class View extends JFrame implements UnoGameModelView {
 
         this.topCardView = new JPanel();
         topCardView.setBorder(new TitledBorder("Top Card"));
-        topCard = new JTextField(model.getCurrentCard().toString());
+        topCard = new JButton();
+        setIcon(topCard, model.getCurrentCard(), true);
+        topCard.setEnabled(false);
         topCardView.add(topCard);
         mainPanel.add(topCardView);
 
@@ -92,13 +97,17 @@ public class View extends JFrame implements UnoGameModelView {
 
     }
 
-    private void setIcon(JButton button, Card card){
-
-        String image = card.toString()+ ".jpg";
-        // Set icon
-        ImageIcon cardIcon = new ImageIcon(image);
-        button.setIcon(cardIcon);
-        button.setText(null);
+    private void setIcon(JButton button, Card card, Boolean topCard){
+        String imagePath = "src/main/java/org/example/uno/GUI/images/" + card.toString()+ ".jpg";
+        int width = 200;
+        int height = 280;
+        ImageIcon originalIcon = new ImageIcon(imagePath);
+        Image scaledImage = originalIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        if (topCard){
+            button.setDisabledIcon(scaledIcon);
+        }
+        button.setIcon(scaledIcon);
     }
     private void updateHand(){
         if(!cards.isEmpty()){
@@ -110,8 +119,9 @@ public class View extends JFrame implements UnoGameModelView {
 
         cards.clear();
         for(Card c: model.getCurrentPlayer().getHand()){
-            JButton b = new JButton();
-            setIcon(b,c);
+            JButton b = new JButton(); // for debugging:c.toString()
+            b.putClientProperty("card", c.toString());
+            setIcon(b,c, false);
             b.addActionListener(unoController);
             cards.add(b);
             hand.add(b);
@@ -135,7 +145,7 @@ public class View extends JFrame implements UnoGameModelView {
       }
       statusField.setText(e.getMessage());
       playerLabel.setText(model.getCurrentPlayer().getName());
-      topCard.setText(model.getCurrentCard().toString());
+      setIcon(topCard, model.getCurrentCard(), true);
 
       if(e.isSkipNextPlayer()){
           for (JButton b : cards) {
@@ -146,10 +156,10 @@ public class View extends JFrame implements UnoGameModelView {
           model.setSkipNextPlayer(false);
       }
       if(model.isRoundOver()){
-          String str = " ";
+          String str = "";
           //get scores
           for(Player p: model.getPlayers()){
-             str += (p.getName() +"s Score: " + p.getScore() + "\n");
+             str += (p.getName() +"'s Score: " + p.getScore() + "\n");
           }
           Object[] selectionValues = new Object[]{"YES","NO"};
           String initialSelection = "YES";
@@ -161,6 +171,10 @@ public class View extends JFrame implements UnoGameModelView {
               case "Yes":
                   model.clearHand();
                   model.startGame();
+                  updateHand();
+                  statusField.setText(e.getMessage());
+                  playerLabel.setText(model.getCurrentPlayer().getName());
+                  setIcon(topCard, model.getCurrentCard(), true);
                   break;
               case "NO":
                   setVisible(false);
