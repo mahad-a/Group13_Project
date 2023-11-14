@@ -1,9 +1,6 @@
 package org.example.uno.GUI;
 
-import org.example.uno.cards.Card;
-import org.example.uno.cards.DrawOneCard;
-import org.example.uno.cards.SkipCard;
-import org.example.uno.cards.WildCard;
+import org.example.uno.cards.*;
 import org.example.uno.game.UnoGame;
 
 import javax.swing.*;
@@ -23,6 +20,13 @@ public class Controller implements ActionListener {
         return Card.Colour.valueOf((String) selection);
     }
 
+    private String getChallengeInput(){
+        Object[] selectionValues = new Object[]{"YES","NO"};
+        String initialSelection = "YES";
+        Object selection = JOptionPane.showInputDialog((Component)null, model.getCurrentPlayer().getName() + " played a Wild Draw Two card. Do you wish to challenge?", "Challenge", JOptionPane.QUESTION_MESSAGE, (Icon)null, selectionValues, String.valueOf(initialSelection));
+        return ((String) selection);
+    }
+
     public void actionPerformed(ActionEvent e) {
         Object o = e.getSource();
         if(o instanceof JButton){
@@ -37,16 +41,20 @@ public class Controller implements ActionListener {
                     model.nextPlayer();
                     break;
                 default:
-                    for(Card ca: model.getCurrentPlayer().getHand()){
+                    for(int i = 0; i < model.getCurrentPlayer().getHand().size(); i++ ){
+                        Card ca = model.getCurrentPlayer().getHand().get(i);
                         if(b.getClientProperty("card").equals(ca.toString())){
                             if(ca instanceof WildCard){
                                 ca.setColour(getColourInput());
-                                model.handleCurrentPlayerTurn(model.getCurrentPlayer(),ca);
                             }
 
-                            else {
-                                model.handleCurrentPlayerTurn(model.getCurrentPlayer(), ca);
+                            if(ca instanceof WildDrawTwoCard){
+                                ca.setColour(getColourInput());
+                                ((WildDrawTwoCard) ca).setChallenged(getChallengeInput());
                             }
+
+                            model.handleCurrentPlayerTurn(model.getCurrentPlayer(), ca);
+
                         }
                     }
 

@@ -1,26 +1,15 @@
 package org.example.uno.GUI;
-
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
 import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-
 import org.example.uno.cards.*;
 import org.example.uno.game.Player;
 import org.example.uno.game.UnoGame;
 
-import javax.swing.AbstractAction;
-import javax.swing.JComponent;
-import javax.swing.KeyStroke;
-import java.awt.event.ActionEvent;
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class View extends JFrame implements UnoGameModelView {
     UnoGame model;
@@ -35,7 +24,7 @@ public class View extends JFrame implements UnoGameModelView {
     JButton nextPlayer;
     Controller unoController;
     ArrayList<JButton> cards;
-    boolean enable_buttons_flag = true;
+
 
     public View() {
         super("UNO");
@@ -66,6 +55,9 @@ public class View extends JFrame implements UnoGameModelView {
     private void setGuiLayout(){
         setLayout(new BorderLayout());
         this.playerLabel = new JLabel(model.getCurrentPlayer().getName());
+        Font customFont = new Font("Courier New", Font.BOLD, 16);
+        // Set the custom Font to the JLabel
+        this.playerLabel.setFont(customFont);
         add(playerLabel,BorderLayout.NORTH);
 
         JPanel mainPanel = new JPanel();
@@ -108,53 +100,6 @@ public class View extends JFrame implements UnoGameModelView {
         drawOneButton = new JButton("Draw A Card");
         drawOneButton.addActionListener(unoController);
         userArea.add(drawOneButton,BorderLayout.EAST);
-
-        // Control N SHORT CUT FOR NEXT PLAYER
-        KeyStroke ctrlNKeyStroke = KeyStroke.getKeyStroke("control N");
-        nextPlayer.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(ctrlNKeyStroke, "nextPlayer");
-        nextPlayer.getActionMap().put("nextPlayer", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                nextPlayerActionPerformed();
-            }
-        });
-
-
-        // ADDINNG HIGHLIGHT EFFECT FOR NEXT PLAYER BUTTON
-        nextPlayer.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                nextPlayer.setBorder(BorderFactory.createLineBorder(Color.BLUE));
-            }
-
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                nextPlayer.setBorder(null);
-            }
-        });
-
-        // ADDING HIGHLIGHT EFFECT FOR DRAW ONE BUTTON
-        drawOneButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                drawOneButton.setBorder(BorderFactory.createLineBorder(Color.BLUE));
-            }
-
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                drawOneButton.setBorder(null);
-            }
-        });
-
-
-        // ADDING HOVER EFFECT OVER THE PANEL FOR CARDS.
-        hand.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        hand.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                hand.setBorder(BorderFactory.createLineBorder(Color.BLUE));
-            }
-
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                hand.setBorder(null);
-            }
-        });
 
     }
 
@@ -217,40 +162,36 @@ public class View extends JFrame implements UnoGameModelView {
           model.setSkipNextPlayer(false);
       }
       if(model.isRoundOver()){
-          String str = "";
-          //get scores
-          for(Player p: model.getPlayers()){
-             str += (p.getName() +"'s Score: " + p.getScore() + "\n");
-          }
-          Object[] selectionValues = new Object[]{"YES","NO"};
-          String initialSelection = "YES";
-          Object selection = JOptionPane.showInputDialog((Component)null,
-                  model.getCurrentPlayer().getName() + " won this round!\n" + str,
-                  "Round Over!", 3,
-                  (Icon)null, selectionValues, initialSelection);
-          switch((String) selection){
-              case "Yes":
-                  model.clearHand();
-                  model.startGame();
-                  updateHand();
-                  statusField.setText(e.getMessage());
-                  playerLabel.setText(model.getCurrentPlayer().getName());
-                  setIcon(topCard, model.getCurrentCard(), true);
-                  break;
-              case "NO":
-                  setVisible(false);
-                  dispose(); //Destroy the JFrame object
-          }
+          handleRoundOver(e);
       }
 
     }
 
-    /**
-     * nextPlayerActionPerformed allows the next player button
-     * to be clicked using Ctrl+N on keyboard.
-     */
-    private void nextPlayerActionPerformed() {
-        unoController.actionPerformed(new ActionEvent(nextPlayer, ActionEvent.ACTION_PERFORMED, null));
+    private void handleRoundOver(UnoEvent e){
+        String str = "";
+        //get scores
+        for(Player p: model.getPlayers()){
+            str += (p.getName() +"'s Score: " + p.getScore() + "\n");
+        }
+        Object[] selectionValues = new Object[]{"YES","NO"};
+        String initialSelection = "YES";
+        Object selection = JOptionPane.showInputDialog((Component)null,
+                model.getCurrentPlayer().getName() + " won this round!\n" + str,
+                "Round Over!", 3,
+                (Icon)null, selectionValues, initialSelection);
+        switch((String) selection){
+            case "YES":
+                model.clearHand();
+                model.startGame();
+                updateHand();
+                statusField.setText("New Round!!");
+                playerLabel.setText(model.getCurrentPlayer().getName());
+                setIcon(topCard, model.getCurrentCard(), true);
+                break;
+            case "NO":
+                setVisible(false);
+                dispose(); //Destroy the JFrame object
+        }
     }
 
     private static void playBackgroundMusic() {
@@ -267,6 +208,7 @@ public class View extends JFrame implements UnoGameModelView {
             e.printStackTrace();
         }
     }
+
     public static void main(String[] args) {
         new View();
     }

@@ -128,9 +128,9 @@ public class UnoGame {
         int currPlayerIndex = this.players.indexOf(getCurrentPlayer());
         int nextPlayer = (currPlayerIndex + 1) % players.size();
         // handle reverse case when only 2 players
-        if (!(currentCard instanceof ReverseCard && players.size() == 2)){
-            setCurrentPlayer(players.get(nextPlayer));
-        }
+
+        setCurrentPlayer(players.get(nextPlayer));
+
         updateView(false,isSkipNextPlayer(),"");
     }
 
@@ -158,8 +158,14 @@ public class UnoGame {
     public void setCurrentCard(Card card){
         this.currentCard = card;
         if(card instanceof SkipCard){
-            updateView(true,false,this.getNextPlayer().getName() + "has to skip their turn due to Skip Card");
+            updateView(true,false,this.getNextPlayer().getName() + " has to skip their turn due to Skip Card");
+            return;
         }
+        else if(card instanceof WildDrawTwoCard){
+            updateView(true,false,((WildDrawTwoCard) card).getMessage());
+            return;
+        }
+
         updateView(true,false," ");
     }
 
