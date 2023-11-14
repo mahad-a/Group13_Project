@@ -58,7 +58,8 @@ public class ReverseCard extends Card {
      * @return The value of the reverse card (20).
      */
     public int getValue(){
-        return this.VALUE;
+
+        return VALUE;
     }
 
     /**

@@ -13,11 +13,11 @@ public class WildDrawTwoCardTest {
     private WildDrawTwoCard wildDrawTwoCard;
     private UnoGame game;
     private static Scanner scanner;
-
+    private int numPlayers = 2;
     @Before
     public void setUp() {
         wildDrawTwoCard = new WildDrawTwoCard();
-        game = new UnoGame(true);
+        game = new UnoGame(true, numPlayers);
         Player alpha = new Player("Alpha");
         Player beta = new Player("Beta");
         game.addPlayer(alpha);

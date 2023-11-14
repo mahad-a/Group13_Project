@@ -13,11 +13,12 @@ public class WildCardTest {
     private WildCard wildCard;
     private UnoGame game;
     private static Scanner scanner;
+    private int numPlayers;
 
     @Before
     public void setUp() {
         wildCard = new WildCard();
-        game = new UnoGame(true);
+        game = new UnoGame(true, numPlayers);
         Player alpha = new Player("Alpha");
         Player beta = new Player("Beta");
         game.addPlayer(alpha);

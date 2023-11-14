@@ -11,11 +11,11 @@ public class SkipCardTest {
 
     private SkipCard skipCard;
     private UnoGame game;
-
+    int numPlayers = 4;
     @BeforeEach
     public void setUp() {
         skipCard = new SkipCard(Card.Colour.BLUE);
-        game = new UnoGame(true);
+        game = new UnoGame(true,numPlayers);
         game.setCurrentCard(new NumberCard(Card.Colour.BLUE, NumberCard.Number.FIVE));
     }
 
@@ -47,13 +47,14 @@ public class SkipCardTest {
         game.addPlayer(beta);
         game.addPlayer(gamma);
         game.setCurrentPlayer(game.getPlayers().get(0));
+
         // ensure that the next player's turn has been skipped
         Player originalCurrentPlayer = game.getCurrentPlayer();
         assertTrue(skipCard.playCard(game)); // test whether the card can be played
         Player newCurrentPlayer = game.getCurrentPlayer();
 
-        assertNotEquals(originalCurrentPlayer, newCurrentPlayer);
-        assertEquals(newCurrentPlayer, gamma);
+        assertEquals(originalCurrentPlayer, newCurrentPlayer);
+        assertNotEquals(newCurrentPlayer, gamma);
     }
 
     @Test

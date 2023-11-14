@@ -10,12 +10,12 @@ public class NumberCardTest {
 
     private NumberCard numberCard;
     private UnoGame game;
-
+    int numPlayers;
     @Before
     public void setUp() {
         Player alpha = new Player("Alpha");
         numberCard = new NumberCard(Card.Colour.BLUE, NumberCard.Number.FIVE);
-        game = new UnoGame(true);
+        game = new UnoGame(true, numPlayers);
         game.setCurrentCard(numberCard);
         game.addPlayer(alpha);
         game.setCurrentPlayer(game.getPlayers().get(0));

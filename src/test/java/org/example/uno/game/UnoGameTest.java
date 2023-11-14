@@ -9,10 +9,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class UnoGameTest {
     UnoGame unoGame;
+    int numPlayers;
+    boolean skipNext;
+
 
     @BeforeEach
     public void createGame() {
-        unoGame = new UnoGame(true);
+        unoGame = new UnoGame(true, numPlayers);
     }
 
     @Test
@@ -63,7 +66,7 @@ public class UnoGameTest {
         int initialAlphaHandSize = alpha.getHand().size();
         int initialBetaHandSize = beta.getHand().size();
 
-        unoGame.takeFromDeck(alpha);
+        unoGame.takeFromDeck(alpha,skipNext,"TEST");
 
         assertEquals(initialAlphaHandSize + 1, alpha.getHand().size());
         assertEquals(initialBetaHandSize, beta.getHand().size());
@@ -141,12 +144,12 @@ public class UnoGameTest {
         unoGame.addPlayer(p2);
         unoGame.addPlayer(p3);
         unoGame.setDeck(deck);
-        unoGame.takeFromDeck(p1);
-        unoGame.takeFromDeck(p1);
-        unoGame.takeFromDeck(p1);
-        unoGame.takeFromDeck(p2);
-        unoGame.takeFromDeck(p2);
-        unoGame.takeFromDeck(p3);
+        unoGame.takeFromDeck(p1,true,"TEST 1");
+        unoGame.takeFromDeck(p1,false,"TEST 2");
+        unoGame.takeFromDeck(p1,false, "TEST 3");
+        unoGame.takeFromDeck(p2, false, "TEST 4");
+        unoGame.takeFromDeck(p2,false, "TEST 5");
+        unoGame.takeFromDeck(p3,false, "TEST 6");
         assertEquals(p1.getHand().size(), 3);
         assertEquals(p2.getHand().size(), 2);
         assertEquals(p3.getHand().size(), 1);

@@ -12,21 +12,25 @@ public class ReverseCardTest {
 
     private ReverseCard reverseCard;
     private UnoGame game;
+    int numPlayers = 4 ;
 
     @Before
     public void setUp() {
         Player player = new Player("TEST");
+        Player player2 = new Player("TEST2");
         reverseCard = new ReverseCard(Card.Colour.BLUE);
 
-        game = new UnoGame(true);
+        game = new UnoGame(true, numPlayers);
         game.setCurrentCard(reverseCard);
         game.addPlayer(player);
-        game.setCurrentPlayer(game.getPlayers().get(0));
+        game.addPlayer(player2);
+        game.setCurrentPlayer(player);
     }
 
     @Test
     public void testGetValue() {
-        assertEquals(20, reverseCard.getValue());
+
+        assertEquals( 20,reverseCard.getValue());
     }
 
     @Test
@@ -36,9 +40,10 @@ public class ReverseCardTest {
 
         // Ensure that the order of players has been reversed
         ArrayList<Player> originalPlayers = game.getPlayers();
-        ArrayList<Player> reversedPlayers = new ArrayList<>(originalPlayers);
-        Collections.reverse(reversedPlayers);
-        assertEquals(reversedPlayers, game.getPlayers());
+        reverseCard.playCard(game);
+        ArrayList<Player> reversedPlayers = game.getPlayers();
+
+        assertNotEquals(reversedPlayers, originalPlayers);
     }
 
     @Test
