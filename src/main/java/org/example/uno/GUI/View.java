@@ -10,6 +10,14 @@ import org.example.uno.cards.*;
 import org.example.uno.game.Player;
 import org.example.uno.game.UnoGame;
 
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
+import javax.swing.KeyStroke;
+import java.awt.event.ActionEvent;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 public class View extends JFrame implements UnoGameModelView {
     UnoGame model;
     JLabel playerLabel;
@@ -94,6 +102,53 @@ public class View extends JFrame implements UnoGameModelView {
         drawOneButton = new JButton("Draw A Card");
         drawOneButton.addActionListener(unoController);
         userArea.add(drawOneButton,BorderLayout.EAST);
+
+        // Control N SHORT CUT FOR NEXT PLAYER
+        KeyStroke ctrlNKeyStroke = KeyStroke.getKeyStroke("control N");
+        nextPlayer.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(ctrlNKeyStroke, "nextPlayer");
+        nextPlayer.getActionMap().put("nextPlayer", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                nextPlayerActionPerformed();
+            }
+        });
+
+
+        // ADDINNG HIGHLIGHT EFFECT FOR NEXT PLAYER BUTTON
+        nextPlayer.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                nextPlayer.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                nextPlayer.setBorder(null);
+            }
+        });
+
+        // ADDING HIGHLIGHT EFFECT FOR DRAW ONE BUTTON
+        drawOneButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                drawOneButton.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                drawOneButton.setBorder(null);
+            }
+        });
+
+
+        // ADDING HOVER EFFECT OVER THE PANEL FOR CARDS.
+        hand.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        hand.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                hand.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                hand.setBorder(null);
+            }
+        });
 
     }
 
@@ -183,6 +238,15 @@ public class View extends JFrame implements UnoGameModelView {
       }
 
     }
+
+    /**
+     * nextPlayerActionPerformed allows the next player button
+     * to be clicked using Ctrl+N on keyboard.
+     */
+    private void nextPlayerActionPerformed() {
+        unoController.actionPerformed(new ActionEvent(nextPlayer, ActionEvent.ACTION_PERFORMED, null));
+    }
+
 
     public static void main(String[] args) {
         new View();
