@@ -31,6 +31,7 @@ public class UnoGame {
     private Card currentCard;
     private Player currentPlayer;
     private boolean skipNextPlayer;
+    private Card cardDrawn = null ;
     private boolean roundOver;
     private static final String YES = "YES";
     private static final String NO = "NO";
@@ -50,6 +51,12 @@ public class UnoGame {
         startGame();
         //** add a way to create 4 players and give them names using input **\\
     }
+
+    /**
+     * Adds a view observer to the game.
+     *
+     * @param v The UnoGameModelView to be added.
+     */
     public void addUnoView(UnoGameModelView v){
         this.views.add(v);
     }
@@ -116,10 +123,40 @@ public class UnoGame {
     public void setCurrentPlayer(Player player) {
         this.currentPlayer = player;
     }
+
+    /**
+     * Checks if the program should skip the next player.
+     *
+     * @return true if the player should be skipped, false otherwise.
+     */
     public boolean isSkipNextPlayer(){
         return this.skipNextPlayer;
     }
+
+    /**
+     * Sets the player that should be skipped next.
+     *
+     * @param x the player to be skipped.
+     */
     public void setSkipNextPlayer(boolean x){this.skipNextPlayer = x;}
+
+    /**
+     * Sets the card that was drawn by the player.
+     *
+     * @param c The card to be set as the card that was drawn.
+     */
+    public void setCardDrawn(Card c){
+        this.cardDrawn = c;
+    }
+
+    /**
+     * Gets the card that was drawn by the player.
+     *
+     * @return The card that was drawn by the player.
+     */
+    public Card getCardDrawn(){
+        return this.cardDrawn;
+    }
 
     /**
      * Advances the turn to the next player, taking into consideration the effects of a special card.
@@ -128,12 +165,17 @@ public class UnoGame {
         int currPlayerIndex = this.players.indexOf(getCurrentPlayer());
         int nextPlayer = (currPlayerIndex + 1) % players.size();
         // handle reverse case when only 2 players
-        if (!(currentCard instanceof ReverseCard && players.size() == 2)){
-            setCurrentPlayer(players.get(nextPlayer));
-        }
+
+        setCurrentPlayer(players.get(nextPlayer));
+
         updateView(false,isSkipNextPlayer(),"");
     }
 
+    /**
+     * Gets the player whose turn is next.
+     *
+     * @return the player who is meant to play next.
+     */
     public Player getNextPlayer(){
         int currPlayerIndex = this.players.indexOf(getCurrentPlayer());
         int nextPlayer = (currPlayerIndex + 1) % players.size();
@@ -158,8 +200,14 @@ public class UnoGame {
     public void setCurrentCard(Card card){
         this.currentCard = card;
         if(card instanceof SkipCard){
-            updateView(true,false,this.getNextPlayer().getName() + "has to skip their turn due to Skip Card");
+            updateView(true,false,this.getNextPlayer().getName() + " has to skip their turn\ndue to Skip Card");
+            return;
         }
+        else if(card instanceof WildDrawTwoCard){
+            updateView(true,false,((WildDrawTwoCard) card).getMessage());
+            return;
+        }
+
         updateView(true,false," ");
     }
 
@@ -235,6 +283,7 @@ public class UnoGame {
 
         player.addCard(cardDrawn);
         if (message.equals("Drew a Card: ")){
+            this.cardDrawn = cardDrawn;
             updateView(true,false,message + cardDrawn.toString());
         }
         else {
@@ -337,6 +386,10 @@ public class UnoGame {
         }
 
     }
+
+    /**
+     * Clears the player's hand of Uno cards.
+     */
     public void clearHand(){
         for (Player p : players){
             p.discardHand();
@@ -349,7 +402,12 @@ public class UnoGame {
     public void gameOver(){
 
     }
-    
+
+    /**
+     * Main method that initiates the start of the UnoGame
+     *
+     * @param args The arguments for the command line.
+     */
     public static void main(String[] args) {
         UnoGame unoGame = new UnoGame(true,2);
         unoGame.startGame();

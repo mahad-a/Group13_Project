@@ -16,6 +16,8 @@ import org.example.uno.game.*;
  */
 public class WildDrawTwoCard extends Card {
     private static final int VALUE = 50;
+    private boolean challenged;
+    private String message;
 
     /**
      * Constructs a wild draw two card.
@@ -34,10 +36,29 @@ public class WildDrawTwoCard extends Card {
     @Override
     public boolean playCard(UnoGame game) {
 
+        if(challenged){
 
+                if(! super.isCardPlaceable(game,this)){
+                    Card c1 = game.takeFromDeck(game.getCurrentPlayer(),false,"" );
+                    Card c2 = game.takeFromDeck(game.getCurrentPlayer(),false,"" );
+                    this.message = this.getColour() + " was chosen.\n" + game.getCurrentPlayer().getName()
+                            + " was found GUILTY!\nDraw two cards";
+                }
+                else{
+                    Card c1 = game.takeFromDeck(game.getNextPlayer(), true, "");
+                    Card c2 = game.takeFromDeck(game.getNextPlayer(), true, "");
+                    this.message = this.getColour() + " was chosen.\n" + game.getNextPlayer().getName()
+                            + " must draw 2 cards\ndue to Wild Draw Two.";
+                }
+
+        }
+        else {
+            Card c1 = game.takeFromDeck(game.getNextPlayer(), true, "");
+            Card c2 = game.takeFromDeck(game.getNextPlayer(), true, "");
+            this.message = this.getColour() + " was chosen.\n" + game.getNextPlayer().getName()
+                    + " must draw 2 cards\ndue to Wild Draw Two.";
+        }
         super.placeCard(game, this);
-        Card c1 = game.takeFromDeck(game.getNextPlayer(),true,game.getNextPlayer().getName() + " has to draw two cards due to Wild Draw Two" );
-        Card c2 = game.takeFromDeck(game.getNextPlayer(),true,game.getNextPlayer().getName() + " has to draw two cards due to Wild Draw Two" );
 
         return true;
     }
@@ -49,6 +70,29 @@ public class WildDrawTwoCard extends Card {
      */
     public int getValue(){
         return VALUE;
+    }
+
+    /**
+     * Sets the player's decision to challenge or not challenge the WildDrawTwoCard.
+     *
+     * @param in The decision to challenge or not challenge.
+     */
+    public void setChallenged(String in){
+        if(in.equals("YES")){
+            this.challenged = true;
+        }
+        else{
+            this.challenged = false;
+        }
+    }
+
+    /**
+     * Retrieves a string representation of the message.
+     *
+     * @return A String message.
+     */
+    public String getMessage(){
+        return this.message;
     }
 
     /**

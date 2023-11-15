@@ -74,23 +74,28 @@ public abstract class Card {
      * @return {@code true} if the card is placeable, {@code false} otherwise.
      */
     public boolean isCardPlaceable(UnoGame game, Card placeCard){
-        boolean noPlayableCardInHand = true;
         Card currentCard = game.getCurrentCard();
+
         // within rulebook, states wildDrawTwoCard can only be played if the player has no cards of the current color
-        for (Card card : game.getCurrentPlayer().getHand()){
-            if (card instanceof NumberCard && card.getColour().equals(currentCard.getColour())){
-                noPlayableCardInHand = false;
-                break;
+        if (placeCard instanceof WildDrawTwoCard){
+            for (Card card : game.getCurrentPlayer().getHand()){
+
+                if(card.getColour().equals(currentCard.getColour()) || (((card instanceof NumberCard) && (currentCard instanceof NumberCard)) &&
+                        ((NumberCard) card).getNumber() == ((NumberCard) currentCard).getNumber())){
+                    return false;
+                }
             }
         }
+
+        boolean isWildDrawTwo = (placeCard instanceof WildDrawTwoCard);
+        boolean isWildCard = (placeCard instanceof WildCard);
         boolean deckColorMatch = currentCard.getColour() == placeCard.getColour();
         boolean wildCardMatch = currentCard.getColour() == placeCard.getColour() && (currentCard instanceof WildCard);
-        boolean wildDrawTwoCardMatch = (currentCard instanceof WildDrawTwoCard) && noPlayableCardInHand;
         boolean reverseCardsMatch = currentCard instanceof ReverseCard && placeCard instanceof ReverseCard;
         boolean drawOneCardMatch = currentCard instanceof DrawOneCard && placeCard instanceof DrawOneCard;
         boolean skipCardMatch = currentCard instanceof SkipCard && placeCard instanceof SkipCard;
 
-        return deckColorMatch || wildCardMatch || reverseCardsMatch || wildDrawTwoCardMatch || drawOneCardMatch || skipCardMatch;
+        return deckColorMatch || wildCardMatch || reverseCardsMatch || drawOneCardMatch || skipCardMatch || isWildDrawTwo || isWildCard;
     }
 
     /**
