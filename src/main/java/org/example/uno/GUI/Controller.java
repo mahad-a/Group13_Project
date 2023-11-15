@@ -53,8 +53,9 @@ public class Controller implements ActionListener {
     private String getChallengeInput(){
         Object[] selectionValues = new Object[]{"YES","NO"};
         String initialSelection = "YES";
-        Object selection = JOptionPane.showInputDialog((Component)null, model.getCurrentPlayer().getName() + " played a Wild Draw Two card. Do you wish to challenge?", "Challenge", JOptionPane.QUESTION_MESSAGE, (Icon)null, selectionValues, String.valueOf(initialSelection));
-        return ((String) selection);
+        int selection = JOptionPane.showOptionDialog((Component)null, model.getCurrentPlayer().getName() + " played a Wild Draw Two card. Do you wish to challenge?",
+                "Challenge",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, (Icon)null,selectionValues,selectionValues[0]);
+        return (selection == JOptionPane.YES_OPTION) ? "YES" : "NO";
     }
 
     /**
