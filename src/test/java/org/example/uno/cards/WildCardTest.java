@@ -1,7 +1,5 @@
 package org.example.uno.cards;
 
-import java.util.Scanner;
-
 import org.example.uno.game.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +10,6 @@ public class WildCardTest {
 
     private WildCard wildCard;
     private UnoGame game;
-    private static Scanner scanner;
     private int numPlayers = 2;
 
     @Before

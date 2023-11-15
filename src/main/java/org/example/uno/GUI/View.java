@@ -3,9 +3,7 @@ package org.example.uno.GUI;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
 import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -18,9 +16,6 @@ import javax.swing.AbstractAction;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 import java.awt.event.ActionEvent;
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class View extends JFrame implements UnoGameModelView {
     UnoGame model;
@@ -35,7 +30,6 @@ public class View extends JFrame implements UnoGameModelView {
     JButton nextPlayer;
     Controller unoController;
     ArrayList<JButton> cards;
-    boolean enable_buttons_flag = true;
 
     public View() {
         super("UNO");

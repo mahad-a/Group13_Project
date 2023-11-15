@@ -1,7 +1,6 @@
 package org.example.uno.game;
 
-import org.example.uno.cards.Card;
-import org.example.uno.cards.NumberCard;
+import org.example.uno.cards.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class UnoGameTest {
     UnoGame unoGame;
-    int numPlayers;
+    int numPlayers = 2;
     boolean skipNext;
 
 
@@ -20,30 +19,16 @@ public class UnoGameTest {
 
     @Test
     public void testNextPlayer() {
-        Player alpha = new Player("Alpha");
-        Player beta = new Player("Beta");
-        Player gamma = new Player("Gamma");
-
-        unoGame.addPlayer(alpha);
-        unoGame.addPlayer(beta);
-        unoGame.addPlayer(gamma);
-        unoGame.setCurrentPlayer(unoGame.getPlayers().get(0));
+        Player nextPlayer = unoGame.getPlayers().get(1); // second person in the arraylist
         unoGame.nextPlayer();
-        assertEquals(unoGame.getCurrentPlayer(), beta);
+
+        assertEquals(nextPlayer, unoGame.getCurrentPlayer());
     }
 
     @Test
     public void testDealCards() {
-        Player alpha = new Player("Alpha");
-        Player beta = new Player("Beta");
-        Player gamma = new Player("Gamma");
-        Player delta = new Player("Delta");
-
-        unoGame.addPlayer(alpha);
-        unoGame.addPlayer(beta);
-        unoGame.addPlayer(gamma);
-        unoGame.addPlayer(delta);
         unoGame.setDeck(new Deck());
+        unoGame.clearHand(); // make every player start with an empty hand
         unoGame.dealCards();
 
         // check every player has 7 cards dealt to them
@@ -83,19 +68,25 @@ public class UnoGameTest {
         assertTrue(unoGame.isPlayerNameExists("Beta"));
         assertFalse(unoGame.isPlayerNameExists("Pi"));
     }
-
+    
     @Test
     public void testCalculateScore() {
-        Player alpha = new Player("Alpha");
-        Player beta = new Player("Beta");
-        unoGame.addPlayer(alpha);
-        unoGame.addPlayer(beta);
-        alpha.addCard(new NumberCard(Card.Colour.RED, NumberCard.Number.FIVE));
-        alpha.addCard(new NumberCard(Card.Colour.BLUE, NumberCard.Number.THREE));
-        assertEquals(8, unoGame.calculateScore(beta));
-        beta.updateScore(unoGame.calculateScore(beta));
-        assertEquals(0, alpha.getScore());
-        assertEquals(8, beta.getScore());
+        for (Player p: unoGame.getPlayers()) {
+            p.discardHand();
+        }
+        Player player1 = unoGame.getCurrentPlayer();
+        player1.addCard(new NumberCard(Card.Colour.RED, NumberCard.Number.FIVE));
+        assertEquals(5, unoGame.calculateScore(player1));
+        player1.addCard(new SkipCard(Card.Colour.BLUE));
+        assertEquals(25, unoGame.calculateScore(player1));
+        player1.addCard(new DrawOneCard(Card.Colour.GREEN));
+        assertEquals(35, unoGame.calculateScore(player1));
+        player1.addCard(new WildCard());
+        assertEquals(75, unoGame.calculateScore(player1));
+        player1.addCard(new ReverseCard(Card.Colour.YELLOW));
+        assertEquals(95, unoGame.calculateScore(player1));
+        player1.addCard(new WildDrawTwoCard());
+        assertEquals(145, unoGame.calculateScore(player1));
     }
 
     @Test
@@ -114,8 +105,7 @@ public class UnoGameTest {
     public void testAddPlayer(){
         unoGame.addPlayer(new Player("John"));
         unoGame.addPlayer(new Player("Cathy"));
-        unoGame.addPlayer(new Player("Manny"));
-        assertEquals(unoGame.getPlayers().size(), 3);
+        assertEquals(unoGame.getPlayers().size(), 4);
     }
 
     @Test
