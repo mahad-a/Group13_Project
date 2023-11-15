@@ -80,7 +80,8 @@ public abstract class Card {
         if (placeCard instanceof WildDrawTwoCard){
             for (Card card : game.getCurrentPlayer().getHand()){
 
-                if(card.getColour().equals(currentCard.getColour()) || (((card instanceof NumberCard) && (currentCard instanceof NumberCard)) &&
+                if((card.getColour() != null && card.getColour().equals(currentCard.getColour())) ||
+                        (((card instanceof NumberCard) && (currentCard instanceof NumberCard)) &&
                         ((NumberCard) card).getNumber() == ((NumberCard) currentCard).getNumber())){
                     return false;
                 }

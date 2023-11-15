@@ -41,7 +41,13 @@ public class Controller implements ActionListener {
         Object[] selectionValues = new Object[]{"RED","YELLOW","BLUE","GREEN"};
         String initialSelection = "Red";
         Object selection = JOptionPane.showInputDialog((Component)null, "Choose A Colour", "Wild Card Colour", JOptionPane.QUESTION_MESSAGE, (Icon)null, selectionValues, String.valueOf(initialSelection));
-        return Card.Colour.valueOf((String) selection);
+        Card.Colour chosenCardColor = null;
+        try {
+            chosenCardColor = Card.Colour.valueOf((String) selection);
+        } catch (NullPointerException e){
+            System.out.println("The window was closed. No color chosen.");
+        }
+        return chosenCardColor;
     }
 
 
@@ -81,15 +87,23 @@ public class Controller implements ActionListener {
                         Card ca = model.getCurrentPlayer().getHand().get(i);
                         if(b.getClientProperty("card").equals(ca.toString())){
                             if(ca instanceof WildCard){
-                                ca.setColour(getColourInput());
+                                Card.Colour colourInput = getColourInput();
+                                if (colourInput != null) {
+                                    ca.setColour(colourInput);
+                                }
                             }
 
                             if(ca instanceof WildDrawTwoCard){
-                                ca.setColour(getColourInput());
-                                ((WildDrawTwoCard) ca).setChallenged(getChallengeInput());
+                                Card.Colour colourInput = getColourInput();
+                                if (colourInput != null) {
+                                    ca.setColour(colourInput);
+                                    ((WildDrawTwoCard) ca).setChallenged(getChallengeInput());
+                                }
                             }
 
-                            model.handleCurrentPlayerTurn(model.getCurrentPlayer(), ca);
+                            if (ca.getColour() != null) {
+                                model.handleCurrentPlayerTurn(model.getCurrentPlayer(), ca);
+                            }
 
                         }
                     }

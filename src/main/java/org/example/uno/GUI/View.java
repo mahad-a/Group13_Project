@@ -51,7 +51,13 @@ public class View extends JFrame implements UnoGameModelView {
         Image scaledImage = optionPanePicture.getImage().getScaledInstance(200, 140, Image.SCALE_SMOOTH);
         ImageIcon scaledOptionPanePicture = new ImageIcon(scaledImage);
         Object selection = JOptionPane.showInputDialog((Component)null, "How many players?", "Select Players", 3, scaledOptionPanePicture, selectionValues, Integer.valueOf(initialSelection));
-        this.startGame((Integer)selection);
+        Integer playerNumber = null;
+        try {
+            playerNumber = (Integer)selection;
+        } catch (NullPointerException e){
+            System.out.println("Exited player pane. Closing the game...");
+        }
+        this.startGame(playerNumber);
     }
 
     /**
@@ -59,18 +65,20 @@ public class View extends JFrame implements UnoGameModelView {
      *
      * @param numPlayer The number of players playing the game.
      */
-    private void startGame(int numPlayer) {
-        this.model = new UnoGame(true,numPlayer);
-        this.unoController = new Controller(model);
-        this.model.addUnoView(this);
-        cards = new ArrayList<JButton>();
-        setGuiLayout();
+    private void startGame(Integer numPlayer) {
+        if (numPlayer != null) {
+            this.model = new UnoGame(true, numPlayer);
+            this.unoController = new Controller(model);
+            this.model.addUnoView(this);
+            cards = new ArrayList<JButton>();
+            setGuiLayout();
 
-        playBackgroundMusic();
+            playBackgroundMusic();
 
-        this.setDefaultCloseOperation(3);
-        this.setSize(1600, 790);
-        this.setVisible(true);
+            this.setDefaultCloseOperation(3);
+            this.setSize(1600, 790);
+            this.setVisible(true);
+        }
     }
 
     /**
