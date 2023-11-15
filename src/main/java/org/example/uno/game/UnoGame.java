@@ -51,6 +51,12 @@ public class UnoGame {
         startGame();
         //** add a way to create 4 players and give them names using input **\\
     }
+
+    /**
+     * Adds a view observer to the game.
+     *
+     * @param v The UnoGameModelView to be added.
+     */
     public void addUnoView(UnoGameModelView v){
         this.views.add(v);
     }
@@ -119,25 +125,34 @@ public class UnoGame {
     }
 
     /**
-     * YUSUF
+     * Checks if the program should skip the next player.
+     *
+     * @return true if the player should be skipped, false otherwise.
      */
     public boolean isSkipNextPlayer(){
         return this.skipNextPlayer;
     }
+
     /**
-     * YUSUF
+     * Sets the player that should be skipped next.
+     *
+     * @param x the player to be skipped.
      */
     public void setSkipNextPlayer(boolean x){this.skipNextPlayer = x;}
 
     /**
-     * YUSUF
+     * Sets the card that was drawn by the player.
+     *
+     * @param c The card to be set as the card that was drawn.
      */
     public void setCardDrawn(Card c){
         this.cardDrawn = c;
     }
 
     /**
-     * YUSUF
+     * Gets the card that was drawn by the player.
+     *
+     * @return The card that was drawn by the player.
      */
     public Card getCardDrawn(){
         return this.cardDrawn;
@@ -156,6 +171,11 @@ public class UnoGame {
         updateView(false,isSkipNextPlayer(),"");
     }
 
+    /**
+     * Gets the player whose turn is next.
+     *
+     * @return the player who is meant to play next.
+     */
     public Player getNextPlayer(){
         int currPlayerIndex = this.players.indexOf(getCurrentPlayer());
         int nextPlayer = (currPlayerIndex + 1) % players.size();
@@ -366,6 +386,10 @@ public class UnoGame {
         }
 
     }
+
+    /**
+     * Clears the player's hand of Uno cards.
+     */
     public void clearHand(){
         for (Player p : players){
             p.discardHand();
@@ -378,7 +402,12 @@ public class UnoGame {
     public void gameOver(){
 
     }
-    
+
+    /**
+     * Main method that initiates the start of the UnoGame
+     *
+     * @param args The arguments for the command line.
+     */
     public static void main(String[] args) {
         UnoGame unoGame = new UnoGame(true,2);
         unoGame.startGame();

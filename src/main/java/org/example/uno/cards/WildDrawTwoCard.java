@@ -72,6 +72,11 @@ public class WildDrawTwoCard extends Card {
         return VALUE;
     }
 
+    /**
+     * Sets the player's decision to challenge or not challenge the WildDrawTwoCard.
+     *
+     * @param in The decision to challenge or not challenge.
+     */
     public void setChallenged(String in){
         if(in.equals("YES")){
             this.challenged = true;
@@ -81,6 +86,11 @@ public class WildDrawTwoCard extends Card {
         }
     }
 
+    /**
+     * Retrieves a string representation of the message.
+     *
+     * @return A String message.
+     */
     public String getMessage(){
         return this.message;
     }

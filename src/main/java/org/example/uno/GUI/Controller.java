@@ -45,6 +45,11 @@ public class Controller implements ActionListener {
     }
 
 
+    /**
+     * A prompt for the user to choose whether they would like to challenge a wild draw two card.
+     *
+     * @return The user's choice to challenge or not.
+     */
     private String getChallengeInput(){
         Object[] selectionValues = new Object[]{"YES","NO"};
         String initialSelection = "YES";

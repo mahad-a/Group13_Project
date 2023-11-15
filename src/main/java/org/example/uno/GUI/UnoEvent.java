@@ -48,6 +48,11 @@ public class UnoEvent extends EventObject {
         return this.moveMade;
     }
 
+    /**
+     * Retrieves the card that was drawn during the event.
+     *
+     * @return The card drawn during the event, or null if no card was drawn.
+     */
     public Card getCardDrawn(){
         return this.cardDrawn;
     }
