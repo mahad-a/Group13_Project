@@ -74,6 +74,11 @@ public class WildDrawTwoCard extends Card {
         }
     }
 
+    /**
+     * Returns the message.
+     *
+     * @return A string message.
+     */
     public String getMessage(){
         return this.message;
     }

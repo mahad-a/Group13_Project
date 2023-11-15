@@ -50,6 +50,12 @@ public class UnoGame {
         startGame();
         //** add a way to create 4 players and give them names using input **\\
     }
+
+    /**
+     * Adds a view observer to the game.
+     *
+     * @param v The UnoGameModelView to be added.
+     */
     public void addUnoView(UnoGameModelView v){
         this.views.add(v);
     }
@@ -116,9 +122,21 @@ public class UnoGame {
     public void setCurrentPlayer(Player player) {
         this.currentPlayer = player;
     }
+
+    /**
+     * Checks if the program should skip the next player.
+     *
+     * @return true if the player should be skipped, false otherwise.
+     */
     public boolean isSkipNextPlayer(){
         return this.skipNextPlayer;
     }
+
+    /**
+     * Sets the player that should be skipped next.
+     *
+     * @param x the player to be skipped.
+     */
     public void setSkipNextPlayer(boolean x){this.skipNextPlayer = x;}
 
     /**
@@ -134,6 +152,11 @@ public class UnoGame {
         updateView(false,isSkipNextPlayer(),"");
     }
 
+    /**
+     * Gets the player whose turn is next.
+     *
+     * @return the player who is meant to play next.
+     */
     public Player getNextPlayer(){
         int currPlayerIndex = this.players.indexOf(getCurrentPlayer());
         int nextPlayer = (currPlayerIndex + 1) % players.size();
@@ -209,6 +232,14 @@ public class UnoGame {
             v.updateView(new UnoEvent(this,moveMade,skipNext,m, cardDrawn));
         }
     }
+
+    /**
+     * Updates the view that is associated with the UnoGame by notifying it about the game event.
+     *
+     * @param moveMade A boolean to indicate if a move was made
+     * @param skipNext A boolean to indicated if the next player should be skipped
+     * @param m A message that is associated with the game event.
+     */
     private void updateView(boolean moveMade,boolean skipNext,String m){
         for(UnoGameModelView v: this.views){
             v.updateView(new UnoEvent(this,moveMade,skipNext,m));
@@ -348,6 +379,10 @@ public class UnoGame {
         }
 
     }
+
+    /**
+     * Clears the player's hand of Uno cards.
+     */
     public void clearHand(){
         for (Player p : players){
             p.discardHand();
@@ -360,7 +395,12 @@ public class UnoGame {
     public void gameOver(){
 
     }
-    
+
+    /**
+     * Main method that initiates the start of the UnoGame
+     *
+     * @param args The arguments for the command line.
+     */
     public static void main(String[] args) {
         UnoGame unoGame = new UnoGame(true,2);
         unoGame.startGame();

@@ -2,7 +2,7 @@
 # SYSC 3110
 # Dr. Wafa Hasanain - Carleton University, Department of Systems and Computer Engineering.
 # Software Development Project for Fall 2023.
-# October 22, 2023
+# November 12, 2023
 
 ## Project Objective
 
@@ -29,8 +29,19 @@ In this first milestone, we successfully developed a playable text-based version
 - Scoring: The ability to add and update the scores of each player currently playing. 
 - Testing: The program has been tested using JUnit tests, to ensure a functional program. 
 
-### Milestone 2 (Planned)
-In the second milestone, we plan to update the game to make a GUI-based version of the game. This version will including JFrames, JButtons, etc... . User interaction detected through mouse input.
+### Milestone 2 (Completed)
+
+For this milestone, we successfully transitioned the UnoGame from a text-based version to a GUI-based version of the game. The updates include the addition of a View and a Controller, and they enable a graphical display within a JFrame. User interaction is now accepted through mouse input, ensuring a more user-friendly experience.
+
+We've also designed and implemented unit tests Model, the tests focus on card placement, scoring, and penalty points. These tests are important to ensure proper game functionality.
+
+## Deliverables:
+
+- Readme file (updated to include Milestone 2)
+- Design changes and explanations for UML and data structures from Milestone 1
+- Corresponding unit tests
+- Code (source + executable in a jar file)
+- Documentation
 
 ### Milestone 3 (Planned)
 For the third milestone, we aim to integrate the Uno Flip card features into the game, implementing specific rules and scoring rules. Additionally, we will introduce a computer player, allowing the game to accommodate a play alone feature.

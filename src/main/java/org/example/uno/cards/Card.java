@@ -24,6 +24,11 @@ public abstract class Card {
     public enum Colour {
         BLUE, RED, GREEN, YELLOW;
 
+        /**
+         * Returns a string representation of the colour.
+         *
+         * @return A string representation of the colour.
+         */
         @Override
         public String toString() {
             return name();

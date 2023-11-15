@@ -25,19 +25,19 @@ import org.example.uno.game.UnoGame;
  * @version 1.0
  */
 public class View extends JFrame implements UnoGameModelView {
-    UnoGame model;
-    JLabel playerLabel;
-    JPanel topCardView;
-    JPanel userArea;
-    JPanel statusArea;
-    JTextArea statusField;
-    JButton topCard;
-    JPanel hand;
-    JButton drawOneButton;
-    JButton currentDrawnCard;
-    JButton nextPlayer;
-    Controller unoController;
-    ArrayList<JButton> cards;
+    private UnoGame model;
+    private JLabel playerLabel;
+    private JPanel topCardView;
+    private JPanel userArea;
+    private JPanel statusArea;
+    private JTextArea statusField;
+    private JButton topCard;
+    private JPanel hand;
+    private JButton drawOneButton;
+    private JButton currentDrawnCard;
+    private JButton nextPlayer;
+    private Controller unoController;
+    private ArrayList<JButton> cards;
 
     /**
      * Constructs a View, by initializing the elements of the GUI.
@@ -232,7 +232,13 @@ public class View extends JFrame implements UnoGameModelView {
 
     }
 
-
+    /**
+     * Handles the end of a round, displaying the scores of the players and asking if they would like to play a new round
+     * or exit the game.
+     *
+     *
+     * @param e The UnoEvent object representing the end of the round.
+     */
     private void handleRoundOver(UnoEvent e){
         String str = "";
         //get scores
@@ -260,6 +266,10 @@ public class View extends JFrame implements UnoGameModelView {
         }
     }
 
+
+    /**
+     * Plays the background music for the UnoGame.
+     */
     private static void playBackgroundMusic() {
         try {
             File musicFile = new File ("src/main/java/org/example/uno/GUI/UNO_FILP_MUSIC.wav");
