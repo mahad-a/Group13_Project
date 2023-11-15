@@ -31,6 +31,7 @@ public class UnoGame {
     private Card currentCard;
     private Player currentPlayer;
     private boolean skipNextPlayer;
+    private Card cardDrawn = null ;
     private boolean roundOver;
     private static final String YES = "YES";
     private static final String NO = "NO";
@@ -116,10 +117,31 @@ public class UnoGame {
     public void setCurrentPlayer(Player player) {
         this.currentPlayer = player;
     }
+
+    /**
+     * YUSUF
+     */
     public boolean isSkipNextPlayer(){
         return this.skipNextPlayer;
     }
+    /**
+     * YUSUF
+     */
     public void setSkipNextPlayer(boolean x){this.skipNextPlayer = x;}
+
+    /**
+     * YUSUF
+     */
+    public void setCardDrawn(Card c){
+        this.cardDrawn = c;
+    }
+
+    /**
+     * YUSUF
+     */
+    public Card getCardDrawn(){
+        return this.cardDrawn;
+    }
 
     /**
      * Advances the turn to the next player, taking into consideration the effects of a special card.
@@ -158,7 +180,7 @@ public class UnoGame {
     public void setCurrentCard(Card card){
         this.currentCard = card;
         if(card instanceof SkipCard){
-            updateView(true,false,this.getNextPlayer().getName() + " has to skip their turn due to Skip Card");
+            updateView(true,false,this.getNextPlayer().getName() + " has to skip their turn\ndue to Skip Card");
             return;
         }
         else if(card instanceof WildDrawTwoCard){
@@ -241,6 +263,7 @@ public class UnoGame {
 
         player.addCard(cardDrawn);
         if (message.equals("Drew a Card: ")){
+            this.cardDrawn = cardDrawn;
             updateView(true,false,message + cardDrawn.toString());
         }
         else {

@@ -20,6 +20,7 @@ import java.util.EventObject;
 public class UnoEvent extends EventObject {
     private boolean moveMade;
     private boolean skipNextPlayer;
+    private Card cardDrawn = null;
     private String message;
 
     /**
@@ -32,6 +33,7 @@ public class UnoEvent extends EventObject {
      */
     public UnoEvent(UnoGame model, boolean t,boolean skipNext,String m){
         super(model);
+        this.cardDrawn = model.getCardDrawn();
         this.moveMade = t;
         this.skipNextPlayer = skipNext;
         this.message = m;
@@ -46,6 +48,9 @@ public class UnoEvent extends EventObject {
         return this.moveMade;
     }
 
+    public Card getCardDrawn(){
+        return this.cardDrawn;
+    }
     /**
      * Checks if the next player should be skipped.
      *

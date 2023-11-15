@@ -42,7 +42,13 @@ public class WildDrawTwoCard extends Card {
                     Card c1 = game.takeFromDeck(game.getCurrentPlayer(),false,"" );
                     Card c2 = game.takeFromDeck(game.getCurrentPlayer(),false,"" );
                     this.message = this.getColour() + " was chosen.\n" + game.getCurrentPlayer().getName()
-                            + " was challenged and found GUILTY!\nDraw two cards";
+                            + " was found GUILTY!\nDraw two cards";
+                }
+                else{
+                    Card c1 = game.takeFromDeck(game.getNextPlayer(), true, "");
+                    Card c2 = game.takeFromDeck(game.getNextPlayer(), true, "");
+                    this.message = this.getColour() + " was chosen.\n" + game.getNextPlayer().getName()
+                            + " must draw 2 cards\ndue to Wild Draw Two.";
                 }
 
         }
@@ -50,7 +56,7 @@ public class WildDrawTwoCard extends Card {
             Card c1 = game.takeFromDeck(game.getNextPlayer(), true, "");
             Card c2 = game.takeFromDeck(game.getNextPlayer(), true, "");
             this.message = this.getColour() + " was chosen.\n" + game.getNextPlayer().getName()
-                    + " must draw 2 cards due to Wild Draw Two.";
+                    + " must draw 2 cards\ndue to Wild Draw Two.";
         }
         super.placeCard(game, this);
 

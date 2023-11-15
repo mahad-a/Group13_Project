@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import javax.swing.border.*;
 import org.example.uno.cards.*;
 import org.example.uno.game.Player;
 import org.example.uno.game.UnoGame;
@@ -24,18 +25,19 @@ import org.example.uno.game.UnoGame;
  * @version 1.0
  */
 public class View extends JFrame implements UnoGameModelView {
-    UnoGame model;
-    JLabel playerLabel;
-    JPanel topCardView;
-    JPanel userArea;
-    JPanel statusArea;
-    JTextArea statusField;
-    JButton topCard;
-    JPanel hand;
-    JButton drawOneButton;
-    JButton nextPlayer;
-    Controller unoController;
-    ArrayList<JButton> cards;
+    private UnoGame model;
+    private JLabel playerLabel;
+    private JPanel topCardView;
+    private JPanel userArea;
+    private JPanel statusArea;
+    private JTextArea statusField;
+    private JButton topCard;
+    private JPanel hand;
+    private JButton drawOneButton;
+    private JButton currentCardDrawn;
+    private JButton nextPlayer;
+    private Controller unoController;
+    private ArrayList<JButton> cards;
 
     /**
      * Constructs a View, by initializing the elements of the GUI.
@@ -67,7 +69,7 @@ public class View extends JFrame implements UnoGameModelView {
         playBackgroundMusic();
 
         this.setDefaultCloseOperation(3);
-        this.setSize(1600, 700);
+        this.setSize(1600, 790);
         this.setVisible(true);
     }
 
@@ -102,9 +104,21 @@ public class View extends JFrame implements UnoGameModelView {
         statusArea.setLayout(new BorderLayout());
         userArea.add(statusArea,BorderLayout.WEST);
 
-        this.statusField = new JTextArea("Status");
+        this.statusField = new JTextArea("Welcome to UNO.\nThe status will be shown here!");
         statusField.setEnabled(false);
-        statusArea.add(statusField,BorderLayout.CENTER);
+        statusField.setPreferredSize(new Dimension(200, 65));
+        LineBorder innerBorder = new LineBorder(Color.BLACK, 1);
+        statusField.setBorder(new EmptyBorder(10, 10, 10, 10));
+        //statusField.setLineWrap(true);
+        statusField.setWrapStyleWord(true);
+        statusArea.add(statusField,BorderLayout.NORTH);
+
+        // drawn card view
+        this.currentCardDrawn = new JButton();
+        currentCardDrawn.setBorderPainted(false);
+        currentCardDrawn.setFocusPainted(false);
+        statusArea.add(currentCardDrawn, BorderLayout.CENTER);
+
 
         this.nextPlayer = new JButton("Next Player");
         nextPlayer.addActionListener(unoController);
@@ -176,12 +190,19 @@ public class View extends JFrame implements UnoGameModelView {
     public void updateView(UnoEvent e) {
 
       updateHand();
+      currentCardDrawn.setVisible(false);
       if(e.isMoveMade()) {
           for (JButton b : cards) {
               b.setEnabled(false);
           }
           drawOneButton.setEnabled(false);
           nextPlayer.setEnabled(true);
+
+          if(e.getCardDrawn() != null){
+              currentCardDrawn.setVisible(true);
+              setIcon(currentCardDrawn,e.getCardDrawn(),false);
+              model.setCardDrawn(null);
+          }
       }
       else{
           nextPlayer.setEnabled(false);
