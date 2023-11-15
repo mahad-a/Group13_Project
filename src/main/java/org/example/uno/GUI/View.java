@@ -235,6 +235,11 @@ public class View extends JFrame implements UnoGameModelView {
      * @param e The UnoEvent object representing the end of the round.
      */
     private void handleRoundOver(UnoEvent e){
+        nextPlayer.setEnabled(false);
+        drawOneButton.setEnabled(false);
+        for (JButton b : cards) {
+            b.setEnabled(false);
+        }
         String str = "";
         //get scores
         for(Player p: model.getPlayers()){
@@ -246,6 +251,7 @@ public class View extends JFrame implements UnoGameModelView {
                 model.getCurrentPlayer().getName() + " won this round!\n" + str,
                 "Round Over!", 3,
                 (Icon)null, selectionValues, initialSelection);
+
         switch((String) selection){
             case "YES":
                 model.clearHand();
