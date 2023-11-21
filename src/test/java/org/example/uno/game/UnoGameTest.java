@@ -11,10 +11,10 @@ public class UnoGameTest {
     int numPlayers = 2;
     boolean skipNext;
 
-
+    private int numAI = 0;
     @BeforeEach
     public void createGame() {
-        unoGame = new UnoGame(true, numPlayers);
+        unoGame = new UnoGame(true, numPlayers, numAI);
     }
 
     @Test

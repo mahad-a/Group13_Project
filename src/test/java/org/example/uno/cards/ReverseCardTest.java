@@ -13,6 +13,7 @@ public class ReverseCardTest {
     private ReverseCard reverseCard;
     private UnoGame game;
     int numPlayers = 2 ;
+    private int numAI = 0;
 
     @Before
     public void setUp() {
@@ -20,7 +21,7 @@ public class ReverseCardTest {
         Player player2 = new Player("TEST2");
         reverseCard = new ReverseCard(Card.Colour.BLUE);
 
-        game = new UnoGame(true, numPlayers);
+        game = new UnoGame(true, numPlayers, numAI);
         game.setCurrentCard(reverseCard);
         game.addPlayer(player);
         game.addPlayer(player2);

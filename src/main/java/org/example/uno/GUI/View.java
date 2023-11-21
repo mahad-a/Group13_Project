@@ -45,19 +45,28 @@ public class View extends JFrame implements UnoGameModelView {
     public View() {
         super("UNO");
         JDialog.setDefaultLookAndFeelDecorated(true);
-        Object[] selectionValues = new Object[]{2, 3, 4};
+        Object[] selectionValues = new Object[]{1, 2, 3, 4, 5, 6};
         int initialSelection = 2;
         ImageIcon optionPanePicture = new ImageIcon("src/main/java/org/example/uno/GUI/images/uno_pic.png");
         Image scaledImage = optionPanePicture.getImage().getScaledInstance(200, 140, Image.SCALE_SMOOTH);
         ImageIcon scaledOptionPanePicture = new ImageIcon(scaledImage);
-        Object selection = JOptionPane.showInputDialog((Component)null, "How many players?", "Select Players", 3, scaledOptionPanePicture, selectionValues, Integer.valueOf(initialSelection));
+        Object selectionPlayer = JOptionPane.showInputDialog((Component)null, "How many players?", "Select Players", 3, scaledOptionPanePicture, selectionValues, Integer.valueOf(initialSelection));
         Integer playerNumber = null;
         try {
-            playerNumber = (Integer)selection;
+            playerNumber = (Integer)selectionPlayer;
         } catch (NullPointerException e){
             System.out.println("Exited player pane. Closing the game...");
         }
-        this.startGame(playerNumber);
+
+        Object selectionAI = JOptionPane.showInputDialog((Component)null, "How many AI?", "Select AI Opponents", 3, scaledOptionPanePicture, selectionValues, Integer.valueOf(initialSelection));
+        Integer AINumber = null;
+        try {
+            AINumber = (Integer)selectionAI;
+        } catch (NullPointerException e){
+            System.out.println("Exited player pane. Closing the game...");
+        }
+
+        this.startGame(playerNumber, AINumber);
     }
 
     /**
@@ -65,9 +74,9 @@ public class View extends JFrame implements UnoGameModelView {
      *
      * @param numPlayer The number of players playing the game.
      */
-    private void startGame(Integer numPlayer) {
+    private void startGame(Integer numPlayer, Integer numAI) {
         if (numPlayer != null) {
-            this.model = new UnoGame(true, numPlayer);
+            this.model = new UnoGame(true, numPlayer, numAI);
             this.unoController = new Controller(model);
             this.model.addUnoView(this);
             cards = new ArrayList<JButton>();

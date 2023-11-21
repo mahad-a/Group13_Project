@@ -24,7 +24,7 @@ public class UnoGame {
 
     private ArrayList<Player> players;
     private List<UnoGameModelView> views;
-    private int numPlayers;
+    private int numPlayers, numAI;
     private Deck deck;
     private boolean lightGame; // if true, we are in light game
     private static final Scanner scanner = new Scanner(System.in);
@@ -43,10 +43,11 @@ public class UnoGame {
      *
      * @param lightGame  an indicator that indicates if the game is in "light" mode.
      */
-    public UnoGame(boolean lightGame,int numberOfPlayers) {
+    public UnoGame(boolean lightGame,int numberOfPlayers, int numberOfAI) {
         this.players = new ArrayList<>();
         this.lightGame = lightGame;
         this.numPlayers = numberOfPlayers;
+        this.numAI = numberOfAI;
         views = new ArrayList<UnoGameModelView>();
         startGame();
         //** add a way to create 4 players and give them names using input **\\
@@ -409,7 +410,7 @@ public class UnoGame {
      * @param args The arguments for the command line.
      */
     public static void main(String[] args) {
-        UnoGame unoGame = new UnoGame(true,2);
+        UnoGame unoGame = new UnoGame(true,2, 1);
         unoGame.startGame();
         scanner.close();
     }

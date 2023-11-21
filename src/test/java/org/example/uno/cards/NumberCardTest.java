@@ -11,11 +11,12 @@ public class NumberCardTest {
     private NumberCard numberCard;
     private UnoGame game;
     int numPlayers = 2;
+    private int numAI = 0;
     @Before
     public void setUp() {
         Player alpha = new Player("Alpha");
         numberCard = new NumberCard(Card.Colour.BLUE, NumberCard.Number.FIVE);
-        game = new UnoGame(true, numPlayers);
+        game = new UnoGame(true, numPlayers, numAI);
         game.setCurrentCard(numberCard);
         game.addPlayer(alpha);
         game.setCurrentPlayer(game.getPlayers().get(0));

@@ -12,11 +12,12 @@ public class DrawOneCardTest {
     private DrawOneCard drawOneCard;
     private UnoGame game;
     private int numPlayers = 3;
+    private int numAI = 0;
 
     @BeforeEach
     public void setUp() {
         drawOneCard = new DrawOneCard(Card.Colour.BLUE);
-        game = new UnoGame(true,numPlayers);
+        game = new UnoGame(true,numPlayers, numAI);
         game.setCurrentCard(new NumberCard(Card.Colour.BLUE, NumberCard.Number.FIVE));
     }
 

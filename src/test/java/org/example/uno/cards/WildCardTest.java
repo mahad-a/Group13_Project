@@ -11,11 +11,12 @@ public class WildCardTest {
     private WildCard wildCard;
     private UnoGame game;
     private int numPlayers = 2;
+    private int numAI = 0;
 
     @Before
     public void setUp() {
         wildCard = new WildCard();
-        game = new UnoGame(true, numPlayers);
+        game = new UnoGame(true, numPlayers, numAI);
         Player alpha = new Player("Alpha");
         Player beta = new Player("Beta");
         game.addPlayer(alpha);
