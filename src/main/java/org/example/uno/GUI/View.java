@@ -45,7 +45,7 @@ public class View extends JFrame implements UnoGameModelView {
     public View() {
         super("UNO");
         JDialog.setDefaultLookAndFeelDecorated(true);
-        Object[] selectionValues = new Object[]{1, 2, 3, 4, 5, 6};
+        Object[] selectionValues = new Object[]{0, 1, 2, 3, 4, 5, 6};
         int initialSelection = 2;
         ImageIcon optionPanePicture = new ImageIcon("src/main/java/org/example/uno/GUI/images/uno_pic.png");
         Image scaledImage = optionPanePicture.getImage().getScaledInstance(200, 140, Image.SCALE_SMOOTH);
@@ -54,9 +54,14 @@ public class View extends JFrame implements UnoGameModelView {
         Integer playerNumber = null;
         try {
             playerNumber = (Integer)selectionPlayer;
+            if (playerNumber == 0){
+                JOptionPane.showMessageDialog((Component) null, "There must be at least 1 Human player.", "Error: Invalid Player Size", 3, scaledOptionPanePicture);
+                throw new IllegalArgumentException(); // end program for now... make it prompt player to re-select players
+            }
         } catch (NullPointerException e){
             System.out.println("Exited player pane. Closing the game...");
         }
+
 
         Object selectionAI = JOptionPane.showInputDialog((Component)null, "How many AI?", "Select AI Opponents", 3, scaledOptionPanePicture, selectionValues, Integer.valueOf(initialSelection));
         Integer AINumber = null;

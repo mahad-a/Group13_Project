@@ -1,5 +1,6 @@
 package org.example.uno.game;
 
+import org.example.uno.AI.AIFirstCard;
 import org.example.uno.GUI.UnoEvent;
 import org.example.uno.GUI.UnoGameModelView;
 import org.example.uno.cards.*;
@@ -357,6 +358,12 @@ public class UnoGame {
             // initialize player names
             for (int i = 1; i <= numPlayers; i++) {
                 addPlayer(new Player("Player " + i));
+            }
+            // add in AI
+            if (numAI != 0) {
+                for (int j = 1; j <= numAI; j++) {
+                    addPlayer(new AIFirstCard("AI " + j));
+                }
             }
         }
         // initialize deck
