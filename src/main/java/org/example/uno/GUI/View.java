@@ -27,9 +27,6 @@ import org.example.uno.game.UnoGame;
 public class View extends JFrame implements UnoGameModelView {
     private UnoGame model;
     private JLabel playerLabel;
-    private JPanel topCardView;
-    private JPanel userArea;
-    private JPanel statusArea;
     private JTextArea statusField;
     private JButton topCard;
     private JPanel hand;
@@ -38,40 +35,51 @@ public class View extends JFrame implements UnoGameModelView {
     private JButton nextPlayer;
     private Controller unoController;
     private ArrayList<JButton> cards;
-
+    private Integer playerNumber;
+    private Integer AINumber;
     /**
      * Constructs a View, by initializing the elements of the GUI.
      */
     public View() {
         super("UNO");
-        JDialog.setDefaultLookAndFeelDecorated(true);
-        Object[] selectionValues = new Object[]{0, 1, 2, 3, 4, 5, 6};
-        int initialSelection = 2;
-        ImageIcon optionPanePicture = new ImageIcon("src/main/java/org/example/uno/GUI/images/uno_pic.png");
-        Image scaledImage = optionPanePicture.getImage().getScaledInstance(200, 140, Image.SCALE_SMOOTH);
-        ImageIcon scaledOptionPanePicture = new ImageIcon(scaledImage);
-        Object selectionPlayer = JOptionPane.showInputDialog((Component)null, "How many players?", "Select Players", 3, scaledOptionPanePicture, selectionValues, Integer.valueOf(initialSelection));
-        Integer playerNumber = null;
-        try {
-            playerNumber = (Integer)selectionPlayer;
-            if (playerNumber == 0){
-                JOptionPane.showMessageDialog((Component) null, "There must be at least 1 Human player.", "Error: Invalid Player Size", 3, scaledOptionPanePicture);
-                throw new IllegalArgumentException(); // end program for now... make it prompt player to re-select players
-            }
-        } catch (NullPointerException e){
-            System.out.println("Exited player pane. Closing the game...");
-        }
 
+        getNumPlayersInputs();
 
-        Object selectionAI = JOptionPane.showInputDialog((Component)null, "How many AI?", "Select AI Opponents", 3, scaledOptionPanePicture, selectionValues, Integer.valueOf(initialSelection));
-        Integer AINumber = null;
-        try {
-            AINumber = (Integer)selectionAI;
-        } catch (NullPointerException e){
-            System.out.println("Exited player pane. Closing the game...");
+        while((this.playerNumber != null && this.AINumber != null) && (this.playerNumber + this.AINumber) < 2){
+
+            JOptionPane.showMessageDialog((Component) null, "Invalid Configuration. There must be at least one human player and a total of at least 2 players", "Invalid Player Configuration", JOptionPane.ERROR_MESSAGE);
+            getNumPlayersInputs();
         }
 
         this.startGame(playerNumber, AINumber);
+    }
+
+    private void getNumPlayersInputs(){
+        JDialog.setDefaultLookAndFeelDecorated(true);
+        Object[] selectionValues = new Object[]{1, 2, 3, 4, 5, 6};
+        int initialSelection = 1;
+        ImageIcon optionPanePicture = new ImageIcon("src/main/java/org/example/uno/GUI/images/uno_pic.png");
+        Image scaledImage = optionPanePicture.getImage().getScaledInstance(200, 140, Image.SCALE_SMOOTH);
+        ImageIcon scaledOptionPanePicture = new ImageIcon(scaledImage);
+
+        Object selectionPlayer = JOptionPane.showInputDialog((Component) null, "How many players?", "Select Players", 3, scaledOptionPanePicture, selectionValues, Integer.valueOf(initialSelection));
+
+        try {
+            this.playerNumber = (Integer) selectionPlayer;
+
+        } catch (NullPointerException e) {
+            System.out.println("Exited player pane. Closing the game...");
+        }
+
+
+        Object[] selectionValuesAI = new Object[]{0, 1, 2, 3, 4, 5, 6};
+        Object selectionAI = JOptionPane.showInputDialog((Component) null, "How many AI?", "Select AI Opponents", 3, scaledOptionPanePicture, selectionValuesAI,0);
+
+        try {
+            this.AINumber = (Integer) selectionAI;
+        } catch (NullPointerException e) {
+            System.out.println("Exited player pane. Closing the game...");
+        }
     }
 
     /**
@@ -110,7 +118,7 @@ public class View extends JFrame implements UnoGameModelView {
         mainPanel.setLayout(new GridLayout(2,0));
         add(mainPanel,BorderLayout.CENTER);
 
-        this.topCardView = new JPanel();
+        JPanel topCardView = new JPanel();
         topCardView.setBorder(new TitledBorder("Top Card"));
         topCard = new JButton();
         setIcon(topCard, model.getCurrentCard(), true);
@@ -118,11 +126,11 @@ public class View extends JFrame implements UnoGameModelView {
         topCardView.add(topCard);
         mainPanel.add(topCardView);
 
-        this.userArea = new JPanel();
+        JPanel userArea = new JPanel();
         userArea.setLayout(new BorderLayout());
         mainPanel.add(userArea);
 
-        statusArea = new JPanel();
+        JPanel statusArea = new JPanel();
         statusArea.setLayout(new BorderLayout());
         userArea.add(statusArea,BorderLayout.WEST);
 
