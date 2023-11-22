@@ -68,6 +68,13 @@ public class Deck {
             }
         }
 
+        //add 8 Flip Cards
+        for (Card.Colour colour : Card.Colour.values()){
+            for(int i =0; i<2; i++){
+                cards.add(new FlipCard(colour));
+            }
+        }
+
         // shuffle the deck
         shuffle();
     }

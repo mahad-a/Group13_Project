@@ -17,7 +17,6 @@ import org.example.uno.game.*;
  */
 public abstract class Card {
 
-
     /**
      * Enumeration representing the colours of the UNO cards.
      */
@@ -31,6 +30,7 @@ public abstract class Card {
     }
 
     private Colour colour;
+    private boolean darkMode;
 
     /**
      * Default constructor for a card. Creates a card with no specific number or colour.
@@ -46,6 +46,7 @@ public abstract class Card {
      */
     public Card(Colour colour) {
         this.colour = colour;
+        //this.darkMode = false;
     }
 
     /**
@@ -95,8 +96,9 @@ public abstract class Card {
         boolean reverseCardsMatch = currentCard instanceof ReverseCard && placeCard instanceof ReverseCard;
         boolean drawOneCardMatch = currentCard instanceof DrawOneCard && placeCard instanceof DrawOneCard;
         boolean skipCardMatch = currentCard instanceof SkipCard && placeCard instanceof SkipCard;
+        boolean isFlipCard =  currentCard instanceof FlipCard && placeCard instanceof FlipCard;
 
-        return deckColorMatch || wildCardMatch || reverseCardsMatch || drawOneCardMatch || skipCardMatch || isWildDrawTwo || isWildCard;
+        return deckColorMatch || wildCardMatch || reverseCardsMatch || drawOneCardMatch || skipCardMatch || isWildDrawTwo || isWildCard || isFlipCard;
     }
 
     /**
@@ -132,4 +134,5 @@ public abstract class Card {
      * @param game The UNO game in which the card is being played.
      */
     public abstract boolean playCard(UnoGame game);
+
 }

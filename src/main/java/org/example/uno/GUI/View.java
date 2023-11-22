@@ -89,7 +89,7 @@ public class View extends JFrame implements UnoGameModelView {
      */
     private void startGame(Integer numPlayer, Integer numAI) {
         if (numPlayer != null) {
-            this.model = new UnoGame(true, numPlayer, numAI);
+            this.model = new UnoGame(false, numPlayer, numAI);
             this.unoController = new Controller(model);
             this.model.addUnoView(this);
             cards = new ArrayList<JButton>();
@@ -177,16 +177,30 @@ public class View extends JFrame implements UnoGameModelView {
      * @param topCard Checker to determine if card is top card.
      */
     private void setIcon(JButton button, Card card, Boolean topCard){
-        String imagePath = "src/main/java/org/example/uno/GUI/images/" + card.toString()+ ".jpg";
-        int width = 200;
-        int height = 280;
-        ImageIcon originalIcon = new ImageIcon(imagePath);
-        Image scaledImage = originalIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        ImageIcon scaledIcon = new ImageIcon(scaledImage);
-        if (topCard){
-            button.setDisabledIcon(scaledIcon);
+        if (model.isDarkGame()){
+            String imagePath = "src/main/java/org/example/uno/GUI/images/" + "DARK " + card.toString() + ".jpg";
+            int width = 200;
+            int height = 280;
+            ImageIcon originalIcon = new ImageIcon(imagePath);
+            Image scaledImage = originalIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+            ImageIcon scaledIcon = new ImageIcon(scaledImage);
+            if (topCard) {
+                button.setDisabledIcon(scaledIcon);
+            }
+            button.setIcon(scaledIcon);
         }
-        button.setIcon(scaledIcon);
+        else {
+            String imagePath = "src/main/java/org/example/uno/GUI/images/" + card.toString() + ".jpg";
+            int width = 200;
+            int height = 280;
+            ImageIcon originalIcon = new ImageIcon(imagePath);
+            Image scaledImage = originalIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+            ImageIcon scaledIcon = new ImageIcon(scaledImage);
+            if (topCard) {
+                button.setDisabledIcon(scaledIcon);
+            }
+            button.setIcon(scaledIcon);
+        }
     }
 
     /**
@@ -302,7 +316,7 @@ public class View extends JFrame implements UnoGameModelView {
      */
     private static void playBackgroundMusic() {
         try {
-            File musicFile = new File ("src/main/java/org/example/uno/GUI/UNO_FILP_MUSIC.wav");
+            File musicFile = new File ("src/main/java/org/example/uno/GUI/UNO_FLIP_MUSIC.wav");
             //System.out.println(musicFile);
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(musicFile);
 

@@ -15,7 +15,9 @@ import org.example.uno.game.*;
  * @version 1.2
  */
 public class WildDrawTwoCard extends Card {
-    private static final int VALUE = 50;
+    private int value;
+    public static final int LIGHTVALUE = 50;
+    public static final int DARKVALUE = 60;
     private boolean challenged;
     private String message;
 
@@ -36,27 +38,58 @@ public class WildDrawTwoCard extends Card {
     @Override
     public boolean playCard(UnoGame game) {
 
-        if(challenged){
-
+        if (game.isDarkGame()) {
+            setValue(DARKVALUE);
+            if (challenged){
+                if(! super.isCardPlaceable(game,this)){
+                    Card c;
+                    do { c = game.takeFromDeck(game.getCurrentPlayer(), false, "");}
+                    while (c.getColour() != game.getCurrentCard().getColour());
+                    Card c1 = game.takeFromDeck(game.getCurrentPlayer(),false,"" );
+                    Card c2 = game.takeFromDeck(game.getCurrentPlayer(),false,"" );
+                    this.message = " was chosen.\n" + game.getCurrentPlayer().getName()
+                            + " was found GUILTY!\nDraw cards until colour +2";
+                }
+                else{
+                    Card c;
+                    do { c = game.takeFromDeck(game.getNextPlayer(), false, "");}
+                    while (c.getColour() != game.getCurrentCard().getColour());
+                    Card c1 = game.takeFromDeck(game.getNextPlayer(), true, "");
+                    Card c2 = game.takeFromDeck(game.getNextPlayer(), true, "");
+                    this.message = " was chosen.\n" + game.getNextPlayer().getName()
+                            + " must draw cards until \ncolour +2 \n Wild Draw Colour.";
+                }
+            }
+            else {
+                Card c;
+                do { c = game.takeFromDeck(game.getCurrentPlayer(), false, "");}
+                while (c.getColour() != game.getCurrentCard().getColour());
+                this.message =" was chosen.\n" + game.getNextPlayer().getName()
+                        + " must draw until colour \ndue to Wild Draw colour.";
+            }
+        }
+        else {
+            setValue(LIGHTVALUE);
+            if(challenged){
                 if(! super.isCardPlaceable(game,this)){
                     Card c1 = game.takeFromDeck(game.getCurrentPlayer(),false,"" );
                     Card c2 = game.takeFromDeck(game.getCurrentPlayer(),false,"" );
-                    this.message = this.getColour() + " was chosen.\n" + game.getCurrentPlayer().getName()
+                    this.message =" was chosen.\n" + game.getCurrentPlayer().getName()
                             + " was found GUILTY!\nDraw two cards";
                 }
                 else{
                     Card c1 = game.takeFromDeck(game.getNextPlayer(), true, "");
                     Card c2 = game.takeFromDeck(game.getNextPlayer(), true, "");
-                    this.message = this.getColour() + " was chosen.\n" + game.getNextPlayer().getName()
+                    this.message =" was chosen.\n" + game.getNextPlayer().getName()
                             + " must draw 2 cards\ndue to Wild Draw Two.";
                 }
-
-        }
-        else {
-            Card c1 = game.takeFromDeck(game.getNextPlayer(), true, "");
-            Card c2 = game.takeFromDeck(game.getNextPlayer(), true, "");
-            this.message = this.getColour() + " was chosen.\n" + game.getNextPlayer().getName()
-                    + " must draw 2 cards\ndue to Wild Draw Two.";
+            }
+            else {
+                Card c1 = game.takeFromDeck(game.getNextPlayer(), true, "");
+                Card c2 = game.takeFromDeck(game.getNextPlayer(), true, "");
+                this.message =" was chosen.\n" + game.getNextPlayer().getName()
+                        + " must draw 2 cards\ndue to Wild Draw Two.";
+            }
         }
         super.placeCard(game, this);
 
@@ -69,7 +102,11 @@ public class WildDrawTwoCard extends Card {
      * @return The value of the card (50).
      */
     public int getValue(){
-        return VALUE;
+        return value;
+    }
+
+    public void setValue(int value){
+        this.value = value;
     }
 
     /**
@@ -78,12 +115,7 @@ public class WildDrawTwoCard extends Card {
      * @param in The decision to challenge or not challenge.
      */
     public void setChallenged(String in){
-        if(in.equals("YES")){
-            this.challenged = true;
-        }
-        else{
-            this.challenged = false;
-        }
+        this.challenged = in.equals("YES");
     }
 
     /**
@@ -109,3 +141,4 @@ public class WildDrawTwoCard extends Card {
         }
     }
 }
+

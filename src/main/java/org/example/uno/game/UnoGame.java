@@ -27,7 +27,7 @@ public class UnoGame {
     private List<UnoGameModelView> views;
     private int numPlayers, numAI;
     private Deck deck;
-    private boolean lightGame; // if true, we are in light game
+    private boolean darkGame; // if true, we are in dark game
     private static final Scanner scanner = new Scanner(System.in);
     private Card currentCard;
     private Player currentPlayer;
@@ -42,11 +42,13 @@ public class UnoGame {
      * Constructs an UNO game, initializing the list of players that are going to play, creates the players,
      * and sets their names based on user input, and setting the game to light mode or normal mode.
      *
-     * @param lightGame  an indicator that indicates if the game is in "light" mode.
+     * @param darkGame  an indicator that indicates if the game is in "light" mode.
+<<<<<<< Updated upstream
+     *                  JAVADOCC
      */
-    public UnoGame(boolean lightGame,int numberOfPlayers, int numberOfAI) {
+    public UnoGame(boolean darkGame,int numberOfPlayers, int numberOfAI) {
         this.players = new ArrayList<>();
-        this.lightGame = lightGame;
+        this.darkGame = darkGame;
         this.numPlayers = numberOfPlayers;
         this.numAI = numberOfAI;
         views = new ArrayList<UnoGameModelView>();
@@ -126,6 +128,7 @@ public class UnoGame {
         this.currentPlayer = player;
     }
 
+
     /**
      * Checks if the program should skip the next player.
      *
@@ -173,6 +176,10 @@ public class UnoGame {
         updateView(false,isSkipNextPlayer(),"");
     }
 
+    public void skipEveryone() {
+            updateView(false, false, getCurrentPlayer().getName() + " Skipped Everyone, \nand can play again!");
+        }
+
     /**
      * Gets the player whose turn is next.
      *
@@ -218,17 +225,17 @@ public class UnoGame {
      *
      * @return true if the game is in light mode, false otherwise.
      */
-    public boolean isLightGame() {
-        return lightGame;
+    public boolean isDarkGame() {
+        return darkGame;
     }
 
     /**
      * Sets the game's mode to light or normal.
      *
-     * @param lightGame {@code true} if game in light mode, {@code false} if game in normal mode.
+     * @param darkGame {@code true} if game in light mode, {@code false} if game in normal mode.
      */
-    public void setLightGame(boolean lightGame) {
-        this.lightGame = lightGame;
+    public void setDarkGame(boolean darkGame) {
+        this.darkGame = darkGame;
     }
 
     /**

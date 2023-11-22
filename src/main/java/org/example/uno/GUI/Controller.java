@@ -38,24 +38,51 @@ public class Controller implements ActionListener {
      * @return The chosen color for the WildCard.
      */
     private Card.Colour getColourInput(){
-        Object[] selectionValues = new Object[]{"RED","YELLOW","BLUE","GREEN"};
-        String initialSelection = "Red";
-        Object selection = JOptionPane.showInputDialog((Component)null, "Choose A Colour", "Wild Card Colour", JOptionPane.QUESTION_MESSAGE, (Icon)null, selectionValues, String.valueOf(initialSelection));
+        Object[] selectionValues;
+        if (model.isDarkGame()){
+            selectionValues  = new Object[]{"PURPLE", "TEAL", "PINK", "ORANGE"};
+        } else {
+            selectionValues  = new Object[]{"RED","YELLOW","BLUE","GREEN"};
+        }
+
+        //String initialSelection = "Red";
+        Object selection = JOptionPane.showInputDialog((Component)null, "Choose A Colour", "Wild Card Colour", JOptionPane.QUESTION_MESSAGE, (Icon)null, selectionValues, null);
         Card.Colour chosenCardColor = null;
         try {
-            chosenCardColor = Card.Colour.valueOf((String) selection);
+            chosenCardColor = Card.Colour.valueOf(convertDarkColourToLight((String)selection));
         } catch (NullPointerException e){
             System.out.println("The window was closed. No color chosen.");
         }
         return chosenCardColor;
     }
 
-
     /**
-     * A prompt for the user to choose whether they would like to challenge a wild draw two card.
+     * JAVADOC
      *
-     * @return The user's choice to challenge or not.
+     * @param colour
+     * @return
      */
+    public String convertDarkColourToLight(String colour) {
+            if (model.isDarkGame()) {
+                if (colour.equals("ORANGE")) {
+                    return "RED";
+                } else if (colour.equals("PINK")) {
+                    return "YELLOW";
+                } else if (colour.equals("PURPLE")) {
+                    return "GREEN";
+                } else if (colour.equals("TEAL")) {
+                    return "BLUE";
+                }
+            }
+            return colour;
+        }
+
+
+        /**
+         * A prompt for the user to choose whether they would like to challenge a wild draw two card.
+         *
+         * @return The user's choice to challenge or not.
+         */
     private String getChallengeInput(){
         Object[] selectionValues = new Object[]{"YES","NO"};
         String initialSelection = "YES";

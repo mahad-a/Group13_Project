@@ -15,7 +15,10 @@ import org.example.uno.game.*;
  * @version 1.1
  */
 public class SkipCard extends Card {
-    private static final int VALUE = 20;
+
+    private int value;
+    public static final int LIGHTVALUE = 20;
+    public static final int DARKVALUE = 30;
 
     /**
      * Constructs a skip card with a specific colour.
@@ -34,11 +37,22 @@ public class SkipCard extends Card {
     @Override
     public boolean playCard(UnoGame game){
         Card currCard = game.getCurrentCard();
-        if(super.isCardPlaceable(game, this)){
-            super.placeCard(game, this);
-            game.setSkipNextPlayer(true);
-            return true;
+        if (game.isDarkGame()){
+            setValue(DARKVALUE);
+            if(super.isCardPlaceable(game, this)){
+                super.placeCard(game, this);
+                game.skipEveryone();
+                return true;
+            }
+        } else {
+            setValue(LIGHTVALUE);
+            if(super.isCardPlaceable(game, this)){
+                super.placeCard(game, this);
+                game.setSkipNextPlayer(true);
+                return true;
+            }
         }
+
         return false;
     }
 
@@ -48,7 +62,11 @@ public class SkipCard extends Card {
      * @return The value of the skip card (20).
      */
     public int getValue(){
-        return this.VALUE;
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
     }
 
     /**
@@ -61,4 +79,5 @@ public class SkipCard extends Card {
         return super.toString() + "SKIP_CARD" ;
     }
 }
+
 

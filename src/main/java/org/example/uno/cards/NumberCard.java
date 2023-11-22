@@ -17,6 +17,7 @@ public class NumberCard extends Card {
 
     private final int VALUE;
 
+
     /**
      * Enumeration representing the numeric values of UNO number cards.
      */
@@ -51,7 +52,7 @@ public class NumberCard extends Card {
      * @param colour The colour of the cards.NumberCard
      * @param number The numeric value of the cards.NumberCard
      */
-    public NumberCard(Colour colour, Number number ){
+    public NumberCard(Colour colour, Number number){
         super(colour);
         this.NUMBER = number;
         this.VALUE = number.getValue();

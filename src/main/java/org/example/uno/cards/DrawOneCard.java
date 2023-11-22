@@ -15,11 +15,17 @@ import org.example.uno.game.UnoGame;
  * @version 1.1
  */
 public class DrawOneCard extends Card{
-    private final int value;
+    private int value;
+    public final static int lightValue = 10;
+    public final static int darkValue = 20;
 
+
+    /**
+     * JAVADOC
+     */
     public DrawOneCard(Card.Colour colour){
         super(colour);
-        this.value = 10;
+        this.value = lightValue;
     }
 
     /**
@@ -28,9 +34,17 @@ public class DrawOneCard extends Card{
      * @return The value of the draw one card (10).
      */
     public int getValue(){
-        return this.value;
+        return value;
     }
 
+    /**
+     * JAVADOC
+     *
+     * @return
+     */
+    public void setValue(int value){
+        this.value = value;
+    }
 
     /**
      * Plays the Draw one card only if it can be placed on the current card on the table. (Based off of colour).
@@ -40,16 +54,29 @@ public class DrawOneCard extends Card{
      */
     @Override
     public boolean playCard(UnoGame game) {
-        Card currCard = game.getCurrentCard();
-        if(super.isCardPlaceable(game, this)){
-
-            super.placeCard(game, this);
-            // makes the next person pick up a card and skips their turn
-            Card c1 = game.takeFromDeck(game.getNextPlayer(),true,game.getNextPlayer().getName() + " has to draw one\ncard due to Draw One Card" );
-            return true;
+        if (game.isDarkGame()) {
+            setValue(darkValue);
+            if(super.isCardPlaceable(game, this)){
+                super.placeCard(game, this);
+                // makes the next person pick up 5 card and skips their turn
+                for (int i = 0; i < 5; i++){
+                    game.takeFromDeck(game.getNextPlayer(), true, game.getNextPlayer().getName() + " has to draw five\ncards due to Draw Five Card");
+                }
+                return true;
+            }
+        } else {
+            setValue(lightValue);
+            Card currCard = game.getCurrentCard();
+            if (super.isCardPlaceable(game, this)) {
+                super.placeCard(game, this);
+                // makes the next person pick up a card and skips their turn
+                game.takeFromDeck(game.getNextPlayer(), true, game.getNextPlayer().getName() + " has to draw one card\ncard due to Draw One Card");
+                return true;
+            }
         }
         return false;
     }
+
 
     /**
      * Returns a string representation of number value and colour of the draw one card.

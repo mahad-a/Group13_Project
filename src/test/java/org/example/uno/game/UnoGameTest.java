@@ -91,7 +91,7 @@ public class UnoGameTest {
 
     @Test
     public void testIsLightGame(){
-        assertTrue(unoGame.isLightGame());
+        assertTrue(unoGame.isDarkGame());
     }
 
     @Test
