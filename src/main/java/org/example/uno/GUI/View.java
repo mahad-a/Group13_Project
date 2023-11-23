@@ -7,6 +7,8 @@ import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.*;
+
+import org.example.uno.AI.AIFirstCard;
 import org.example.uno.cards.*;
 import org.example.uno.game.Player;
 import org.example.uno.game.UnoGame;
@@ -235,7 +237,8 @@ public class View extends JFrame implements UnoGameModelView {
 
       updateHand();
       currentCardDrawn.setVisible(false);
-      if(e.isMoveMade()) {
+      model.checkAI();
+      if(e.isMoveMade() || model.getCurrentPlayer() instanceof AIFirstCard) {
           for (JButton b : cards) {
               b.setEnabled(false);
           }

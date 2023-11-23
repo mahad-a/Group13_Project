@@ -1,6 +1,6 @@
 package org.example.uno.game;
 
-import org.example.uno.AI.AIFirstCard;
+import org.example.uno.AI.*;
 import org.example.uno.GUI.UnoEvent;
 import org.example.uno.GUI.UnoGameModelView;
 import org.example.uno.cards.*;
@@ -340,6 +340,11 @@ public class UnoGame {
         return score;
     }
 
+    public void checkAI(){
+        if (this.getCurrentPlayer() instanceof AI){
+            ((AIFirstCard) this.getCurrentPlayer()).decideStrategy(this);
+        }
+    }
 
     /**
      * Handles a player's turn by allowing them to place a card, or draw a card if no placeable card is available.
