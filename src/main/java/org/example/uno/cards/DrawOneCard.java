@@ -66,7 +66,6 @@ public class DrawOneCard extends Card{
             }
         } else {
             setValue(lightValue);
-            Card currCard = game.getCurrentCard();
             if (super.isCardPlaceable(game, this)) {
                 super.placeCard(game, this);
                 // makes the next person pick up a card and skips their turn

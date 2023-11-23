@@ -30,7 +30,6 @@ public abstract class Card {
     }
 
     private Colour colour;
-    private boolean darkMode;
 
     /**
      * Default constructor for a card. Creates a card with no specific number or colour.

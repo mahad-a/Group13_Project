@@ -40,54 +40,51 @@ public class WildDrawTwoCard extends Card {
 
         if (game.isDarkGame()) {
             setValue(DARKVALUE);
+            String colour = convertDarkColourToLight();
             if (challenged){
                 if(! super.isCardPlaceable(game,this)){
                     Card c;
-                    do { c = game.takeFromDeck(game.getCurrentPlayer(), false, "");}
+                    do { c = game.takeFromDeck(game.getCurrentPlayer(), true, "");}
                     while (c.getColour() != game.getCurrentCard().getColour());
-                    Card c1 = game.takeFromDeck(game.getCurrentPlayer(),false,"" );
-                    Card c2 = game.takeFromDeck(game.getCurrentPlayer(),false,"" );
-                    this.message = " was chosen.\n" + game.getCurrentPlayer().getName()
+                    this.message = colour + " was chosen.\n" + game.getCurrentPlayer().getName()
                             + " was found GUILTY!\nDraw cards until colour +2";
                 }
                 else{
                     Card c;
-                    do { c = game.takeFromDeck(game.getNextPlayer(), false, "");}
+                    do { c = game.takeFromDeck(game.getNextPlayer(), true, "");}
                     while (c.getColour() != game.getCurrentCard().getColour());
-                    Card c1 = game.takeFromDeck(game.getNextPlayer(), true, "");
-                    Card c2 = game.takeFromDeck(game.getNextPlayer(), true, "");
-                    this.message = " was chosen.\n" + game.getNextPlayer().getName()
-                            + " must draw cards until \ncolour +2 \n Wild Draw Colour.";
+                    this.message = colour + " was chosen.\n" + game.getNextPlayer().getName()
+                            + " must draw cards until\ncolour +2 \n Wild Draw Colour.";
                 }
             }
             else {
                 Card c;
-                do { c = game.takeFromDeck(game.getCurrentPlayer(), false, "");}
+                do { c = game.takeFromDeck(game.getNextPlayer(), true, "");}
                 while (c.getColour() != game.getCurrentCard().getColour());
-                this.message =" was chosen.\n" + game.getNextPlayer().getName()
-                        + " must draw until colour \ndue to Wild Draw colour.";
+                this.message = colour + " was chosen.\n" + game.getNextPlayer().getName()
+                        + " must draw until colour\ndue to Wild Draw colour.";
             }
         }
         else {
             setValue(LIGHTVALUE);
             if(challenged){
                 if(! super.isCardPlaceable(game,this)){
-                    Card c1 = game.takeFromDeck(game.getCurrentPlayer(),false,"" );
-                    Card c2 = game.takeFromDeck(game.getCurrentPlayer(),false,"" );
-                    this.message =" was chosen.\n" + game.getCurrentPlayer().getName()
+                    game.takeFromDeck(game.getCurrentPlayer(),false,"" );
+                    game.takeFromDeck(game.getCurrentPlayer(),false,"" );
+                    this.message = this.getColour() + " was chosen.\n" + game.getCurrentPlayer().getName()
                             + " was found GUILTY!\nDraw two cards";
                 }
                 else{
-                    Card c1 = game.takeFromDeck(game.getNextPlayer(), true, "");
-                    Card c2 = game.takeFromDeck(game.getNextPlayer(), true, "");
-                    this.message =" was chosen.\n" + game.getNextPlayer().getName()
+                    game.takeFromDeck(game.getNextPlayer(), true, "");
+                    game.takeFromDeck(game.getNextPlayer(), true, "");
+                    this.message = this.getColour() + " was chosen.\n" + game.getNextPlayer().getName()
                             + " must draw 2 cards\ndue to Wild Draw Two.";
                 }
             }
             else {
-                Card c1 = game.takeFromDeck(game.getNextPlayer(), true, "");
-                Card c2 = game.takeFromDeck(game.getNextPlayer(), true, "");
-                this.message =" was chosen.\n" + game.getNextPlayer().getName()
+                game.takeFromDeck(game.getNextPlayer(), true, "");
+                game.takeFromDeck(game.getNextPlayer(), true, "");
+                this.message = this.getColour() + " was chosen.\n" + game.getNextPlayer().getName()
                         + " must draw 2 cards\ndue to Wild Draw Two.";
             }
         }
@@ -125,6 +122,24 @@ public class WildDrawTwoCard extends Card {
      */
     public String getMessage(){
         return this.message;
+    }
+    private String convertDarkColourToLight() {
+
+        switch (String.valueOf(this.getColour())) {
+            case "RED" -> {
+                return "ORANGE";
+            }
+            case "YELLOW" -> {
+                return "PINK";
+            }
+            case "GREEN" -> {
+                return "PURPLE";
+            }
+            case "BLUE" -> {
+                return "TEAL";
+            }
+        }
+        return null;
     }
 
     /**

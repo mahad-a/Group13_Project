@@ -17,14 +17,9 @@ public class FlipCard extends Card{
     @Override
     public boolean playCard(UnoGame game) {
         Card currCard = game.getCurrentCard();
-        if(super.isCardPlaceable(game, this) || (currCard instanceof FlipCard && ((FlipCard) currCard).getColour() == this.getColour())){
+        if(super.isCardPlaceable(game, this) || (currCard instanceof FlipCard && currCard.getColour() == this.getColour())){
             super.placeCard(game, this);
-            if(game.isDarkGame()){
-                game.setDarkGame(false);
-            }
-            else {
-                game.setDarkGame(true);
-            }
+            game.setDarkGame(!game.isDarkGame());
             return true;
         }
         return false;

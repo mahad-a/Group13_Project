@@ -20,7 +20,7 @@ import java.util.EventObject;
 public class UnoEvent extends EventObject {
     private boolean moveMade;
     private boolean skipNextPlayer;
-    private Card cardDrawn = null;
+    private Card cardDrawn;
     private String message;
 
     /**

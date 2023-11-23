@@ -19,7 +19,6 @@ import java.util.Objects;
 public class Player {
     private final String NAME;
     private ArrayList<Card> hand;
-    private ArrayList<Card> discardPile;
     private int score;
 
     /**
@@ -109,7 +108,7 @@ public class Player {
      * Discards the player's current hand for when a round is over.
      */
     public void discardHand(){
-        this.hand = new ArrayList<Card>();
+        this.hand = new ArrayList<>();
     }
 
     /**

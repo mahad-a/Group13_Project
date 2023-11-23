@@ -41,7 +41,6 @@ public class ReverseCard extends Card {
 
         // if this doesn't change the original player list make a setter for player list
         //and replace the list with the reversed list
-        Card currCard = game.getCurrentCard();
         if(super.isCardPlaceable(game, this)) {
             if(game.getPlayers().size() == 2){
                 super.placeCard(game, this);

@@ -46,7 +46,7 @@ public class Controller implements ActionListener {
         }
 
         //String initialSelection = "Red";
-        Object selection = JOptionPane.showInputDialog((Component)null, "Choose A Colour", "Wild Card Colour", JOptionPane.QUESTION_MESSAGE, (Icon)null, selectionValues, null);
+        Object selection = JOptionPane.showInputDialog(null, "Choose A Colour", "Wild Card Colour", JOptionPane.QUESTION_MESSAGE, null, selectionValues, null);
         Card.Colour chosenCardColor = null;
         try {
             chosenCardColor = Card.Colour.valueOf(convertDarkColourToLight((String)selection));
@@ -64,14 +64,19 @@ public class Controller implements ActionListener {
      */
     public String convertDarkColourToLight(String colour) {
             if (model.isDarkGame()) {
-                if (colour.equals("ORANGE")) {
-                    return "RED";
-                } else if (colour.equals("PINK")) {
-                    return "YELLOW";
-                } else if (colour.equals("PURPLE")) {
-                    return "GREEN";
-                } else if (colour.equals("TEAL")) {
-                    return "BLUE";
+                switch (colour) {
+                    case "ORANGE" -> {
+                        return "RED";
+                    }
+                    case "PINK" -> {
+                        return "YELLOW";
+                    }
+                    case "PURPLE" -> {
+                        return "GREEN";
+                    }
+                    case "TEAL" -> {
+                        return "BLUE";
+                    }
                 }
             }
             return colour;
@@ -85,9 +90,8 @@ public class Controller implements ActionListener {
          */
     private String getChallengeInput(){
         Object[] selectionValues = new Object[]{"YES","NO"};
-        String initialSelection = "YES";
-        int selection = JOptionPane.showOptionDialog((Component)null, model.getCurrentPlayer().getName() + " played a Wild Draw Two card. Do you wish to challenge?",
-                "Challenge",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, (Icon)null,selectionValues,selectionValues[0]);
+        int selection = JOptionPane.showOptionDialog(null, model.getCurrentPlayer().getName() + " played a Wild Draw Two card. Do you wish to challenge?",
+                "Challenge",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,selectionValues,selectionValues[0]);
         return (selection == JOptionPane.YES_OPTION) ? "YES" : "NO";
     }
 
@@ -98,29 +102,22 @@ public class Controller implements ActionListener {
      */
     public void actionPerformed(ActionEvent e) {
         Object o = e.getSource();
-        if(o instanceof JButton){
-            JButton b = (JButton) o;
-            switch(b.getText()){
-
-                case "Draw A Card":
-                    Card c = model.takeFromDeck(model.getCurrentPlayer(),false,"Drew a Card: ");
-                    break;
-                case "Next Player":
-
-                    model.nextPlayer();
-                    break;
-                default:
-                    for(int i = 0; i < model.getCurrentPlayer().getHand().size(); i++ ){
+        if(o instanceof JButton b){
+            switch (b.getText()) {
+                case "Draw A Card" -> model.takeFromDeck(model.getCurrentPlayer(), false, "Drew a Card: ");
+                case "Next Player" -> model.nextPlayer();
+                default -> {
+                    for (int i = 0; i < model.getCurrentPlayer().getHand().size(); i++) {
                         Card ca = model.getCurrentPlayer().getHand().get(i);
-                        if(b.getClientProperty("card").equals(ca.toString())){
-                            if(ca instanceof WildCard){
+                        if (b.getClientProperty("card").equals(ca.toString())) {
+                            if (ca instanceof WildCard) {
                                 Card.Colour colourInput = getColourInput();
                                 if (colourInput != null) {
                                     ca.setColour(colourInput);
                                 }
                             }
 
-                            if(ca instanceof WildDrawTwoCard){
+                            if (ca instanceof WildDrawTwoCard) {
                                 Card.Colour colourInput = getColourInput();
                                 if (colourInput != null) {
                                     ca.setColour(colourInput);
@@ -134,8 +131,7 @@ public class Controller implements ActionListener {
 
                         }
                     }
-
-
+                }
             }
         }
     }

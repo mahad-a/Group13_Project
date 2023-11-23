@@ -1,7 +1,6 @@
 package org.example.uno.cards;
 
-import java.util.Scanner;
-import org.example.uno.game.*;
+import org.example.uno.game.UnoGame;
 
 /**
  * The WildCard class represents a specific type of UNO card, the Wild card.

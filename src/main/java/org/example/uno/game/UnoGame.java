@@ -34,8 +34,6 @@ public class UnoGame {
     private boolean skipNextPlayer;
     private Card cardDrawn = null ;
     private boolean roundOver;
-    private static final String YES = "YES";
-    private static final String NO = "NO";
 
 
     /**
@@ -44,14 +42,14 @@ public class UnoGame {
      *
      * @param darkGame  an indicator that indicates if the game is in "light" mode.
 <<<<<<< Updated upstream
-     *                  JAVADOCC
+     *                  JAVADOC
      */
     public UnoGame(boolean darkGame,int numberOfPlayers, int numberOfAI) {
         this.players = new ArrayList<>();
         this.darkGame = darkGame;
         this.numPlayers = numberOfPlayers;
         this.numAI = numberOfAI;
-        views = new ArrayList<UnoGameModelView>();
+        views = new ArrayList<>();
         startGame();
         //** add a way to create 4 players and give them names using input **\\
     }
@@ -247,14 +245,6 @@ public class UnoGame {
         return this.roundOver;
     }
 
-    /**
-     * Sets the status of the current round.
-     *
-     * @param roundOver {@code true} if the round is over, {@code false} otherwise.
-     */
-    public void setRoundOver(boolean roundOver){
-        this.roundOver = roundOver;
-    }
     private void updateView(boolean moveMade,boolean skipNext,String m){
         for(UnoGameModelView v: this.views){
             v.updateView(new UnoEvent(this,moveMade,skipNext,m));
@@ -414,13 +404,6 @@ public class UnoGame {
         for (Player p : players){
             p.discardHand();
         }
-    }
-
-    /**
-     * Checks if the UNO game is over depending on how many cards each player has in their hand.
-     */
-    public void gameOver(){
-
     }
 
     /**

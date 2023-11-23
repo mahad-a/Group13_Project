@@ -36,7 +36,6 @@ public class SkipCard extends Card {
      */
     @Override
     public boolean playCard(UnoGame game){
-        Card currCard = game.getCurrentCard();
         if (game.isDarkGame()){
             setValue(DARKVALUE);
             if(super.isCardPlaceable(game, this)){

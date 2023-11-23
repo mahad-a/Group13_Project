@@ -49,7 +49,7 @@ public class View extends JFrame implements UnoGameModelView {
 
         while((this.playerNumber != null && this.AINumber != null) && (this.playerNumber + this.AINumber) < 2){
 
-            JOptionPane.showMessageDialog((Component) null, "Invalid Configuration. There must be at least one human player and a total of at least 2 players", "Invalid Player Configuration", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Invalid Configuration. There must be at least one human player and a total of at least 2 players", "Invalid Player Configuration", JOptionPane.ERROR_MESSAGE);
             getNumPlayersInputs();
         }
 
@@ -58,13 +58,13 @@ public class View extends JFrame implements UnoGameModelView {
 
     private void getNumPlayersInputs(){
         JDialog.setDefaultLookAndFeelDecorated(true);
-        Object[] selectionValues = new Object[]{1, 2, 3, 4, 5, 6};
-        int initialSelection = 1;
+
         ImageIcon optionPanePicture = new ImageIcon("src/main/java/org/example/uno/GUI/images/uno_pic.png");
         Image scaledImage = optionPanePicture.getImage().getScaledInstance(200, 140, Image.SCALE_SMOOTH);
         ImageIcon scaledOptionPanePicture = new ImageIcon(scaledImage);
 
-        Object selectionPlayer = JOptionPane.showInputDialog((Component) null, "How many players?", "Select Players", 3, scaledOptionPanePicture, selectionValues, Integer.valueOf(initialSelection));
+        Object selectionPlayer = JOptionPane.showInputDialog(null, "How many players?", "Select Players",
+                JOptionPane.QUESTION_MESSAGE, scaledOptionPanePicture, new Object[]{1, 2, 3, 4, 5, 6}, 1);
 
         try {
             this.playerNumber = (Integer) selectionPlayer;
@@ -74,8 +74,8 @@ public class View extends JFrame implements UnoGameModelView {
         }
 
 
-        Object[] selectionValuesAI = new Object[]{0, 1, 2, 3, 4, 5, 6};
-        Object selectionAI = JOptionPane.showInputDialog((Component) null, "How many AI?", "Select AI Opponents", 3, scaledOptionPanePicture, selectionValuesAI,0);
+        Object selectionAI = JOptionPane.showInputDialog(null, "How many AI?",
+                "Select AI Opponents", JOptionPane.QUESTION_MESSAGE, scaledOptionPanePicture, new Object[]{0, 1, 2, 3, 4, 5, 6},0);
 
         try {
             this.AINumber = (Integer) selectionAI;
@@ -94,12 +94,12 @@ public class View extends JFrame implements UnoGameModelView {
             this.model = new UnoGame(false, numPlayer, numAI);
             this.unoController = new Controller(model);
             this.model.addUnoView(this);
-            cards = new ArrayList<JButton>();
+            cards = new ArrayList<>();
             setGuiLayout();
 
             playBackgroundMusic();
 
-            this.setDefaultCloseOperation(3);
+            this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             this.setSize(1600, 790);
             this.setVisible(true);
         }
@@ -139,7 +139,7 @@ public class View extends JFrame implements UnoGameModelView {
         this.statusField = new JTextArea("Welcome to UNO.\nThe status will be shown here!");
         statusField.setEnabled(false);
         statusField.setPreferredSize(new Dimension(200, 65));
-        LineBorder innerBorder = new LineBorder(Color.BLACK, 1);
+        new LineBorder(Color.BLACK, 1);
         statusField.setBorder(new EmptyBorder(10, 10, 10, 10));
         //statusField.setLineWrap(true);
         statusField.setWrapStyleWord(true);
@@ -179,30 +179,18 @@ public class View extends JFrame implements UnoGameModelView {
      * @param topCard Checker to determine if card is top card.
      */
     private void setIcon(JButton button, Card card, Boolean topCard){
-        if (model.isDarkGame()){
-            String imagePath = "src/main/java/org/example/uno/GUI/images/" + "DARK " + card.toString() + ".jpg";
-            int width = 200;
-            int height = 280;
-            ImageIcon originalIcon = new ImageIcon(imagePath);
-            Image scaledImage = originalIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
-            ImageIcon scaledIcon = new ImageIcon(scaledImage);
-            if (topCard) {
-                button.setDisabledIcon(scaledIcon);
-            }
-            button.setIcon(scaledIcon);
+        int width = 200;
+        int height = 280;
+        String imagePath = "src/main/java/org/example/uno/GUI/images/";
+        imagePath += model.isDarkGame() ? ("DARK " + card.toString() + ".jpg") : (card.toString() + ".jpg");
+
+        ImageIcon originalIcon = new ImageIcon(imagePath);
+        Image scaledImage = originalIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        if (topCard) {
+            button.setDisabledIcon(scaledIcon);
         }
-        else {
-            String imagePath = "src/main/java/org/example/uno/GUI/images/" + card.toString() + ".jpg";
-            int width = 200;
-            int height = 280;
-            ImageIcon originalIcon = new ImageIcon(imagePath);
-            Image scaledImage = originalIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
-            ImageIcon scaledIcon = new ImageIcon(scaledImage);
-            if (topCard) {
-                button.setDisabledIcon(scaledIcon);
-            }
-            button.setIcon(scaledIcon);
-        }
+        button.setIcon(scaledIcon);
     }
 
     /**
@@ -268,7 +256,7 @@ public class View extends JFrame implements UnoGameModelView {
           model.setSkipNextPlayer(false);
       }
       if(model.isRoundOver()){
-          handleRoundOver(e);
+          handleRoundOver();
       }
 
     }
@@ -279,9 +267,8 @@ public class View extends JFrame implements UnoGameModelView {
      * or exit the game.
      *
      *
-     * @param e The UnoEvent object representing the end of the round.
      */
-    private void handleRoundOver(UnoEvent e){
+    private void handleRoundOver(){
         nextPlayer.setEnabled(false);
         drawOneButton.setEnabled(false);
         for (JButton b : cards) {
@@ -292,25 +279,26 @@ public class View extends JFrame implements UnoGameModelView {
         for(Player p: model.getPlayers()){
             str += (p.getName() +"'s Score: " + p.getScore() + "\n");
         }
-        Object[] selectionValues = new Object[]{"YES","NO"};
-        String initialSelection = "YES";
-        Object selection = JOptionPane.showInputDialog((Component)null,
-                model.getCurrentPlayer().getName() + " won this round!\n" + str,
-                "Round Over!", 3,
-                (Icon)null, selectionValues, initialSelection);
+        str += "\nDo you wish to play again?";
 
-        switch((String) selection){
-            case "YES":
+        Object selection = JOptionPane.showInputDialog(null,
+                model.getCurrentPlayer().getName() + " won this round!\n" + str,
+                "Round Over!", JOptionPane.QUESTION_MESSAGE,
+                null, new Object[]{"YES","NO"}, "YES");
+
+        switch ((String) selection) {
+            case "YES" -> {
                 model.clearHand();
                 model.startGame();
                 updateHand();
                 statusField.setText("New Round!!");
                 playerLabel.setText(model.getCurrentPlayer().getName());
                 setIcon(topCard, model.getCurrentCard(), true);
-                break;
-            case "NO":
+            }
+            case "NO" -> {
                 setVisible(false);
                 dispose(); //Destroy the JFrame object
+            }
         }
     }
 
