@@ -26,10 +26,4 @@ public class AIFirstCard extends AIPlayer {
         // if no suitable card is found, return null (picking up from deck is handled in handleNextPlayer)
         return null;
     }
-
-    private Card.Colour getRandomColour(){
-        Card.Colour[] colours = Card.Colour.values();
-        int randomIndex = new Random().nextInt(colours.length);
-        return colours[randomIndex];
-    }
 }

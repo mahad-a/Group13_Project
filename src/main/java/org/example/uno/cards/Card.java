@@ -108,6 +108,7 @@ public abstract class Card {
      */
     public void placeCard(UnoGame game, Card card){
         game.getCurrentPlayer().discardCard(card);
+        game.getDeck().addToDiscardPile(card);// add to placed pile
         game.setCurrentCard(card);
     }
 

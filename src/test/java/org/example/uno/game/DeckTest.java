@@ -1,6 +1,5 @@
 package org.example.uno.game;
 import org.example.uno.cards.Card;
-import org.example.uno.game.Deck;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -37,7 +36,7 @@ public class DeckTest {
     @Test
     public void testShuffle() {
         Deck originalDeck = new Deck();
-        deck.shuffle();
+        deck.shuffleDeck();
 
         assertNotEquals(originalDeck, deck);
     }

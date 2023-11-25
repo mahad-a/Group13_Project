@@ -23,6 +23,7 @@ import java.util.List;
 public class Deck {
 
     private List<Card> cards;
+    private List<Card> discardPile;
 
     /**
      * Constructs a deck of UNO cards with 112 cards. The deck is composed of 80 normal cards (10 cards of each
@@ -32,6 +33,7 @@ public class Deck {
      */
     public Deck() {
         cards = new ArrayList<>();
+        discardPile = new ArrayList<>();
 
         // add 18 (1-9 twice) of each colour cards
         for (Card.Colour colour : Card.Colour.values()) {
@@ -76,7 +78,7 @@ public class Deck {
         }
 
         // shuffle the deck
-        shuffle();
+        shuffleDeck();
     }
 
     /**
@@ -91,7 +93,7 @@ public class Deck {
     /**
      * Shuffles the deck by randomizing the order of the cards in the deck.
      */
-    public void shuffle() {
+    public void shuffleDeck() {
         Collections.shuffle(cards); // randomizes the order of the deck
     }
 
@@ -108,5 +110,38 @@ public class Deck {
             System.out.println("The deck is empty.");
             return null;
         }
+    }
+
+    /**
+     * Adds to the deck.
+     * @param card The card to be added to the deck.
+     */
+    public void addToDeck(Card card){
+        cards.add(card);
+    }
+
+    /**
+     * Gets the discard pile.
+     *
+     * @return The discard pile.
+     */
+    public List<Card> getDiscardPile() {
+        return discardPile;
+    }
+
+    /**
+     * Adds a card to the discard pile.
+     *
+     * @param card The card to be added to the discard pile.
+     */
+    public void addToDiscardPile(Card card) {
+        discardPile.add(card);
+    }
+
+    /**
+     * Shuffles the deck by randomizing the order of the cards in the deck.
+     */
+    public void shuffleDiscardPile() {
+        Collections.shuffle(discardPile); // randomizes the order of the discard pile
     }
 }

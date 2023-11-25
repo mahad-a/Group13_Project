@@ -18,9 +18,14 @@ public class AIHighestValue extends AIPlayer {
                 if (c.getValue() > highestValue){ // compare to current highest
                     highestValue += c.getValue(); // if higher, update the highest value
                     highestCard = c; // store as the highest card
+                    // deal with wild card instances
+                    if (highestCard.getColour() == null){
+                        highestCard.setColour(getRandomColour());
+                    }
                 }
             }
         }
+
         // if playable card found, returns the card
         // else, returns null
         return highestCard;

@@ -276,6 +276,19 @@ public class UnoGame {
     public Card takeFromDeck(Player player,boolean skipNext, String message){
         Card cardDrawn = deck.drawCard();
 
+        // deck ran out of cards
+        if (cardDrawn == null) {
+            System.out.println("No more cards in the deck. Shuffling pile and adding to deck.");
+            deck.shuffleDiscardPile();
+            for (Card card : deck.getDiscardPile()) {
+                if (card instanceof WildCard || card instanceof WildDrawTwoCard){
+                    card.setColour(null);
+                }
+                deck.addToDeck(card);
+            }
+            cardDrawn = deck.drawCard();
+        }
+
         player.addCard(cardDrawn);
         if (message.equals("Drew a card: ")){
             this.cardDrawn = cardDrawn;

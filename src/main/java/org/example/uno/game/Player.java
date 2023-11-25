@@ -83,7 +83,6 @@ public class Player {
     public void discardCard(Card card) {
         if (hand.contains(card)) {
             hand.remove(card);
-            /*this.discardPile.add(card);*/
         } else {
             System.out.println("Cannot remove " + card + " as this is not in the players hand");
         }
