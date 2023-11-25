@@ -327,7 +327,6 @@ public class UnoGame {
     }
 
     public void handleAIMove(){
-        ((AIPlayer) this.getCurrentPlayer()).strategyPlay(this);
         handleCurrentPlayerTurn(this.getCurrentPlayer(), ((AIPlayer)getCurrentPlayer()).strategyPlay(this));
     }
 
@@ -366,7 +365,7 @@ public class UnoGame {
             }
             // add in AI
             for (int j = 0; j < numAI; j++) {
-                addPlayer(new AIFirstCard("AI " + j));
+                addPlayer(new AIHighestValue("AI " + j));
             }
         }
         // initialize deck

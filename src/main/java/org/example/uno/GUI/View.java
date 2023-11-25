@@ -214,6 +214,7 @@ public class View extends JFrame implements UnoGameModelView {
             hand.add(b);
         }
         System.out.println(model.getCurrentPlayer().getName() + " has " + model.getCurrentPlayer().getHand().size() + " cards."); // for debugging
+        System.out.println("Hand is: " + model.getCurrentPlayer().getHand());
     }
 
     /**
