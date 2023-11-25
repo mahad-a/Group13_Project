@@ -124,9 +124,16 @@ public class Controller implements ActionListener {
                 case "Next Player" -> {
                     model.nextPlayer();
                     // automatically play for AI
-                    if (model.getCurrentPlayer() instanceof AIPlayer && !model.isSkipNextPlayer()) {
-                        model.handleAIMove();
+                    if (model.getCurrentPlayer() instanceof AIPlayer) {
+                        if(! model.isSkipNextPlayer()) {
+                            model.handleAIMove();
+                        }
+                        else{
+                            model.setSkipNextPlayer(false);
+                            model.skipAI();
+                        }
                     }
+
                 }
                 default -> {
                     for (int i = 0; i < model.getCurrentPlayer().getHand().size(); i++) {

@@ -340,7 +340,11 @@ public class UnoGame {
     }
 
     public void handleAIMove(){
-        handleCurrentPlayerTurn(this.getCurrentPlayer(), ((AIPlayer)getCurrentPlayer()).strategyPlay(this));
+        handleCurrentPlayerTurn(this.getCurrentPlayer(), ((AIPlayer) getCurrentPlayer()).strategyPlay(this));
+    }
+
+    public void skipAI(){
+        this.updateView(true,isSkipNextPlayer(),"");
     }
 
     /**

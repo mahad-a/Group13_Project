@@ -9,6 +9,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.border.*;
 
 import org.example.uno.AI.AIFirstCard;
+import org.example.uno.AI.AIPlayer;
 import org.example.uno.cards.*;
 import org.example.uno.game.Player;
 import org.example.uno.game.UnoGame;
@@ -248,7 +249,7 @@ public class View extends JFrame implements UnoGameModelView {
       playerLabel.setText(model.getCurrentPlayer().getName());
       setIcon(topCard, model.getCurrentCard(), true);
 
-      if(e.isSkipNextPlayer()){
+      if(e.isSkipNextPlayer() && ! (model.getCurrentPlayer() instanceof AIPlayer)){
           for (JButton b : cards) {
               b.setEnabled(false);
           }
