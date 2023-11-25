@@ -3,27 +3,33 @@ package org.example.uno.AI;
 import org.example.uno.cards.Card;
 import org.example.uno.game.UnoGame;
 
-public class AIFirstCard extends AI implements AIMain {
+import java.util.Random;
+
+public class AIFirstCard extends AIPlayer {
     // AI plays the first possible card it can find
     public AIFirstCard(String name) {
         super(name);
     }
 
     @Override
-    public void decideStrategy(UnoGame unoGame) {
-        // search through hand for first possible card to play
+    public Card strategyPlay(UnoGame unoGame) {
+        // strategy: search through hand for first possible card to play
         for (Card c: this.getHand()){
             if (c.isCardPlaceable(unoGame, c)){
-                c.playCard(unoGame);
-                return;
+                // deal with wild card instances
+                if (c.getColour() == null){
+                    c.setColour(getRandomColour());
+                }
+                return c;
             }
         }
-        // if no suitable card is found, draw card
-        unoGame.takeFromDeck(this, false, "");
+        // if no suitable card is found, return null (picking up from deck is handled in handleNextPlayer)
+        return null;
     }
 
-    @Override
-    public void legalMove() {
-
+    private Card.Colour getRandomColour(){
+        Card.Colour[] colours = Card.Colour.values();
+        int randomIndex = new Random().nextInt(colours.length);
+        return colours[randomIndex];
     }
 }

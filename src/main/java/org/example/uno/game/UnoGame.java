@@ -41,8 +41,6 @@ public class UnoGame {
      * and sets their names based on user input, and setting the game to light mode or normal mode.
      *
      * @param darkGame  an indicator that indicates if the game is in "light" mode.
-<<<<<<< Updated upstream
-     *                  JAVADOC
      */
     public UnoGame(boolean darkGame,int numberOfPlayers, int numberOfAI) {
         this.players = new ArrayList<>();
@@ -168,9 +166,7 @@ public class UnoGame {
         int currPlayerIndex = this.players.indexOf(getCurrentPlayer());
         int nextPlayer = (currPlayerIndex + 1) % players.size();
         // handle reverse case when only 2 players
-
         setCurrentPlayer(players.get(nextPlayer));
-
         updateView(false,isSkipNextPlayer(),"");
     }
 
@@ -281,7 +277,7 @@ public class UnoGame {
         Card cardDrawn = deck.drawCard();
 
         player.addCard(cardDrawn);
-        if (message.equals("Drew a Card: ")){
+        if (message.equals("Drew a card: ")){
             this.cardDrawn = cardDrawn;
             updateView(true,false,message + cardDrawn.toString());
         }
@@ -330,10 +326,9 @@ public class UnoGame {
         return score;
     }
 
-    public void checkAI(){
-        if (this.getCurrentPlayer() instanceof AI){
-            ((AIFirstCard) this.getCurrentPlayer()).decideStrategy(this);
-        }
+    public void handleAIMove(){
+        ((AIPlayer) this.getCurrentPlayer()).strategyPlay(this);
+        handleCurrentPlayerTurn(this.getCurrentPlayer(), ((AIPlayer)getCurrentPlayer()).strategyPlay(this));
     }
 
     /**
@@ -342,11 +337,19 @@ public class UnoGame {
      * @param player The current player taking their turn.
      */
     public void handleCurrentPlayerTurn(Player player, Card card){
-
-            if(!card.playCard(this)){
-                updateView(false,false,"Invalid Card");
+        // invalid card view update
+        if (player instanceof AIPlayer) {  // AI view update
+            // handle case that the AI has no cards to play
+            if (card == null) {
+                takeFromDeck(player, false,"Drew a card: ");
+            } else {
+                card.playCard(this);
+                updateView(true, false, player.getName() + " played: " + card.toString());
             }
-            checkGameWinner(player);
+        } else if (!card.playCard(this)) {
+            updateView(false, false, "Invalid Card");
+        }
+        checkGameWinner(player);
     }
 
 
@@ -362,10 +365,8 @@ public class UnoGame {
                 addPlayer(new Player("Player " + i));
             }
             // add in AI
-            if (numAI != 0) {
-                for (int j = 1; j <= numAI; j++) {
-                    addPlayer(new AIFirstCard("AI " + j));
-                }
+            for (int j = 0; j < numAI; j++) {
+                addPlayer(new AIFirstCard("AI " + j));
             }
         }
         // initialize deck

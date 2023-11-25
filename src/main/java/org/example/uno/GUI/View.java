@@ -213,6 +213,7 @@ public class View extends JFrame implements UnoGameModelView {
             cards.add(b);
             hand.add(b);
         }
+        System.out.println(model.getCurrentPlayer().getName() + " has " + model.getCurrentPlayer().getHand().size() + " cards."); // for debugging
     }
 
     /**
@@ -225,7 +226,6 @@ public class View extends JFrame implements UnoGameModelView {
 
       updateHand();
       currentCardDrawn.setVisible(false);
-      model.checkAI();
       if(e.isMoveMade() || model.getCurrentPlayer() instanceof AIFirstCard) {
           for (JButton b : cards) {
               b.setEnabled(false);

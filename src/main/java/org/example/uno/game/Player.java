@@ -55,6 +55,7 @@ public class Player {
      *
      * @return A string representation of the player's hand of UNO cards.
      */
+
     public String showHand() {
         String retString = "";
 
@@ -98,7 +99,7 @@ public class Player {
     }
 
     /**
-     * Updates the player's score by adding 1 to the current score.
+     * Updates the player's score by adding to the current score.
      */
     public void updateScore(int score) {
         this.score = score;
