@@ -77,6 +77,16 @@ public class SkipCard extends Card {
     public String toString() {
         return super.toString() + "SKIP_CARD" ;
     }
+
+    @Override
+    public String getName() {
+        return "SKIP ";
+    }
+
+    @Override
+    public String getDarkName() {
+        return "SKIP EVERYONE ";
+    }
 }
 
 

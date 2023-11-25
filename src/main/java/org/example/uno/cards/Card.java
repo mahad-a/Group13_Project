@@ -128,6 +128,10 @@ public abstract class Card {
         return (this.colour + " ");
     }
 
+    public abstract String getName();
+
+    public abstract String getDarkName();
+
     /**
      * Abstract method for playing the card in a UNO game.
      *

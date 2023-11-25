@@ -155,5 +155,15 @@ public class WildDrawTwoCard extends Card {
             return "WILD_DRAW_TWO_CARD (" + this.getColour() + ")";
         }
     }
+
+    @Override
+    public String getName() {
+        return "WILD DRAW TWO ";
+    }
+
+    @Override
+    public String getDarkName() {
+        return "WILD DRAW COLOUR ";
+    }
 }
 

@@ -60,5 +60,15 @@ public class WildCard extends Card {
             return "WILD_CARD (" + this.getColour() + ")";
         }
     }
+
+    @Override
+    public String getName() {
+        return "WILD CARD ";
+    }
+
+    @Override
+    public String getDarkName() {
+        return getName();
+    }
 }
 

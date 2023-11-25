@@ -292,13 +292,44 @@ public class UnoGame {
         player.addCard(cardDrawn);
         if (message.equals("Drew a card: ")){
             this.cardDrawn = cardDrawn;
-            updateView(true,false,message + cardDrawn.toString());
+            if (isDarkGame()){
+                updateView(true,false,  message + "\n" + revertColour(cardDrawn.getColour().toString()) + cardDrawn.getDarkName());
+            }
+            else{
+                updateView(true,false,message + "\n" + revertColour(cardDrawn.getColour().toString()) + cardDrawn.getName());
+
+            }
         }
         else {
             updateView(true,skipNext, message);
             this.skipNextPlayer = skipNext;
         }
         return cardDrawn;
+    }
+
+    public String revertColour(String colour) {
+        // window closed case
+        if (colour == null) {
+            return null;
+        }
+
+        if (isDarkGame()) {
+            switch (colour) {
+                case "RED" -> {
+                    return "ORANGE ";
+                }
+                case "YELLOW" -> {
+                    return "PINK ";
+                }
+                case "GREEN" -> {
+                    return "PURPLE ";
+                }
+                case "BLUE" -> {
+                    return "TEAL ";
+                }
+            }
+        }
+        return colour + " ";
     }
 
     /**
@@ -360,7 +391,12 @@ public class UnoGame {
                 takeFromDeck(player, false,"Drew a card: ");
             } else {
                 card.playCard(this);
-                updateView(true, false, player.getName() + " played: " + card.toString());
+                if (isDarkGame()){
+                    updateView(true, false, player.getName() + " played: \n" + revertColour(card.getColour().toString()) + card.getDarkName());
+                }
+                else {
+                    updateView(true, false, player.getName() + " played: \n" + revertColour(card.getColour().toString()) + card.getName());
+                }
             }
         } else if (!card.playCard(this)) {
             updateView(false, false, "Invalid Card");

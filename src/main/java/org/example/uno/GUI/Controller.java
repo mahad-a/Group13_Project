@@ -50,7 +50,7 @@ public class Controller implements ActionListener {
         Object selection = JOptionPane.showInputDialog(null, "Choose A Colour", "Wild Card Colour", JOptionPane.QUESTION_MESSAGE, null, selectionValues, null);
         Card.Colour chosenCardColor = null;
         try {
-            chosenCardColor = Card.Colour.valueOf(convertDarkColourToLight((String) selection));
+            chosenCardColor = Card.Colour.valueOf(convertColour((String) selection));
         } catch (NullPointerException e) {
             System.out.println("The window was closed. No color chosen.");
         }
@@ -63,7 +63,7 @@ public class Controller implements ActionListener {
      * @param colour
      * @return
      */
-    public String convertDarkColourToLight(String colour) {
+    public String convertColour(String colour) {
 
         // window closed case
         if (colour == null) {

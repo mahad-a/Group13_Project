@@ -76,5 +76,15 @@ public class ReverseCard extends Card {
         return  super.toString() + "REVERSE_CARD" ;
     }
 
+    @Override
+    public String getName() {
+        return "REVERSE CARD ";
+    }
+
+    @Override
+    public String getDarkName() {
+        return getName();
+    }
+
 
 }

@@ -101,4 +101,14 @@ public class NumberCard extends Card {
     public String toString() {
         return super.toString() + this.NUMBER;
     }
+
+    @Override
+    public String getName() {
+        return "NUMBER " + this.NUMBER.toString();
+    }
+
+    @Override
+    public String getDarkName() {
+        return getName();
+    }
 }

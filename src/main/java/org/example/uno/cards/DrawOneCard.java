@@ -86,5 +86,15 @@ public class DrawOneCard extends Card{
     public String toString() {
         return super.toString() + "DRAW_ONE_CARD";
     }
+
+    @Override
+    public String getName() {
+        return "DRAW ONE ";
+    }
+
+    @Override
+    public String getDarkName() {
+        return "DRAW FIVE ";
+    }
 }
 

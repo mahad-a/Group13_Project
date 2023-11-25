@@ -29,4 +29,14 @@ public class FlipCard extends Card{
         return super.toString() + "FLIP_CARD";
     }
 
+    @Override
+    public String getName() {
+        return "FLIP CARD ";
+    }
+
+    @Override
+    public String getDarkName() {
+        return getName();
+    }
+
 }
