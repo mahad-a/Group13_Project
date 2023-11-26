@@ -58,10 +58,9 @@ public class Controller implements ActionListener {
     }
 
     /**
-     * JAVADOC
+     * Converts the colour of the card from dark mode to light mode.
      *
-     * @param colour
-     * @return
+     * @param colour The colour of the card in dark mode.
      */
     public String convertColour(String colour) {
 

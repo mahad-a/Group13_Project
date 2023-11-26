@@ -16,16 +16,17 @@ import org.example.uno.game.UnoGame;
  */
 public class DrawOneCard extends Card{
     private int value;
-    public final static int lightValue = 10;
-    public final static int darkValue = 20;
+    public final static int LIGHT_VALUE = 10;
+    public final static int DARK_VALUE = 20;
 
 
     /**
-     * JAVADOC
+     * Constructs a draw one card with a specific colour.
+     * @param colour The colour of the card.
      */
     public DrawOneCard(Card.Colour colour){
         super(colour);
-        this.value = lightValue;
+        this.value = LIGHT_VALUE;
     }
 
     /**
@@ -38,9 +39,9 @@ public class DrawOneCard extends Card{
     }
 
     /**
-     * JAVADOC
+     * Sets the value of the card to the value passed in.
      *
-     * @return
+     * @param value The value to set the card to.
      */
     public void setValue(int value){
         this.value = value;
@@ -55,7 +56,7 @@ public class DrawOneCard extends Card{
     @Override
     public boolean playCard(UnoGame game) {
         if (game.isDarkGame()) {
-            setValue(darkValue);
+            setValue(DARK_VALUE);
             if(super.isCardPlaceable(game, this)){
                 super.placeCard(game, this);
                 // makes the next person pick up 5 card and skips their turn
@@ -65,7 +66,7 @@ public class DrawOneCard extends Card{
                 return true;
             }
         } else {
-            setValue(lightValue);
+            setValue(LIGHT_VALUE);
             if (super.isCardPlaceable(game, this)) {
                 super.placeCard(game, this);
                 // makes the next person pick up a card and skips their turn
