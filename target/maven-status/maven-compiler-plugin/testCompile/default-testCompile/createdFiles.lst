@@ -1,0 +1,10 @@
+org/example/uno/cards/FlipCardTest.class
+org/example/uno/game/PlayerTest.class
+org/example/uno/cards/WildCardTest.class
+org/example/uno/cards/WildDrawTwoCardTest.class
+org/example/uno/cards/NumberCardTest.class
+org/example/uno/game/UnoGameTest.class
+org/example/uno/cards/SkipCardTest.class
+org/example/uno/cards/ReverseCardTest.class
+org/example/uno/cards/DrawOneCardTest.class
+org/example/uno/game/DeckTest.class

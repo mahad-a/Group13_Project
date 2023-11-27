@@ -26,6 +26,7 @@ public class WildDrawTwoCard extends Card {
      */
     public WildDrawTwoCard(){
         super();
+        this.value = LIGHTVALUE;
     }
 
     /**

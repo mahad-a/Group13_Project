@@ -2,11 +2,14 @@ package org.example.uno.GUI;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Objects;
 import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.*;
+import javax.swing.ImageIcon;
 
 import org.example.uno.AI.AIFirstCard;
 import org.example.uno.AI.AIPlayer;
@@ -60,7 +63,7 @@ public class View extends JFrame implements UnoGameModelView {
     private void getNumPlayersInputs(){
         JDialog.setDefaultLookAndFeelDecorated(true);
 
-        ImageIcon optionPanePicture = new ImageIcon("src/main/java/org/example/uno/GUI/images/uno_pic.png");
+        ImageIcon optionPanePicture = loadImage("/images/uno_pic.png");
         Image scaledImage = optionPanePicture.getImage().getScaledInstance(200, 140, Image.SCALE_SMOOTH);
         ImageIcon scaledOptionPanePicture = new ImageIcon(scaledImage);
 
@@ -182,10 +185,11 @@ public class View extends JFrame implements UnoGameModelView {
     private void setIcon(JButton button, Card card, Boolean topCard){
         int width = 200;
         int height = 280;
-        String imagePath = "src/main/java/org/example/uno/GUI/images/";
+
+        String imagePath = "/images/";
         imagePath += model.isDarkGame() ? ("DARK " + card.toString() + ".jpg") : (card.toString() + ".jpg");
 
-        ImageIcon originalIcon = new ImageIcon(imagePath);
+        ImageIcon originalIcon = loadImage(imagePath);
         Image scaledImage = originalIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
         if (topCard) {
@@ -268,7 +272,6 @@ public class View extends JFrame implements UnoGameModelView {
      * Handles the end of a round, displaying the scores of the players and asking if they would like to play a new round
      * or exit the game.
      *
-     *
      */
     private void handleRoundOver(){
         nextPlayer.setEnabled(false);
@@ -309,16 +312,35 @@ public class View extends JFrame implements UnoGameModelView {
      */
     private static void playBackgroundMusic() {
         try {
-            File musicFile = new File ("src/main/java/org/example/uno/GUI/UNO_FLIP_MUSIC.wav");
-            //System.out.println(musicFile);
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(musicFile);
+            // Use class loader to get the URL of the resource
+            URL url = View.class.getClassLoader().getResource("music/UNO_FLIP_MUSIC.wav");
+            if (url != null) {
+                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
 
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioInputStream);
 
-            clip.loop(Clip.LOOP_CONTINUOUSLY);
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
+            } else {
+                System.err.println("Could not find the music file: " + "UNO_FLIP_MUSIC.wav");
+            }
         } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Retrieves the image from the resources folder and returns it as an ImageIcon.
+     * @param imagePath The path of the image.
+     * @return ImageIcon of the image.
+     */
+    public static ImageIcon loadImage(String imagePath) {
+        try {
+            return new ImageIcon(Objects.requireNonNull(View.class.getResource(imagePath)));
+        } catch (Exception e) {
+            System.out.println("Error loading image: " + imagePath);
+            e.printStackTrace();
+            return null;
         }
     }
 

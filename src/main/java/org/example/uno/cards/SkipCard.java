@@ -27,6 +27,7 @@ public class SkipCard extends Card {
      */
     public SkipCard(Colour colour){
         super(colour);
+        this.value = LIGHTVALUE;
     }
 
     /**
