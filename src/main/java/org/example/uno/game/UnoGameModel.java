@@ -6,11 +6,12 @@ import org.example.uno.GUI.UnoGameModelView;
 import org.example.uno.cards.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
 /**
- * The UnoGame class represents the logic of the UNO game. It manages the players, the cards, and the flow of the game.
+ * The UnoGameModel class represents the logic of the UNO game. It manages the players, the cards, and the flow of the game.
  * The class is responsible for controlling the game, and the player interactions.
  *
  * @author Mahad Ahmed
@@ -21,7 +22,7 @@ import java.util.Scanner;
  *
  * @version 1.1
  */
-public class UnoGame {
+public class UnoGameModel {
 
     private ArrayList<Player> players;
     private List<UnoGameModelView> views;
@@ -33,6 +34,7 @@ public class UnoGame {
     private Player currentPlayer;
     private boolean skipNextPlayer;
     private Card cardDrawn = null ;
+
     private boolean roundOver;
 
 
@@ -42,7 +44,7 @@ public class UnoGame {
      *
      * @param darkGame  an indicator that indicates if the game is in "light" mode.
      */
-    public UnoGame(boolean darkGame,int numberOfPlayers, int numberOfAI) {
+    public UnoGameModel(boolean darkGame, int numberOfPlayers, int numberOfAI) {
         this.players = new ArrayList<>();
         this.darkGame = darkGame;
         this.numPlayers = numberOfPlayers;
@@ -113,6 +115,24 @@ public class UnoGame {
      */
     public Player getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    /**
+     * Restarts the game.
+     *
+     */
+    public void setRoundOver(boolean roundOver) {
+        this.roundOver = roundOver;
+        this.darkGame = false;
+        if( !(players.get(0).getName().equals("Player 1"))){
+            ArrayList<Player> playersr = this.getPlayers();
+            Collections.reverse(playersr);
+            this.setPlayers(playersr);
+            this.setCurrentPlayer(players.get(0));
+        }
+        for(UnoGameModelView v: views){
+            v.restartGame();
+        }
     }
 
     /**
@@ -460,13 +480,13 @@ public class UnoGame {
     }
 
     /**
-     * Main method that initiates the start of the UnoGame
+     * Main method that initiates the start of the UnoGameModel
      *
      * @param args The arguments for the command line.
      */
     public static void main(String[] args) {
-        UnoGame unoGame = new UnoGame(true,2, 1);
-        unoGame.startGame();
+        UnoGameModel unoGameModel = new UnoGameModel(true,2, 1);
+        unoGameModel.startGame();
         scanner.close();
     }
 

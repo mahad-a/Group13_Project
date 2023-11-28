@@ -1,7 +1,7 @@
 package org.example.uno.GUI;
 
 import org.example.uno.cards.Card;
-import org.example.uno.game.UnoGame;
+import org.example.uno.game.UnoGameModel;
 
 import java.util.EventObject;
 
@@ -26,12 +26,12 @@ public class UnoEvent extends EventObject {
     /**
      * Constructs a new UnoEvent with parameters.
      *
-     * @param model The UnoGame associated with the event.
+     * @param model The UnoGameModel associated with the event.
      * @param t Represents if a move was made during the event or not.
      * @param skipNext Represents if the next player should be skipped or not.
      * @param m A message related to the event that is taking place.
      */
-    public UnoEvent(UnoGame model, boolean t,boolean skipNext,String m){
+    public UnoEvent(UnoGameModel model, boolean t, boolean skipNext, String m){
         super(model);
         this.cardDrawn = model.getCardDrawn();
         this.moveMade = t;

@@ -36,7 +36,7 @@ public class ReverseCard extends Card {
      * @param game The UNO game in which the card is being played.
      */
     @Override
-    public boolean playCard(UnoGame game){
+    public boolean playCard(UnoGameModel game){
         // reverse card
 
         // if this doesn't change the original player list make a setter for player list

@@ -35,7 +35,7 @@ public class SkipCard extends Card {
      * @param game The UNO game in which the card is being played.
      */
     @Override
-    public boolean playCard(UnoGame game){
+    public boolean playCard(UnoGameModel game){
         if (game.isDarkGame()){
             setValue(DARKVALUE);
             if(super.isCardPlaceable(game, this)){

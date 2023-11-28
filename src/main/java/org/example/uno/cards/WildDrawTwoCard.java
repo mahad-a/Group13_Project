@@ -36,7 +36,7 @@ public class WildDrawTwoCard extends Card {
      * @return {@code true} if the card was successfully played, {@code false} otherwise.
      */
     @Override
-    public boolean playCard(UnoGame game) {
+    public boolean playCard(UnoGameModel game) {
 
         if (game.isDarkGame()) {
             setValue(DARKVALUE);

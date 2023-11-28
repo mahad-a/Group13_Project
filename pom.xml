@@ -52,7 +52,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>org.example.uno.game.UnoGame</mainClass>
+                            <mainClass>org.example.uno.game.UnoGameModel</mainClass>
                         </manifest>
                     </archive>
                     <includes>
