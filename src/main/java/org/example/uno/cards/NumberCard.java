@@ -92,6 +92,10 @@ public class NumberCard extends Card {
         return false;
     }
 
+    @Override
+    public void unPlayCard(UnoGameModel game){
+    }
+
     /**
      * Returns a string representation of number value and colour of the number card.
      *

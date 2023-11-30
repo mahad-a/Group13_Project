@@ -19,7 +19,9 @@ public class WildDrawTwoCard extends Card {
     public static final int LIGHTVALUE = 50;
     public static final int DARKVALUE = 60;
     private boolean challenged;
+    private boolean guilty;
     private String message;
+    private int addedCards = 0;
 
     /**
      * Constructs a wild draw two card.
@@ -41,28 +43,39 @@ public class WildDrawTwoCard extends Card {
         if (game.isDarkGame()) {
             setValue(DARKVALUE);
             String colour = convertDarkColourToLight();
+
             if (challenged){
                 if(! super.isCardPlaceable(game,this)){
                     Card c;
-                    do { c = game.takeFromDeck(game.getCurrentPlayer(), true, "");}
+                    do {
+                        c = game.takeFromDeck(game.getCurrentPlayer(), false, "");
+                        addedCards++;
+                    }
                     while (c.getColour() != game.getCurrentCard().getColour());
                     this.message = colour + " was chosen.\n" + game.getCurrentPlayer().getName()
                             + " was found GUILTY!\nDraw cards until colour +2";
-                }
-                else{
+                    guilty = true;
+                } else{
                     Card c;
-                    do { c = game.takeFromDeck(game.getNextPlayer(), true, "");}
+                    do {
+                        c = game.takeFromDeck(game.getNextPlayer(), true, "");
+                        addedCards++;
+                    }
                     while (c.getColour() != game.getCurrentCard().getColour());
                     this.message = colour + " was chosen.\n" + game.getNextPlayer().getName()
                             + " must draw cards until\ncolour +2 \n Wild Draw Colour.";
+                    guilty = false;
                 }
-            }
-            else {
+            } else {
                 Card c;
-                do { c = game.takeFromDeck(game.getNextPlayer(), true, "");}
+                do {
+                    c = game.takeFromDeck(game.getNextPlayer(), true, "");
+                    addedCards++;
+                }
                 while (c.getColour() != game.getCurrentCard().getColour());
                 this.message = colour + " was chosen.\n" + game.getNextPlayer().getName()
                         + " must draw until colour\ndue to Wild Draw colour.";
+                guilty = false;
             }
         }
         else {
@@ -73,24 +86,55 @@ public class WildDrawTwoCard extends Card {
                     game.takeFromDeck(game.getCurrentPlayer(),false,"" );
                     this.message = this.getColour() + " was chosen.\n" + game.getCurrentPlayer().getName()
                             + " was found GUILTY!\nDraw two cards";
-                }
-                else{
+                    guilty = true;
+                } else {
                     game.takeFromDeck(game.getNextPlayer(), true, "");
                     game.takeFromDeck(game.getNextPlayer(), true, "");
                     this.message = this.getColour() + " was chosen.\n" + game.getNextPlayer().getName()
                             + " must draw 2 cards\ndue to Wild Draw Two.";
+                    guilty = false;
                 }
-            }
-            else {
+            } else {
                 game.takeFromDeck(game.getNextPlayer(), true, "");
                 game.takeFromDeck(game.getNextPlayer(), true, "");
                 this.message = this.getColour() + " was chosen.\n" + game.getNextPlayer().getName()
                         + " must draw 2 cards\ndue to Wild Draw Two.";
+                guilty = false;
             }
         }
         super.placeCard(game, this);
 
         return true;
+    }
+
+    @Override
+    public void unPlayCard(UnoGameModel game) {
+        this.setColour(null);
+        if (game.isDarkGame()) { // draw colour
+            if (challenged && guilty){ // current player is challenged and guilty
+                int size = game.getCurrentPlayer().getHand().size(); // store the size
+                for (int i = 1; i < addedCards+1; i++){
+                    game.putBackInDeck(game.getCurrentPlayer().getHand().get(size - i));
+                }
+            } else {
+                int size = game.getNextPlayer().getHand().size(); // store the size
+                for (int i = 1; i < addedCards+1; i++){
+                    game.putBackInDeck(game.getNextPlayer().getHand().get(size - i));
+                }
+                game.setSkipNextPlayer(false);
+            }
+        } else { // draw two
+            if (challenged && guilty){ // current player is challenged and guilty
+                int size = game.getCurrentPlayer().getHand().size(); // store the size
+                game.putBackInDeck(game.getCurrentPlayer().getHand().get(size - 1));
+                game.putBackInDeck(game.getCurrentPlayer().getHand().get(size - 2));
+            } else { // not guilty or not challenged
+                int size = game.getNextPlayer().getHand().size(); // store the size
+                game.putBackInDeck(game.getNextPlayer().getHand().get(size - 1));
+                game.putBackInDeck(game.getNextPlayer().getHand().get(size - 2));
+                game.setSkipNextPlayer(false);
+            }
+        }
     }
 
     /**

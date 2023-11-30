@@ -56,6 +56,17 @@ public class ReverseCard extends Card {
         return false;
     }
 
+    @Override
+    public void unPlayCard(UnoGameModel game){
+        if(game.getPlayers().size() == 2){
+            game.setSkipNextPlayer(false); // revoke the skip next player
+        }
+//        ArrayList<Player> playersList = game.getPlayers();
+//        Collections.reverse(playersList);
+//        game.setPlayers(playersList);
+        Collections.reverse(game.getPlayers()); // try this
+    }
+
     /**
      * Gets the score value of the reverse card.
      *

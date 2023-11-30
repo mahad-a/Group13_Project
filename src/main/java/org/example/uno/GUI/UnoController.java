@@ -127,19 +127,46 @@ public class UnoController implements ActionListener {
                     //save game
                 case "Load":
                     //load game
-                case "Undo":
-                    //undo
-                case "Redo":
-                    //redo
             }
         }
         if (o instanceof JButton b) {
             switch (b.getText()) {
+                case "Undo" -> {
+                    if(model.checkIsCardDrawn()){
+                        Card kaka = model.getCurrentPlayer().getHand().get(model.getCurrentPlayer().getHand().size()-1);
+                        model.putBackInDeck(kaka);
+                        model.getCurrentPlayer().getHand().remove(kaka);
+                        model.setCardDrawnBool(false);
+                        model.setCardDrawn(kaka);
+                    }
+                    else {
+                        Card top = model.getPrevTopCard();
+                        model.getCurrentPlayer().getHand().add(model.getCurrentCard());
+                        model.getCurrentCard().unPlayCard(model);
+                        model.setCurrentCard(top);
+                    }
+
+                    model.undoView();
+                }
+
+                case "Redo" -> {
+                    if(model.checkIsCardDrawn()){
+                        model.getCurrentPlayer().getHand().add(model.getCardDrawn());
+                    }else {
+                        Card played = model.getPrevTopCard();
+                        played.playCard(model);
+
+                    }
+                    model.redoView();
+                }
+                    //redo
                 case "Draw A Card" -> {
+                    model.setCardDrawnBool(true);
                     model.takeFromDeck(model.getCurrentPlayer(), false, "Drew a card: ");
                 }
                 case "Next Player" -> {
                     model.nextPlayer();
+                    model.setCardDrawnBool(false);
                     // automatically play for AI
                     if (model.getCurrentPlayer() instanceof AIPlayer) {
                         if(! model.isSkipNextPlayer()) {
@@ -148,6 +175,7 @@ public class UnoController implements ActionListener {
                         else{
                             model.setSkipNextPlayer(false);
                             model.skipAI();
+
                         }
                     }
 

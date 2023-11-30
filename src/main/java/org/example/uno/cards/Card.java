@@ -138,5 +138,6 @@ public abstract class Card {
      * @param game The UNO game in which the card is being played.
      */
     public abstract boolean playCard(UnoGameModel game);
+    public abstract void unPlayCard(UnoGameModel game);
 
 }

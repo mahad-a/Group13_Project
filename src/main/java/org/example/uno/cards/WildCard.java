@@ -38,6 +38,10 @@ public class WildCard extends Card {
         return true;
     }
 
+    public void unPlayCard(UnoGameModel game){
+        this.setColour(null);
+    }
+
     /**
      * Gets the score value of the wild card.
      *

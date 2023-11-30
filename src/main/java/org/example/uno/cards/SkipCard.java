@@ -54,6 +54,9 @@ public class SkipCard extends Card {
 
         return false;
     }
+    public void unPlayCard(UnoGameModel game){
+        game.setSkipNextPlayer(false);
+    }
 
     /**
      * Gets the score value of the skip card.
@@ -87,6 +90,8 @@ public class SkipCard extends Card {
     public String getDarkName() {
         return "SKIP EVERYONE ";
     }
+
+
 }
 
 

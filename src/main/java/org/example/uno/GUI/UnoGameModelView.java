@@ -22,4 +22,6 @@ public interface UnoGameModelView {
     void updateView(UnoEvent e);
 
     void restartGame();
+    void undoMove();
+    void redoMove();
 }

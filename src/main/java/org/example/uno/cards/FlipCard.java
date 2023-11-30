@@ -25,6 +25,11 @@ public class FlipCard extends Card{
         return false;
     }
 
+    @Override
+    public void unPlayCard(UnoGameModel game){
+        game.setDarkGame(!game.isDarkGame());
+    }
+
     public String toString(){
         return super.toString() + "FLIP_CARD";
     }

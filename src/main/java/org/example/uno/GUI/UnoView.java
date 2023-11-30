@@ -40,6 +40,8 @@ public class UnoView extends JFrame implements UnoGameModelView {
     private ArrayList<JButton> cards;
     private Integer playerNumber;
     private Integer AINumber;
+    private JButton undo;
+    private JButton redo;
     /**
      * Constructs a UnoView, by initializing the elements of the GUI.
      */
@@ -99,7 +101,6 @@ public class UnoView extends JFrame implements UnoGameModelView {
             setGuiLayout();
 
             playBackgroundMusic();
-
             this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             this.setSize(1600, 790);
             this.setVisible(true);
@@ -139,12 +140,14 @@ public class UnoView extends JFrame implements UnoGameModelView {
 
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu("Game");
-        JMenu edit = new JMenu("Edit");
+        //JMenu edit = new JMenu("Edit");
         JMenuItem restartButton = new JMenuItem("Restart");
         JMenuItem saveGame = new JMenuItem("Save");
         JMenuItem loadGame = new JMenuItem("Load");
-        JMenuItem undo = new JMenuItem("Undo");
-        JMenuItem redo = new JMenuItem("Redo");
+        undo = new JButton("Undo");
+        redo = new JButton("Redo");
+        undo.setEnabled(false);
+        redo.setEnabled(false);
         restartButton.addActionListener(unoController);
         saveGame.addActionListener(unoController);
         loadGame.addActionListener(unoController);
@@ -154,10 +157,10 @@ public class UnoView extends JFrame implements UnoGameModelView {
         menu.add(restartButton);
         menu.add(saveGame);
         menu.add(loadGame);
-        edit.add(undo);
-        edit.add(redo);
         menuBar.add(menu);
-        menuBar.add(edit);
+        menuBar.add(undo);
+        menuBar.add(redo);
+        //menuBar.add(edit);
 
         this.setJMenuBar(menuBar);
 
@@ -240,6 +243,10 @@ public class UnoView extends JFrame implements UnoGameModelView {
         }
         System.out.println(model.getCurrentPlayer().getName() + " has " + model.getCurrentPlayer().getHand().size() + " cards."); // for debugging
         System.out.println("Hand is: " + model.getCurrentPlayer().getHand());
+        System.out.println("Card on Table: " + model.getCurrentCard());
+        System.out.println("State of Card Drawn: " + model.getCardDrawn());
+        System.out.println("Bool of Card Drawn: " + model.checkIsCardDrawn());
+        System.out.println(" ");
     }
 
     /**
@@ -258,6 +265,8 @@ public class UnoView extends JFrame implements UnoGameModelView {
           }
           drawOneButton.setEnabled(false);
           nextPlayer.setEnabled(true);
+          undo.setEnabled(true);
+          redo.setEnabled(false);
 
           if(e.getCardDrawn() != null){
               currentCardDrawn.setVisible(true);
@@ -268,6 +277,8 @@ public class UnoView extends JFrame implements UnoGameModelView {
       else{
           nextPlayer.setEnabled(false);
           drawOneButton.setEnabled(true);
+          undo.setEnabled(false);
+          redo.setEnabled(false);
       }
       statusField.setText(e.getMessage());
       playerLabel.setText(model.getCurrentPlayer().getName());
@@ -285,6 +296,32 @@ public class UnoView extends JFrame implements UnoGameModelView {
           handleRoundOver();
       }
 
+    }
+
+    @Override
+    public void undoMove(){
+        for (JButton b : cards) {
+            b.setEnabled(true);
+        }
+        nextPlayer.setEnabled(false);
+        drawOneButton.setEnabled(true);
+        undo.setEnabled(false);
+        redo.setEnabled(true);
+        statusField.setText("Undid Move");
+        updateHand();
+    }
+
+    @Override
+    public void redoMove(){
+        for (JButton b : cards) {
+            b.setEnabled(false);
+        }
+        nextPlayer.setEnabled(true);
+        drawOneButton.setEnabled(false);
+        undo.setEnabled(true);
+        redo.setEnabled(false);
+        statusField.setText("Redid Move");
+        updateHand();
     }
 
 
@@ -327,6 +364,8 @@ public class UnoView extends JFrame implements UnoGameModelView {
         model.clearHand();
         model.startGame();
         updateHand();
+        drawOneButton.setEnabled(true);
+        currentCardDrawn.setVisible(false);
         statusField.setText("Game Restarted!");
         playerLabel.setText(model.getCurrentPlayer().getName());
         setIcon(topCard, model.getCurrentCard(), true);

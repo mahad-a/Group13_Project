@@ -77,6 +77,24 @@ public class DrawOneCard extends Card{
         return false;
     }
 
+    /**
+     *
+     * @param game
+     */
+    public void unPlayCard(UnoGameModel game){
+
+        // If game is dark, undo the 5 cards given
+        int size =  game.getNextPlayer().getHand().size(); // store the size
+        if (game.isDarkGame()){
+            for(int i = 1; i<6; i++) {
+                game.putBackInDeck(game.getNextPlayer().getHand().get(size - i));
+            }
+        }
+        // If game is light, undo the last card given.
+        game.putBackInDeck(game.getNextPlayer().getHand().get(size - 1));
+
+    }
+
 
     /**
      * Returns a string representation of number value and colour of the draw one card.

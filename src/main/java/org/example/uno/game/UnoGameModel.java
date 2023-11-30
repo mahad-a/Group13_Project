@@ -30,12 +30,15 @@ public class UnoGameModel {
     private Deck deck;
     private boolean darkGame; // if true, we are in dark game
     private static final Scanner scanner = new Scanner(System.in);
+    private Card prevTopCard;
     private Card currentCard;
+
     private Player currentPlayer;
     private boolean skipNextPlayer;
-    private Card cardDrawn = null ;
+    private Card cardDrawnn;
 
     private boolean roundOver;
+    private boolean cardisDrawn;
 
 
     /**
@@ -79,6 +82,11 @@ public class UnoGameModel {
      */
     public Deck getDeck(){
         return this.deck;
+    }
+
+    public Card getPrevTopCard(){
+
+        return prevTopCard;
     }
 
     /**
@@ -167,7 +175,7 @@ public class UnoGameModel {
      * @param c The card to be set as the card that was drawn.
      */
     public void setCardDrawn(Card c){
-        this.cardDrawn = c;
+        this.cardDrawnn = c;
     }
 
     /**
@@ -176,7 +184,8 @@ public class UnoGameModel {
      * @return The card that was drawn by the player.
      */
     public Card getCardDrawn(){
-        return this.cardDrawn;
+
+        return this.cardDrawnn;
     }
 
     /**
@@ -187,12 +196,14 @@ public class UnoGameModel {
         int nextPlayer = (currPlayerIndex + 1) % players.size();
         // handle reverse case when only 2 players
         setCurrentPlayer(players.get(nextPlayer));
+        this.cardDrawnn = null;
+        setCardDrawnBool(false);
         updateView(false,isSkipNextPlayer(),"");
     }
 
     public void skipEveryone() {
             updateView(false, false, getCurrentPlayer().getName() + " Skipped Everyone, \nand can play again!");
-        }
+    }
 
     /**
      * Gets the player whose turn is next.
@@ -203,6 +214,23 @@ public class UnoGameModel {
         int currPlayerIndex = this.players.indexOf(getCurrentPlayer());
         int nextPlayer = (currPlayerIndex + 1) % players.size();
         return players.get(nextPlayer);
+    }
+
+    public void putBackInDeck(Card card){
+        deck.addToDeck(card); // return card to deck
+        this.getCurrentPlayer().getHand().remove(card); // remove card from hand
+    }
+
+    public void undoView(){
+        for(UnoGameModelView v: views){
+            v.undoMove();
+        }
+    }
+
+    public void redoView(){
+        for(UnoGameModelView v: views){
+            v.redoMove();
+        }
     }
 
     /**
@@ -221,6 +249,7 @@ public class UnoGameModel {
      * @param card The card to be set as the current card.
      */
     public void setCurrentCard(Card card){
+        this.prevTopCard = this.currentCard;
         this.currentCard = card;
         if(card instanceof SkipCard){
             updateView(true,false,this.getNextPlayer().getName() + " has to skip their turn\ndue to Skip Card");
@@ -261,6 +290,13 @@ public class UnoGameModel {
         return this.roundOver;
     }
 
+    public void setCardDrawnBool(boolean cardDrawn){
+        this.cardisDrawn = cardDrawn;
+    }
+    public boolean checkIsCardDrawn(){
+        return cardisDrawn;
+    }
+
     private void updateView(boolean moveMade,boolean skipNext,String m){
         for(UnoGameModelView v: this.views){
             v.updateView(new UnoEvent(this,moveMade,skipNext,m));
@@ -295,7 +331,6 @@ public class UnoGameModel {
      */
     public Card takeFromDeck(Player player,boolean skipNext, String message){
         Card cardDrawn = deck.drawCard();
-
         // deck ran out of cards
         if (cardDrawn == null) {
             System.out.println("No more cards in the deck. Shuffling pile and adding to deck.");
@@ -309,9 +344,10 @@ public class UnoGameModel {
             cardDrawn = deck.drawCard();
         }
 
+
         player.addCard(cardDrawn);
         if (message.equals("Drew a card: ")){
-            this.cardDrawn = cardDrawn;
+            this.cardDrawnn = cardDrawn;
             if (isDarkGame()){
                 updateView(true,false,  message + "\n" + revertColour(cardDrawn.getColour().toString()) + cardDrawn.getDarkName());
             }
@@ -446,6 +482,8 @@ public class UnoGameModel {
         this.roundOver = false;
         this.skipNextPlayer = false;
         dealCards();
+        this.prevTopCard = null;
+        this.cardDrawnn = null;
         currentCard = deck.drawCard();
         while (!(currentCard instanceof NumberCard)){ // starting card cannot be action or wild card
             currentCard = deck.drawCard();
