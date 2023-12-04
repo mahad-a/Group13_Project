@@ -134,7 +134,7 @@ public class UnoController implements ActionListener {
                 case "Undo" -> {
                     if(model.checkIsCardDrawn()){
                         Card kaka = model.getCurrentPlayer().getHand().get(model.getCurrentPlayer().getHand().size()-1);
-                        model.putBackInDeck(kaka);
+                        model.putBackInDeck(kaka,model.getCurrentPlayer());
                         model.getCurrentPlayer().getHand().remove(kaka);
                         model.setCardDrawnBool(false);
                         model.setCardDrawn(kaka);
@@ -150,14 +150,19 @@ public class UnoController implements ActionListener {
                 }
 
                 case "Redo" -> {
-                    if(model.checkIsCardDrawn()){
+                    if (model.checkIsCardDrawn()) {
                         model.getCurrentPlayer().getHand().add(model.getCardDrawn());
-                    }else {
+                    } else {
                         Card played = model.getPrevTopCard();
+                        if (played instanceof WildCard || played instanceof WildDrawTwoCard) {
+                            Card.Colour colourInput = getColourInput();
+                            if (colourInput != null) {
+                                played.setColour(colourInput);
+                            }
+                        }
                         played.playCard(model);
-
+                        model.redoView();
                     }
-                    model.redoView();
                 }
                     //redo
                 case "Draw A Card" -> {

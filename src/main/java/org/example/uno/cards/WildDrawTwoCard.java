@@ -21,7 +21,7 @@ public class WildDrawTwoCard extends Card {
     private boolean challenged;
     private boolean guilty;
     private String message;
-    private int addedCards = 0;
+    private int addedCards = 1;
 
     /**
      * Constructs a wild draw two card.
@@ -114,26 +114,30 @@ public class WildDrawTwoCard extends Card {
         if (game.isDarkGame()) { // draw colour
             if (challenged && guilty){ // current player is challenged and guilty
                 int size = game.getCurrentPlayer().getHand().size(); // store the size
-                for (int i = 1; i < addedCards+1; i++){
-                    game.putBackInDeck(game.getCurrentPlayer().getHand().get(size - i));
+                for (int i = 1; i < addedCards; i++){
+                    game.putBackInDeck(game.getCurrentPlayer().getHand().get(size - i),game.getCurrentPlayer());
                 }
             } else {
                 int size = game.getNextPlayer().getHand().size(); // store the size
-                for (int i = 1; i < addedCards+1; i++){
-                    game.putBackInDeck(game.getNextPlayer().getHand().get(size - i));
+                for (int i = 1; i < addedCards; i++){
+                    game.putBackInDeck(game.getNextPlayer().getHand().get(size - i),game.getCurrentPlayer());
                 }
                 game.setSkipNextPlayer(false);
             }
         } else { // draw two
             if (challenged && guilty){ // current player is challenged and guilty
+                System.out.println("CHALLENGED AND GUILTY");
                 int size = game.getCurrentPlayer().getHand().size(); // store the size
-                game.putBackInDeck(game.getCurrentPlayer().getHand().get(size - 1));
-                game.putBackInDeck(game.getCurrentPlayer().getHand().get(size - 2));
-            } else { // not guilty or not challenged
+                game.putBackInDeck(game.getCurrentPlayer().getHand().get(size - 1),game.getCurrentPlayer());
+                game.putBackInDeck(game.getCurrentPlayer().getHand().get(size - 2),game.getCurrentPlayer());
+                System.out.println("CARDS RETURNED");
+            } else{ // not guilty or not challenged
+                System.out.print("NOT GUILTY AND NOT CHALLENGED");
                 int size = game.getNextPlayer().getHand().size(); // store the size
-                game.putBackInDeck(game.getNextPlayer().getHand().get(size - 1));
-                game.putBackInDeck(game.getNextPlayer().getHand().get(size - 2));
+                game.putBackInDeck(game.getNextPlayer().getHand().get(size - 1),game.getNextPlayer());
+                game.putBackInDeck(game.getNextPlayer().getHand().get(size - 2),game.getNextPlayer());
                 game.setSkipNextPlayer(false);
+                System.out.println("CARDS RETURNED");
             }
         }
     }

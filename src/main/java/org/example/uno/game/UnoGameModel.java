@@ -216,9 +216,9 @@ public class UnoGameModel {
         return players.get(nextPlayer);
     }
 
-    public void putBackInDeck(Card card){
+    public void putBackInDeck(Card card,Player p){
         deck.addToDeck(card); // return card to deck
-        this.getCurrentPlayer().getHand().remove(card); // remove card from hand
+        p.getHand().remove(card); // remove card from hand
     }
 
     public void undoView(){

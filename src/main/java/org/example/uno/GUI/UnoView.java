@@ -103,7 +103,7 @@ public class UnoView extends JFrame implements UnoGameModelView {
             cards = new ArrayList<>();
             setGuiLayout();
 
-            playBackgroundMusic();
+            //playBackgroundMusic();
             this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             this.setSize(1600, 790);
             this.setVisible(true);
@@ -326,6 +326,9 @@ public class UnoView extends JFrame implements UnoGameModelView {
         redo.setEnabled(false);
         statusField.setText("Redid Move");
         updateHand();
+        for (JButton b : cards) {
+            b.setEnabled(false);
+        }
     }
 
 
