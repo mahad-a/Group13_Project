@@ -6,11 +6,12 @@ import org.example.uno.GUI.UnoGameModelView;
 import org.example.uno.cards.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
 /**
- * The UnoGame class represents the logic of the UNO game. It manages the players, the cards, and the flow of the game.
+ * The UnoGameModel class represents the logic of the UNO game. It manages the players, the cards, and the flow of the game.
  * The class is responsible for controlling the game, and the player interactions.
  *
  * @author Mahad Ahmed
@@ -21,7 +22,7 @@ import java.util.Scanner;
  *
  * @version 1.1
  */
-public class UnoGame {
+public class UnoGameModel {
 
     private ArrayList<Player> players;
     private List<UnoGameModelView> views;
@@ -29,11 +30,15 @@ public class UnoGame {
     private Deck deck;
     private boolean darkGame; // if true, we are in dark game
     private static final Scanner scanner = new Scanner(System.in);
+    private Card prevTopCard;
     private Card currentCard;
+
     private Player currentPlayer;
     private boolean skipNextPlayer;
-    private Card cardDrawn = null ;
+    private Card cardDrawnn;
+
     private boolean roundOver;
+    private boolean cardisDrawn;
 
 
     /**
@@ -42,7 +47,7 @@ public class UnoGame {
      *
      * @param darkGame  an indicator that indicates if the game is in "light" mode.
      */
-    public UnoGame(boolean darkGame,int numberOfPlayers, int numberOfAI) {
+    public UnoGameModel(boolean darkGame, int numberOfPlayers, int numberOfAI) {
         this.players = new ArrayList<>();
         this.darkGame = darkGame;
         this.numPlayers = numberOfPlayers;
@@ -77,6 +82,11 @@ public class UnoGame {
      */
     public Deck getDeck(){
         return this.deck;
+    }
+
+    public Card getPrevTopCard(){
+
+        return prevTopCard;
     }
 
     /**
@@ -116,6 +126,24 @@ public class UnoGame {
     }
 
     /**
+     * Restarts the game.
+     *
+     */
+    public void setRoundOver(boolean roundOver) {
+        this.roundOver = roundOver;
+        this.darkGame = false;
+        if( !(players.get(0).getName().equals("Player 1"))){
+            ArrayList<Player> playersr = this.getPlayers();
+            Collections.reverse(playersr);
+            this.setPlayers(playersr);
+            this.setCurrentPlayer(players.get(0));
+        }
+        for(UnoGameModelView v: views){
+            v.restartGame();
+        }
+    }
+
+    /**
      * Sets the current player who is meant to play their turn.
      *
      * @param player The player to set as the current player.
@@ -147,7 +175,7 @@ public class UnoGame {
      * @param c The card to be set as the card that was drawn.
      */
     public void setCardDrawn(Card c){
-        this.cardDrawn = c;
+        this.cardDrawnn = c;
     }
 
     /**
@@ -156,7 +184,8 @@ public class UnoGame {
      * @return The card that was drawn by the player.
      */
     public Card getCardDrawn(){
-        return this.cardDrawn;
+
+        return this.cardDrawnn;
     }
 
     /**
@@ -167,12 +196,14 @@ public class UnoGame {
         int nextPlayer = (currPlayerIndex + 1) % players.size();
         // handle reverse case when only 2 players
         setCurrentPlayer(players.get(nextPlayer));
+        this.cardDrawnn = null;
+        setCardDrawnBool(false);
         updateView(false,isSkipNextPlayer(),"");
     }
 
     public void skipEveryone() {
             updateView(false, false, getCurrentPlayer().getName() + " Skipped Everyone, \nand can play again!");
-        }
+    }
 
     /**
      * Gets the player whose turn is next.
@@ -183,6 +214,23 @@ public class UnoGame {
         int currPlayerIndex = this.players.indexOf(getCurrentPlayer());
         int nextPlayer = (currPlayerIndex + 1) % players.size();
         return players.get(nextPlayer);
+    }
+
+    public void putBackInDeck(Card card){
+        deck.addToDeck(card); // return card to deck
+        this.getCurrentPlayer().getHand().remove(card); // remove card from hand
+    }
+
+    public void undoView(){
+        for(UnoGameModelView v: views){
+            v.undoMove();
+        }
+    }
+
+    public void redoView(){
+        for(UnoGameModelView v: views){
+            v.redoMove();
+        }
     }
 
     /**
@@ -201,6 +249,7 @@ public class UnoGame {
      * @param card The card to be set as the current card.
      */
     public void setCurrentCard(Card card){
+        this.prevTopCard = this.currentCard;
         this.currentCard = card;
         if(card instanceof SkipCard){
             updateView(true,false,this.getNextPlayer().getName() + " has to skip their turn\ndue to Skip Card");
@@ -241,6 +290,13 @@ public class UnoGame {
         return this.roundOver;
     }
 
+    public void setCardDrawnBool(boolean cardDrawn){
+        this.cardisDrawn = cardDrawn;
+    }
+    public boolean checkIsCardDrawn(){
+        return cardisDrawn;
+    }
+
     private void updateView(boolean moveMade,boolean skipNext,String m){
         for(UnoGameModelView v: this.views){
             v.updateView(new UnoEvent(this,moveMade,skipNext,m));
@@ -275,7 +331,6 @@ public class UnoGame {
      */
     public Card takeFromDeck(Player player,boolean skipNext, String message){
         Card cardDrawn = deck.drawCard();
-
         // deck ran out of cards
         if (cardDrawn == null) {
             System.out.println("No more cards in the deck. Shuffling pile and adding to deck.");
@@ -289,9 +344,10 @@ public class UnoGame {
             cardDrawn = deck.drawCard();
         }
 
+
         player.addCard(cardDrawn);
         if (message.equals("Drew a card: ")){
-            this.cardDrawn = cardDrawn;
+            this.cardDrawnn = cardDrawn;
             if (isDarkGame()){
                 updateView(true,false,  message + "\n" + revertColour(cardDrawn.getColour().toString()) + cardDrawn.getDarkName());
             }
@@ -426,6 +482,8 @@ public class UnoGame {
         this.roundOver = false;
         this.skipNextPlayer = false;
         dealCards();
+        this.prevTopCard = null;
+        this.cardDrawnn = null;
         currentCard = deck.drawCard();
         while (!(currentCard instanceof NumberCard)){ // starting card cannot be action or wild card
             currentCard = deck.drawCard();
@@ -460,13 +518,13 @@ public class UnoGame {
     }
 
     /**
-     * Main method that initiates the start of the UnoGame
+     * Main method that initiates the start of the UnoGameModel
      *
      * @param args The arguments for the command line.
      */
     public static void main(String[] args) {
-        UnoGame unoGame = new UnoGame(true,2, 1);
-        unoGame.startGame();
+        UnoGameModel unoGameModel = new UnoGameModel(true,2, 1);
+        unoGameModel.startGame();
         scanner.close();
     }
 

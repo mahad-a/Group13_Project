@@ -1,3 +1,2 @@
 Manifest-Version: 1.0
-Main-Class: org.example.uno.GUI.View
-
+Main-Class: org.example.uno.GUI.UnoView

@@ -15,10 +15,10 @@ import org.example.uno.AI.AIFirstCard;
 import org.example.uno.AI.AIPlayer;
 import org.example.uno.cards.*;
 import org.example.uno.game.Player;
-import org.example.uno.game.UnoGame;
+import org.example.uno.game.UnoGameModel;
 
 /**
- * The View class represents the GUI for the UNO game. It extends the JFrame class and implements the UnoGameModelView
+ * The UnoView class represents the GUI for the UNO game. It extends the JFrame class and implements the UnoGameModelView
  * interface. It is the visual representation of the game's current state and allows the players to interact with the
  * game using buttons and visual elements.
  *
@@ -30,8 +30,8 @@ import org.example.uno.game.UnoGame;
  *
  * @version 1.0
  */
-public class View extends JFrame implements UnoGameModelView {
-    private UnoGame model;
+public class UnoView extends JFrame implements UnoGameModelView {
+    private UnoGameModel model;
     private JLabel playerLabel;
     private JTextArea statusField;
     private JButton topCard;
@@ -39,14 +39,16 @@ public class View extends JFrame implements UnoGameModelView {
     private JButton drawOneButton;
     private JButton currentCardDrawn;
     private JButton nextPlayer;
-    private Controller unoController;
+    private UnoController unoController;
     private ArrayList<JButton> cards;
     private Integer playerNumber;
     private Integer AINumber;
+    private JButton undo;
+    private JButton redo;
     /**
-     * Constructs a View, by initializing the elements of the GUI.
+     * Constructs a UnoView, by initializing the elements of the GUI.
      */
-    public View() {
+    public UnoView() {
         super("UNO");
 
         getNumPlayersInputs();
@@ -95,14 +97,13 @@ public class View extends JFrame implements UnoGameModelView {
      */
     private void startGame(Integer numPlayer, Integer numAI) {
         if (numPlayer != null) {
-            this.model = new UnoGame(false, numPlayer, numAI);
-            this.unoController = new Controller(model);
+            this.model = new UnoGameModel(false, numPlayer, numAI);
+            this.unoController = new UnoController(model);
             this.model.addUnoView(this);
             cards = new ArrayList<>();
             setGuiLayout();
 
             playBackgroundMusic();
-
             this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             this.setSize(1600, 790);
             this.setVisible(true);
@@ -139,6 +140,32 @@ public class View extends JFrame implements UnoGameModelView {
         JPanel statusArea = new JPanel();
         statusArea.setLayout(new BorderLayout());
         userArea.add(statusArea,BorderLayout.WEST);
+
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menu = new JMenu("Game");
+        //JMenu edit = new JMenu("Edit");
+        JMenuItem restartButton = new JMenuItem("Restart");
+        JMenuItem saveGame = new JMenuItem("Save");
+        JMenuItem loadGame = new JMenuItem("Load");
+        undo = new JButton("Undo");
+        redo = new JButton("Redo");
+        undo.setEnabled(false);
+        redo.setEnabled(false);
+        restartButton.addActionListener(unoController);
+        saveGame.addActionListener(unoController);
+        loadGame.addActionListener(unoController);
+        undo.addActionListener(unoController);
+        redo.addActionListener(unoController);
+
+        menu.add(restartButton);
+        menu.add(saveGame);
+        menu.add(loadGame);
+        menuBar.add(menu);
+        menuBar.add(undo);
+        menuBar.add(redo);
+        //menuBar.add(edit);
+
+        this.setJMenuBar(menuBar);
 
         this.statusField = new JTextArea("Welcome to UNO.\nThe status will be shown here!");
         statusField.setEnabled(false);
@@ -220,6 +247,10 @@ public class View extends JFrame implements UnoGameModelView {
         }
         System.out.println(model.getCurrentPlayer().getName() + " has " + model.getCurrentPlayer().getHand().size() + " cards."); // for debugging
         System.out.println("Hand is: " + model.getCurrentPlayer().getHand());
+        System.out.println("Card on Table: " + model.getCurrentCard());
+        System.out.println("State of Card Drawn: " + model.getCardDrawn());
+        System.out.println("Bool of Card Drawn: " + model.checkIsCardDrawn());
+        System.out.println(" ");
     }
 
     /**
@@ -238,6 +269,8 @@ public class View extends JFrame implements UnoGameModelView {
           }
           drawOneButton.setEnabled(false);
           nextPlayer.setEnabled(true);
+          undo.setEnabled(true);
+          redo.setEnabled(false);
 
           if(e.getCardDrawn() != null){
               currentCardDrawn.setVisible(true);
@@ -248,6 +281,8 @@ public class View extends JFrame implements UnoGameModelView {
       else{
           nextPlayer.setEnabled(false);
           drawOneButton.setEnabled(true);
+          undo.setEnabled(false);
+          redo.setEnabled(false);
       }
       statusField.setText(e.getMessage());
       playerLabel.setText(model.getCurrentPlayer().getName());
@@ -265,6 +300,32 @@ public class View extends JFrame implements UnoGameModelView {
           handleRoundOver();
       }
 
+    }
+
+    @Override
+    public void undoMove(){
+        for (JButton b : cards) {
+            b.setEnabled(true);
+        }
+        nextPlayer.setEnabled(false);
+        drawOneButton.setEnabled(true);
+        undo.setEnabled(false);
+        redo.setEnabled(true);
+        statusField.setText("Undid Move");
+        updateHand();
+    }
+
+    @Override
+    public void redoMove(){
+        for (JButton b : cards) {
+            b.setEnabled(false);
+        }
+        nextPlayer.setEnabled(true);
+        drawOneButton.setEnabled(false);
+        undo.setEnabled(true);
+        redo.setEnabled(false);
+        statusField.setText("Redid Move");
+        updateHand();
     }
 
 
@@ -293,12 +354,7 @@ public class View extends JFrame implements UnoGameModelView {
 
         switch ((String) selection) {
             case "YES" -> {
-                model.clearHand();
-                model.startGame();
-                updateHand();
-                statusField.setText("New Round!!");
-                playerLabel.setText(model.getCurrentPlayer().getName());
-                setIcon(topCard, model.getCurrentCard(), true);
+                restartGame();
             }
             case "NO" -> {
                 setVisible(false);
@@ -307,13 +363,24 @@ public class View extends JFrame implements UnoGameModelView {
         }
     }
 
+    public void restartGame(){
+        model.clearHand();
+        model.startGame();
+        updateHand();
+        drawOneButton.setEnabled(true);
+        currentCardDrawn.setVisible(false);
+        statusField.setText("Game Restarted!");
+        playerLabel.setText(model.getCurrentPlayer().getName());
+        setIcon(topCard, model.getCurrentCard(), true);
+    }
+
     /**
-     * Plays the background music for the UnoGame.
+     * Plays the background music for the UnoGameModel.
      */
     private static void playBackgroundMusic() {
         try {
             // Use class loader to get the URL of the resource
-            URL url = View.class.getClassLoader().getResource("music/UNO_FLIP_MUSIC.wav");
+            URL url = UnoView.class.getClassLoader().getResource("music/UNO_FLIP_MUSIC.wav");
             if (url != null) {
                 AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
 
@@ -336,7 +403,7 @@ public class View extends JFrame implements UnoGameModelView {
      */
     public static ImageIcon loadImage(String imagePath) {
         try {
-            return new ImageIcon(Objects.requireNonNull(View.class.getResource(imagePath)));
+            return new ImageIcon(Objects.requireNonNull(UnoView.class.getResource(imagePath)));
         } catch (Exception e) {
             System.out.println("Error loading image: " + imagePath);
             e.printStackTrace();
@@ -350,6 +417,6 @@ public class View extends JFrame implements UnoGameModelView {
      * @param args The arguments for the command line.
      */
     public static void main(String[] args) {
-        new View();
+        new UnoView();
     }
 }

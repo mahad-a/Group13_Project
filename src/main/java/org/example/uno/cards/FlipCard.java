@@ -1,6 +1,6 @@
 package org.example.uno.cards;
 
-import org.example.uno.game.UnoGame;
+import org.example.uno.game.UnoGameModel;
 
 public class FlipCard extends Card{
 
@@ -15,7 +15,7 @@ public class FlipCard extends Card{
     }
 
     @Override
-    public boolean playCard(UnoGame game) {
+    public boolean playCard(UnoGameModel game) {
         Card currCard = game.getCurrentCard();
         if(super.isCardPlaceable(game, this) || (currCard instanceof FlipCard && currCard.getColour() == this.getColour())){
             super.placeCard(game, this);
@@ -23,6 +23,11 @@ public class FlipCard extends Card{
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void unPlayCard(UnoGameModel game){
+        game.setDarkGame(!game.isDarkGame());
     }
 
     public String toString(){

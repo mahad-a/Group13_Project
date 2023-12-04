@@ -1,12 +1,9 @@
 package org.example.uno.cards;
 
 import org.example.uno.game.Player;
-import org.example.uno.game.UnoGame;
+import org.example.uno.game.UnoGameModel;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -14,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class FlipCardTest {
     private FlipCard flipCard;
-    private UnoGame game;
+    private UnoGameModel game;
     private NumberCard card;
     int numPlayers = 2 ;
     private int numAI = 0;
@@ -26,7 +23,7 @@ public class FlipCardTest {
         flipCard = new FlipCard(Card.Colour.BLUE);
         card = new NumberCard(Card.Colour.BLUE, NumberCard.Number.ONE);
 
-        game = new UnoGame(false, numPlayers, numAI);
+        game = new UnoGameModel(false, numPlayers, numAI);
 
         game.setCurrentCard(card);
         game.addPlayer(player);

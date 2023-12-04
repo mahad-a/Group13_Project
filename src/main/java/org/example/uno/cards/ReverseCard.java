@@ -36,7 +36,7 @@ public class ReverseCard extends Card {
      * @param game The UNO game in which the card is being played.
      */
     @Override
-    public boolean playCard(UnoGame game){
+    public boolean playCard(UnoGameModel game){
         // reverse card
 
         // if this doesn't change the original player list make a setter for player list
@@ -54,6 +54,17 @@ public class ReverseCard extends Card {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void unPlayCard(UnoGameModel game){
+        if(game.getPlayers().size() == 2){
+            game.setSkipNextPlayer(false); // revoke the skip next player
+        }
+//        ArrayList<Player> playersList = game.getPlayers();
+//        Collections.reverse(playersList);
+//        game.setPlayers(playersList);
+        Collections.reverse(game.getPlayers()); // try this
     }
 
     /**

@@ -1,7 +1,7 @@
 package org.example.uno.cards;
 import static org.junit.Assert.*;
 import org.example.uno.game.Player;
-import org.example.uno.game.UnoGame;
+import org.example.uno.game.UnoGameModel;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,7 +11,7 @@ import java.util.Collections;
 public class ReverseCardTest {
 
     private ReverseCard reverseCard;
-    private UnoGame game;
+    private UnoGameModel game;
     int numPlayers = 2 ;
     private int numAI = 0;
 
@@ -21,7 +21,7 @@ public class ReverseCardTest {
         Player player2 = new Player("TEST2");
         reverseCard = new ReverseCard(Card.Colour.BLUE);
 
-        game = new UnoGame(true, numPlayers, numAI);
+        game = new UnoGameModel(true, numPlayers, numAI);
         game.setCurrentCard(reverseCard);
         game.addPlayer(player);
         game.addPlayer(player2);

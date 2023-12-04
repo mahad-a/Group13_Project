@@ -2,17 +2,16 @@ package org.example.uno.GUI;
 
 import org.example.uno.AI.AIPlayer;
 import org.example.uno.cards.*;
-import org.example.uno.game.UnoGame;
+import org.example.uno.game.UnoGameModel;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
 /**
- * The Controller class is the architecture for the UNO Game.
- * It also handles user interactions from GUI, such as button clicks, and communicates them with the UnoGame.
+ * The UnoController class is the architecture for the UNO Game.
+ * It also handles user interactions from GUI, such as button clicks, and communicates them with the UnoGameModel.
  *
  * @author Mahad Ahmed
  * @author Firas El-Ezzi
@@ -21,15 +20,15 @@ import java.util.Random;
  * @author Yusuf Ibrahim
  * @version 1.0
  */
-public class Controller implements ActionListener {
-    private UnoGame model;
+public class UnoController implements ActionListener {
+    private UnoGameModel model;
 
     /**
-     * Constructs an instance of controller with a reference to the UnoGame model.
+     * Constructs an instance of controller with a reference to the UnoGameModel model.
      *
-     * @param game The UnoGame model to be controlled.
+     * @param game The UnoGameModel model to be controlled.
      */
-    public Controller(UnoGame game) {
+    public UnoController(UnoGameModel game) {
         this.model = game;
     }
 
@@ -115,13 +114,59 @@ public class Controller implements ActionListener {
      */
     public void actionPerformed(ActionEvent e) {
         Object o = e.getSource();
+        if(o instanceof JMenuItem){
+            JMenuItem i = (JMenuItem) o;
+            switch (i.getText()){
+                case "Restart":
+                    int selection = JOptionPane.showOptionDialog(null, "Do you wish to restart the game?",
+                            "Challenge", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+                    if(selection == JOptionPane.YES_OPTION){
+                        model.setRoundOver(true);
+                    }
+                case "Save":
+                    //save game
+                case "Load":
+                    //load game
+            }
+        }
         if (o instanceof JButton b) {
             switch (b.getText()) {
+                case "Undo" -> {
+                    if(model.checkIsCardDrawn()){
+                        Card kaka = model.getCurrentPlayer().getHand().get(model.getCurrentPlayer().getHand().size()-1);
+                        model.putBackInDeck(kaka);
+                        model.getCurrentPlayer().getHand().remove(kaka);
+                        model.setCardDrawnBool(false);
+                        model.setCardDrawn(kaka);
+                    }
+                    else {
+                        Card top = model.getPrevTopCard();
+                        model.getCurrentPlayer().getHand().add(model.getCurrentCard());
+                        model.getCurrentCard().unPlayCard(model);
+                        model.setCurrentCard(top);
+                    }
+
+                    model.undoView();
+                }
+
+                case "Redo" -> {
+                    if(model.checkIsCardDrawn()){
+                        model.getCurrentPlayer().getHand().add(model.getCardDrawn());
+                    }else {
+                        Card played = model.getPrevTopCard();
+                        played.playCard(model);
+
+                    }
+                    model.redoView();
+                }
+                    //redo
                 case "Draw A Card" -> {
+                    model.setCardDrawnBool(true);
                     model.takeFromDeck(model.getCurrentPlayer(), false, "Drew a card: ");
                 }
                 case "Next Player" -> {
                     model.nextPlayer();
+                    model.setCardDrawnBool(false);
                     // automatically play for AI
                     if (model.getCurrentPlayer() instanceof AIPlayer) {
                         if(! model.isSkipNextPlayer()) {
@@ -130,6 +175,7 @@ public class Controller implements ActionListener {
                         else{
                             model.setSkipNextPlayer(false);
                             model.skipAI();
+
                         }
                     }
 

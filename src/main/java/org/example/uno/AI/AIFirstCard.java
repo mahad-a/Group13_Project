@@ -1,9 +1,7 @@
 package org.example.uno.AI;
 
 import org.example.uno.cards.Card;
-import org.example.uno.game.UnoGame;
-
-import java.util.Random;
+import org.example.uno.game.UnoGameModel;
 
 public class AIFirstCard extends AIPlayer {
     // AI plays the first possible card it can find
@@ -12,10 +10,10 @@ public class AIFirstCard extends AIPlayer {
     }
 
     @Override
-    public Card strategyPlay(UnoGame unoGame) {
+    public Card strategyPlay(UnoGameModel unoGameModel) {
         // strategy: search through hand for first possible card to play
         for (Card c: this.getHand()){
-            if (c.isCardPlaceable(unoGame, c)){
+            if (c.isCardPlaceable(unoGameModel, c)){
                 // deal with wild card instances
                 if (c.getColour() == null){
                     c.setColour(getRandomColour());

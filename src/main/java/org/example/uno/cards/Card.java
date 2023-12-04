@@ -73,7 +73,7 @@ public abstract class Card {
      * @param placeCard The card being considered for placement.
      * @return {@code true} if the card is placeable, {@code false} otherwise.
      */
-    public boolean isCardPlaceable(UnoGame game, Card placeCard){
+    public boolean isCardPlaceable(UnoGameModel game, Card placeCard){
         Card currentCard = game.getCurrentCard();
 
         // within rulebook, states wildDrawTwoCard can only be played if the player has no cards of the current color
@@ -106,7 +106,7 @@ public abstract class Card {
      * @param game The UNO game the card is being played in
      * @param card The card to be placed.
      */
-    public void placeCard(UnoGame game, Card card){
+    public void placeCard(UnoGameModel game, Card card){
         game.getCurrentPlayer().discardCard(card);
         game.getDeck().addToDiscardPile(card);// add to placed pile
         game.setCurrentCard(card);
@@ -137,6 +137,7 @@ public abstract class Card {
      *
      * @param game The UNO game in which the card is being played.
      */
-    public abstract boolean playCard(UnoGame game);
+    public abstract boolean playCard(UnoGameModel game);
+    public abstract void unPlayCard(UnoGameModel game);
 
 }

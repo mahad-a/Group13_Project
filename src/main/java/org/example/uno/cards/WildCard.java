@@ -1,6 +1,6 @@
 package org.example.uno.cards;
 
-import org.example.uno.game.UnoGame;
+import org.example.uno.game.UnoGameModel;
 
 /**
  * The WildCard class represents a specific type of UNO card, the Wild card.
@@ -33,9 +33,13 @@ public class WildCard extends Card {
      * @param game The UNO game in which the card is being played.
      */
     @Override
-    public boolean playCard(UnoGame game){
+    public boolean playCard(UnoGameModel game){
         super.placeCard(game, this);
         return true;
+    }
+
+    public void unPlayCard(UnoGameModel game){
+        this.setColour(null);
     }
 
     /**

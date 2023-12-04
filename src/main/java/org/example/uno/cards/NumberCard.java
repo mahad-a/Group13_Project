@@ -83,13 +83,17 @@ public class NumberCard extends Card {
      * @param game The UNO game in which the card is being played.
      */
     @Override
-    public boolean playCard(UnoGame game) {
+    public boolean playCard(UnoGameModel game) {
         Card currCard = game.getCurrentCard();
         if(super.isCardPlaceable(game, this) || (currCard instanceof NumberCard && ((NumberCard) currCard).getNumber() == this.NUMBER)){
             super.placeCard(game, this);
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void unPlayCard(UnoGameModel game){
     }
 
     /**

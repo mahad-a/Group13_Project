@@ -1,7 +1,6 @@
 package org.example.uno.cards;
 
 import org.example.uno.game.*;
-import org.example.uno.cards.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,13 +9,13 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SkipCardTest {
 
     private SkipCard skipCard;
-    private UnoGame game;
+    private UnoGameModel game;
     int numPlayers = 4;
     private int numAI = 0;
     @BeforeEach
     public void setUp() {
         skipCard = new SkipCard(Card.Colour.BLUE);
-        game = new UnoGame(true,numPlayers, numAI);
+        game = new UnoGameModel(true,numPlayers, numAI);
         game.setCurrentCard(new NumberCard(Card.Colour.BLUE, NumberCard.Number.FIVE));
     }
 

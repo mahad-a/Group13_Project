@@ -1,6 +1,6 @@
 package org.example.uno.cards;
 
-import org.example.uno.game.UnoGame;
+import org.example.uno.game.UnoGameModel;
 
 /**
  * The DrawOneCard class represents a special UNO card type, the draw one card.
@@ -54,7 +54,7 @@ public class DrawOneCard extends Card{
      * @return {@code true} if the card was played, {@code false} otherwise.
      */
     @Override
-    public boolean playCard(UnoGame game) {
+    public boolean playCard(UnoGameModel game) {
         if (game.isDarkGame()) {
             setValue(DARK_VALUE);
             if(super.isCardPlaceable(game, this)){
@@ -75,6 +75,24 @@ public class DrawOneCard extends Card{
             }
         }
         return false;
+    }
+
+    /**
+     *
+     * @param game
+     */
+    public void unPlayCard(UnoGameModel game){
+
+        // If game is dark, undo the 5 cards given
+        int size =  game.getNextPlayer().getHand().size(); // store the size
+        if (game.isDarkGame()){
+            for(int i = 1; i<6; i++) {
+                game.putBackInDeck(game.getNextPlayer().getHand().get(size - i));
+            }
+        }
+        // If game is light, undo the last card given.
+        game.putBackInDeck(game.getNextPlayer().getHand().get(size - 1));
+
     }
 
 

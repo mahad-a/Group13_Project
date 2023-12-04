@@ -19,5 +19,9 @@ public interface UnoGameModelView {
      *
      * @param e The UnoEvent object that needs to be viewed.
      */
-    public void updateView(UnoEvent e);
+    void updateView(UnoEvent e);
+
+    void restartGame();
+    void undoMove();
+    void redoMove();
 }

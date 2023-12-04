@@ -1,7 +1,6 @@
 package org.example.uno.cards;
 
 import org.example.uno.game.*;
-import org.example.uno.cards.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,14 +9,14 @@ import static org.junit.jupiter.api.Assertions.*;
 public class DrawOneCardTest {
 
     private DrawOneCard drawOneCard;
-    private UnoGame game;
+    private UnoGameModel game;
     private int numPlayers = 3;
     private int numAI = 0;
 
     @BeforeEach
     public void setUp() {
         drawOneCard = new DrawOneCard(Card.Colour.BLUE);
-        game = new UnoGame(true,numPlayers, numAI);
+        game = new UnoGameModel(true,numPlayers, numAI);
         game.setCurrentCard(new NumberCard(Card.Colour.BLUE, NumberCard.Number.FIVE));
     }
 

@@ -2,7 +2,7 @@ package org.example.uno.AI;
 
 import org.example.uno.cards.Card;
 import org.example.uno.game.Player;
-import org.example.uno.game.UnoGame;
+import org.example.uno.game.UnoGameModel;
 
 import java.util.Random;
 
@@ -20,10 +20,10 @@ public abstract class AIPlayer extends Player {
     /**
      * Gets the strategy to play for the AI player.
      *
-     * @param unoGame The UNO game in which the AI player is playing.
+     * @param unoGameModel The UNO game in which the AI player is playing.
      * @return The card to play.
      */
-    public abstract Card strategyPlay(UnoGame unoGame); // decide the strategy to use
+    public abstract Card strategyPlay(UnoGameModel unoGameModel); // decide the strategy to use
 
 
     /**
