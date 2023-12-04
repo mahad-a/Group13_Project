@@ -3,6 +3,7 @@ package org.example.uno.GUI;
 import org.example.uno.cards.Card;
 import org.example.uno.game.UnoGameModel;
 
+import java.io.Serializable;
 import java.util.EventObject;
 
 /**
@@ -17,7 +18,7 @@ import java.util.EventObject;
  *
  * @version 1.0
  */
-public class UnoEvent extends EventObject {
+public class UnoEvent extends EventObject implements Serializable {
     private boolean moveMade;
     private boolean skipNextPlayer;
     private Card cardDrawn;

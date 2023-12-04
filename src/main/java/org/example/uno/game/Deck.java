@@ -3,6 +3,7 @@ package org.example.uno.game;
 
 import org.example.uno.cards.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
  *
  * @version 1.2
  */
-public class Deck {
+public class Deck implements Serializable {
 
     private List<Card> cards;
     private List<Card> discardPile;

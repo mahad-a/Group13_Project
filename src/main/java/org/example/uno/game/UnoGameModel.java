@@ -5,6 +5,7 @@ import org.example.uno.GUI.UnoEvent;
 import org.example.uno.GUI.UnoGameModelView;
 import org.example.uno.cards.*;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,8 +23,8 @@ import java.util.Scanner;
  *
  * @version 1.1
  */
-public class UnoGameModel {
-
+public class UnoGameModel implements Serializable {
+    private static final long serialVersionUID = 1L;
     private ArrayList<Player> players;
     private List<UnoGameModelView> views;
     private int numPlayers, numAI;
@@ -514,6 +515,46 @@ public class UnoGameModel {
     public void clearHand(){
         for (Player p : players){
             p.discardHand();
+        }
+    }
+
+    /**
+     * Imports a game from a file.
+     * @param fileName
+     * @return The UnoGameModel that was imported.
+     */
+    public void importGame(String fileName) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName + ".ser"))) {
+            UnoGameModel importedGame = (UnoGameModel) ois.readObject();
+            this.players = importedGame.players;
+            this.views = importedGame.views;
+            this.numPlayers = importedGame.numPlayers;
+            this.numAI = importedGame.numAI;
+            this.deck = importedGame.deck;
+            this.darkGame = importedGame.darkGame;
+            this.prevTopCard = importedGame.prevTopCard;
+            this.currentCard = importedGame.currentCard;
+            this.currentPlayer = importedGame.currentPlayer;
+            this.skipNextPlayer = importedGame.skipNextPlayer;
+            this.cardDrawnn = importedGame.cardDrawnn;
+            this.roundOver = importedGame.roundOver;
+            this.cardisDrawn = importedGame.cardisDrawn;
+            this.updateView(false,false,"Loaded Game");
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Exports the current game to a file.
+     *
+     * @param fileName The name of the file to be exported to.
+     */
+    public void exportGame(String fileName) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName + ".ser"))) {
+            oos.writeObject(this);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

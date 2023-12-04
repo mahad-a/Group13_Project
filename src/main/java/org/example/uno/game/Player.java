@@ -1,5 +1,7 @@
 package org.example.uno.game;
 import org.example.uno.cards.*;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -16,7 +18,7 @@ import java.util.Objects;
  *
  * @version 1.4
  */
-public class Player {
+public class Player implements Serializable {
     private final String NAME;
     private ArrayList<Card> hand;
     private int score;

@@ -2,6 +2,7 @@ package org.example.uno.GUI;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -30,7 +31,7 @@ import org.example.uno.game.UnoGameModel;
  *
  * @version 1.0
  */
-public class UnoView extends JFrame implements UnoGameModelView {
+public class UnoView extends JFrame implements UnoGameModelView, Serializable {
     private UnoGameModel model;
     private JLabel playerLabel;
     private JTextArea statusField;
@@ -103,7 +104,7 @@ public class UnoView extends JFrame implements UnoGameModelView {
             cards = new ArrayList<>();
             setGuiLayout();
 
-            playBackgroundMusic();
+            //playBackgroundMusic();
             this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             this.setSize(1600, 790);
             this.setVisible(true);

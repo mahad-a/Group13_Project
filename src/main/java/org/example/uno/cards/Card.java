@@ -2,6 +2,8 @@ package org.example.uno.cards;
 
 import org.example.uno.game.*;
 
+import java.io.Serializable;
+
 
 /**
  * The cards.Card class represents a card in the UNO game. UNO cards have a colour and can be assigned different
@@ -15,7 +17,7 @@ import org.example.uno.game.*;
  *
  * @version 1.1
  */
-public abstract class Card {
+public abstract class Card implements Serializable {
 
     /**
      * Enumeration representing the colours of the UNO cards.

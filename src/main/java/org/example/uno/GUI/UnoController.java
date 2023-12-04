@@ -7,6 +7,7 @@ import org.example.uno.game.UnoGameModel;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 import java.util.Random;
 
 /**
@@ -20,7 +21,7 @@ import java.util.Random;
  * @author Yusuf Ibrahim
  * @version 1.0
  */
-public class UnoController implements ActionListener {
+public class UnoController implements ActionListener, Serializable {
     private UnoGameModel model;
 
     /**
@@ -118,15 +119,21 @@ public class UnoController implements ActionListener {
             JMenuItem i = (JMenuItem) o;
             switch (i.getText()){
                 case "Restart":
+                    System.out.println("Restarting Game...");
                     int selection = JOptionPane.showOptionDialog(null, "Do you wish to restart the game?",
                             "Challenge", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
                     if(selection == JOptionPane.YES_OPTION){
                         model.setRoundOver(true);
                     }
+                    break;
                 case "Save":
-                    //save game
+                    System.out.println("Saving game...");
+                    model.exportGame("SerializedGame");
+                    break;
                 case "Load":
-                    //load game
+                    System.out.println("Loading game...");
+                    model.importGame("SerializedGame"); // import new game
+                    break;
             }
         }
         if (o instanceof JButton b) {
