@@ -87,11 +87,11 @@ public class DrawOneCard extends Card{
         int size =  game.getNextPlayer().getHand().size(); // store the size
         if (game.isDarkGame()){
             for(int i = 1; i<6; i++) {
-                game.putBackInDeck(game.getNextPlayer().getHand().get(size - i));
+                game.putBackInDeck(game.getNextPlayer().getHand().get(size - i), game.getNextPlayer());
             }
         }
         // If game is light, undo the last card given.
-        game.putBackInDeck(game.getNextPlayer().getHand().get(size - 1));
+        game.putBackInDeck(game.getNextPlayer().getHand().get(size - 1),game.getNextPlayer());
 
     }
 

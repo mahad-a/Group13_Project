@@ -327,6 +327,9 @@ public class UnoView extends JFrame implements UnoGameModelView, Serializable {
         redo.setEnabled(false);
         statusField.setText("Redid Move");
         updateHand();
+        for (JButton b : cards) {
+            b.setEnabled(false);
+        }
     }
 
 
