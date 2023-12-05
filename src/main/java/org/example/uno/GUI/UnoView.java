@@ -367,6 +367,7 @@ public class UnoView extends JFrame implements UnoGameModelView, Serializable {
         }
     }
 
+    @Override
     public void restartGame(){
         model.clearHand();
         model.startGame();
@@ -374,6 +375,16 @@ public class UnoView extends JFrame implements UnoGameModelView, Serializable {
         drawOneButton.setEnabled(true);
         currentCardDrawn.setVisible(false);
         statusField.setText("Game Restarted!");
+        playerLabel.setText(model.getCurrentPlayer().getName());
+        setIcon(topCard, model.getCurrentCard(), true);
+    }
+
+    @Override
+    public void loadGame(){
+        updateHand();
+        drawOneButton.setEnabled(true);
+        currentCardDrawn.setVisible(false);
+        statusField.setText("Loaded Game!");
         playerLabel.setText(model.getCurrentPlayer().getName());
         setIcon(topCard, model.getCurrentCard(), true);
     }

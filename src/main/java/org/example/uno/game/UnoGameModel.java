@@ -3,6 +3,7 @@ package org.example.uno.game;
 import org.example.uno.AI.*;
 import org.example.uno.GUI.UnoEvent;
 import org.example.uno.GUI.UnoGameModelView;
+import org.example.uno.GUI.UnoView;
 import org.example.uno.cards.*;
 
 import java.io.*;
@@ -527,7 +528,6 @@ public class UnoGameModel implements Serializable {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName + ".ser"))) {
             UnoGameModel importedGame = (UnoGameModel) ois.readObject();
             this.players = importedGame.players;
-            this.views = importedGame.views;
             this.numPlayers = importedGame.numPlayers;
             this.numAI = importedGame.numAI;
             this.deck = importedGame.deck;
@@ -539,7 +539,9 @@ public class UnoGameModel implements Serializable {
             this.cardDrawnn = importedGame.cardDrawnn;
             this.roundOver = importedGame.roundOver;
             this.cardisDrawn = importedGame.cardisDrawn;
-            this.updateView(false,false,"Loaded Game");
+            for(UnoGameModelView v: views){
+                v.loadGame();
+            }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

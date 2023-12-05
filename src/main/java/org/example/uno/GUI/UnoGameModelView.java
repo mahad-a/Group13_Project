@@ -24,4 +24,5 @@ public interface UnoGameModelView {
     void restartGame();
     void undoMove();
     void redoMove();
+    void loadGame();
 }
