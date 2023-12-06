@@ -178,6 +178,8 @@ public class UnoGameModelTest {
         assertEquals(ogGame.getPlayers(), deserializedGame2.getPlayers());
         assertEquals(ogGame.getCardDrawn(), deserializedGame2.getCardDrawn());
         assertEquals(ogGame.getPrevTopCard(), deserializedGame2.getPrevTopCard());
-    }
 
+        File file = new File("ogGame.ser");
+        file.delete();
+    }
 }
