@@ -4,6 +4,8 @@ import org.example.uno.cards.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UnoGameModelTest {
@@ -143,6 +145,39 @@ public class UnoGameModelTest {
         assertEquals(p1.getHand().size(), 3);
         assertEquals(p2.getHand().size(), 2);
         assertEquals(p3.getHand().size(), 1);
+    }
+
+
+    @Test
+    public void testExportGameAndImportGame(){
+        //test Serialization (tests exporting of original game)
+        UnoGameModel ogGame = new UnoGameModel(true, 2, 1);
+        ogGame.startGame();
+        ogGame.exportGame("ogGame");
+
+        //test importGame1 and ogGame (tests if import works)
+        UnoGameModel deserializedGame1 = new UnoGameModel(false, 1, 1);
+        deserializedGame1.importGame("ogGame");
+
+        assertEquals(ogGame.isDarkGame(), deserializedGame1.isDarkGame());
+        assertEquals(ogGame.getCurrentPlayer() , deserializedGame1.getCurrentPlayer());
+        assertEquals(ogGame.getNextPlayer(), deserializedGame1.getNextPlayer());
+        assertEquals(ogGame.getCurrentCard().toString(), deserializedGame1.getCurrentCard().toString());
+        assertEquals(ogGame.getPlayers(), deserializedGame1.getPlayers());
+        assertEquals(ogGame.getCardDrawn(), deserializedGame1.getCardDrawn());
+        assertEquals(ogGame.getPrevTopCard(), deserializedGame1.getPrevTopCard());
+
+        //test importGame2 and ogGame (tests if import works again on the same og file)
+        UnoGameModel deserializedGame2 = new UnoGameModel(true, 3, 2);
+        deserializedGame2.importGame("ogGame");
+
+        assertEquals(ogGame.isDarkGame(), deserializedGame2.isDarkGame());
+        assertEquals(ogGame.getCurrentPlayer() , deserializedGame2.getCurrentPlayer());
+        assertEquals(ogGame.getNextPlayer(), deserializedGame2.getNextPlayer());
+        assertEquals(ogGame.getCurrentCard().toString(), deserializedGame2.getCurrentCard().toString());
+        assertEquals(ogGame.getPlayers(), deserializedGame2.getPlayers());
+        assertEquals(ogGame.getCardDrawn(), deserializedGame2.getCardDrawn());
+        assertEquals(ogGame.getPrevTopCard(), deserializedGame2.getPrevTopCard());
     }
 
 }
