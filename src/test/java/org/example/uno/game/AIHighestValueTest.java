@@ -15,15 +15,14 @@ public class AIHighestValueTest {
     AIHighestValue aiPlayer;
     Player player;
 
+
     @Before
-
-    public void setUp(){
-
-        game = new UnoGameModel(false,1,1);
-        aiPlayer = new AIHighestValue("Test");
-        player = new Player("Firas");
-        game.addPlayer(aiPlayer);
+    public void setGame(){
+        game = new UnoGameModel(false, 1,1);
+        player = new Player("FIRAS ELEZZI");
+        aiPlayer = new AIHighestValue("TEST ");
         game.addPlayer(player);
+        game.addPlayer(aiPlayer);
 
         aiPlayer.addCard(new NumberCard(NumberCard.Colour.BLUE, NumberCard.Number.THREE));
         aiPlayer.addCard(new NumberCard(NumberCard.Colour.RED, NumberCard.Number.TWO));
@@ -35,13 +34,16 @@ public class AIHighestValueTest {
         game.setCurrentCard(new NumberCard(Card.Colour.BLUE, NumberCard.Number.TWO));
         game.setCurrentPlayer(aiPlayer);
 
+
     }
+
     @Test
-    public void teststrategyPlay(){
+    public void testStrategyPlay(){
+        NumberCard testCard = new NumberCard(Card.Colour.YELLOW, NumberCard.Number.THREE);
+        NumberCard actualCard = (NumberCard) aiPlayer.strategyPlay(game);
 
-        NumberCard cardTest = new NumberCard(Card.Colour.BLUE, NumberCard.Number.FIVE);
-        NumberCard actual = (NumberCard) aiPlayer.strategyPlay(game);
+        assertEquals(testCard.toString(), actualCard.toString());
 
-        assertEquals(cardTest.toString(),actual.toString());
+
     }
 }
