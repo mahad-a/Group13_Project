@@ -86,6 +86,10 @@ public class UnoGameModel implements Serializable {
         return this.deck;
     }
 
+    /**
+     * Retrieves the previous top card
+     * @return The previous top card
+     */
     public Card getPrevTopCard(){
 
         return prevTopCard;
@@ -203,6 +207,9 @@ public class UnoGameModel implements Serializable {
         updateView(false,isSkipNextPlayer(),"");
     }
 
+    /**
+     * Updates the view when Skip Everyone card is invoked
+     */
     public void skipEveryone() {
             updateView(false, false, getCurrentPlayer().getName() + " Skipped Everyone, \nand can play again!");
     }
@@ -218,17 +225,28 @@ public class UnoGameModel implements Serializable {
         return players.get(nextPlayer);
     }
 
+    /**
+     * Removes card from hand and returns to deck
+     * @param card The card to be returned
+     * @param p The player to remove card from
+     */
     public void putBackInDeck(Card card,Player p){
         deck.addToDeck(card); // return card to deck
         p.getHand().remove(card); // remove card from hand
     }
 
+    /**
+     * Updates the view of the game by sending an event to all views that Undo button was invoked
+     */
     public void undoView(){
         for(UnoGameModelView v: views){
             v.undoMove();
         }
     }
 
+    /**
+     * Updates the view of the game by sending an event to all views that Redo button was invoked
+     */
     public void redoView(){
         for(UnoGameModelView v: views){
             v.redoMove();
@@ -292,13 +310,28 @@ public class UnoGameModel implements Serializable {
         return this.roundOver;
     }
 
+    /**
+     * Sets the boolean if card has been drawn or not
+     * @param cardDrawn {@code true} if the card is drawn, {@code false} otherwise.
+     */
     public void setCardDrawnBool(boolean cardDrawn){
         this.cardisDrawn = cardDrawn;
     }
+
+    /**
+     * Returns the boolean if card has been drawn or not
+     * @return true if card has been drawn, false if not
+     */
     public boolean checkIsCardDrawn(){
         return cardisDrawn;
     }
 
+    /**
+     * Updates the view of the game by sending an event to all views.
+     * @param moveMade if a move was made
+     * @param skipNext if the next player should be skipped
+     * @param m A message related to the event that is taking place
+     */
     private void updateView(boolean moveMade,boolean skipNext,String m){
         for(UnoGameModelView v: this.views){
             v.updateView(new UnoEvent(this,moveMade,skipNext,m));
@@ -365,6 +398,11 @@ public class UnoGameModel implements Serializable {
         return cardDrawn;
     }
 
+    /**
+     * Reverts the colour of cards from light to dark
+     * @param colour The colour to revert
+     * @return The reverted colour
+     */
     public String revertColour(String colour) {
         // window closed case
         if (colour == null) {
@@ -428,10 +466,16 @@ public class UnoGameModel implements Serializable {
         return score;
     }
 
+    /**
+     * Handles an AI's move by calling upon their unique strategy method
+     */
     public void handleAIMove(){
         handleCurrentPlayerTurn(this.getCurrentPlayer(), ((AIPlayer) getCurrentPlayer()).strategyPlay(this));
     }
 
+    /**
+     * Updates view when to skip AI's turn
+     */
     public void skipAI(){
         this.updateView(true,isSkipNextPlayer(),"");
     }
@@ -521,7 +565,7 @@ public class UnoGameModel implements Serializable {
 
     /**
      * Imports a game from a file.
-     * @param fileName
+     * @param fileName The name of the file to import from
      * @return The UnoGameModel that was imported.
      */
     public void importGame(String fileName) {

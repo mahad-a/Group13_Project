@@ -1,6 +1,5 @@
 package org.example.uno.GUI;
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
@@ -46,6 +45,7 @@ public class UnoView extends JFrame implements UnoGameModelView, Serializable {
     private Integer AINumber;
     private JButton undo;
     private JButton redo;
+
     /**
      * Constructs a UnoView, by initializing the elements of the GUI.
      */
@@ -63,6 +63,10 @@ public class UnoView extends JFrame implements UnoGameModelView, Serializable {
         this.startGame(playerNumber, AINumber);
     }
 
+
+    /**
+     * Initializes the number of players and number of AI players
+     */
     private void getNumPlayersInputs(){
         JDialog.setDefaultLookAndFeelDecorated(true);
 
@@ -104,7 +108,7 @@ public class UnoView extends JFrame implements UnoGameModelView, Serializable {
             cards = new ArrayList<>();
             setGuiLayout();
 
-            //playBackgroundMusic();
+            playBackgroundMusic();
             this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             this.setSize(1600, 790);
             this.setVisible(true);
@@ -303,6 +307,9 @@ public class UnoView extends JFrame implements UnoGameModelView, Serializable {
 
     }
 
+    /**
+     * Updates the GUI whenever Undo is invoked
+     */
     @Override
     public void undoMove(){
         for (JButton b : cards) {
@@ -316,6 +323,9 @@ public class UnoView extends JFrame implements UnoGameModelView, Serializable {
         updateHand();
     }
 
+    /**
+     * Updates the GUI whenever Redo is invoked
+     */
     @Override
     public void redoMove(){
         for (JButton b : cards) {
@@ -367,6 +377,9 @@ public class UnoView extends JFrame implements UnoGameModelView, Serializable {
         }
     }
 
+    /**
+     * Updates the GUI whenever Restart is invoked
+     */
     @Override
     public void restartGame(){
         model.clearHand();
@@ -379,6 +392,9 @@ public class UnoView extends JFrame implements UnoGameModelView, Serializable {
         setIcon(topCard, model.getCurrentCard(), true);
     }
 
+    /**
+     * Updates the GUI whenever Load is invoked
+     */
     @Override
     public void loadGame(){
         updateHand();
