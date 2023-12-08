@@ -43,18 +43,40 @@ We've also designed and implemented unit tests Model, the tests focus on card pl
 - Code (source + executable in a jar file)
 - Documentation
 
-### Milestone 3 (Planned)
-For the third milestone, we aim to integrate the Uno Flip card features into the game, implementing specific rules and scoring rules. Additionally, we will introduce a computer player, allowing the game to accommodate a play alone feature.
+### Milestone 3 (Completed)
+In this third milestone, we have integrated the Uno Flip card features into the game, implementing specific rules and scoring rules. Additionally, we introduced a pickable number of computer players/AI, allowing the game to accommodate a play alone feature. The AI players implement different strategies at random. One being to play the first card it can and the other searching through the AIs hand and playing the card that scores the most.
 
-### Milestone 4 (Planned)
-In the final milestone, we will incorporate redo capabilities and replay capabilities. Players will have the ability to redo/undo their moves within the game, and they can replay the game, allowing them to play the perfect match and enjoy multiple rounds. We will also implement save/load features using Java Serialization, enabling players to save their current game progress and later resume it.
+New Features:
+    Uno Flip added.
+    Customizable amount of Computer/AI Players with each having its own difficulty.
+    Player range changed from 4 to 6.
+    More cards to deck added.
+    Added new card methods and specialties 
+
+## Deliverables:
+    Readme file (updated to include Milestone 3)
+    Design changes and explanations for UML and data structures from Milestone 2
+    Corresponding unit tests
+    Code (source + executable in a jar file)
+    Documentation
+
+### Milestone 4 (Completed)
+In the final milestone, we incorporated redo capabilities and replay capabilities. Players now have the ability to redo/undo their moves within the game, and they can replay the game from the start at any given moment, allowing them to play the perfect match and enjoy multiple rounds. We also implemented save/load features using Java Serialization, enabling players to save their current game progress and later resume it. This can be done by using the Game jmenu on the unogames menubar.
+
+New Features:
+    Restart Game
+    Undo Move
+    Redo Move
+    Save Game
+    Load Game
+
 
 ## Deliverables
 
 Deliverables are to be delivered all in one zip file.
 
 - Readme file
-- Code (source + executable in a jar file)
+- Code (source + executable in a jar file + Unit tests)
 - UML diagrams
 - Documentation
 
