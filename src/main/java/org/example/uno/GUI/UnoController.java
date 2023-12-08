@@ -143,7 +143,6 @@ public class UnoController implements ActionListener, Serializable {
                         Card kaka = model.getCurrentPlayer().getHand().get(model.getCurrentPlayer().getHand().size()-1);
                         model.putBackInDeck(kaka,model.getCurrentPlayer());
                         model.getCurrentPlayer().getHand().remove(kaka);
-                        model.setCardDrawnBool(false);
                         model.setCardDrawn(kaka);
                     }
                     else {
@@ -168,8 +167,8 @@ public class UnoController implements ActionListener, Serializable {
                             }
                         }
                         played.playCard(model);
-                        model.redoView();
                     }
+                    model.redoView();
                 }
                     //redo
                 case "Draw A Card" -> {
